@@ -4,9 +4,30 @@
 <template>
   <div>
     <el-button type="primary" @click="testBtnClick">弹窗测试按钮</el-button>
-    <avue-dialog :form-option="option" :show-dialog-props="showDialog" :object-data="obj" @submit="testClickSubmit"
+
+
+    <el-dialog></el-dialog>
+    <avue-dialog :form-option="option" :showDialogProps="showDialog" :object-data="obj" @submit="testClickSubmit"
                  @closeDialog="closeDialog" :dialog-option="dialogOption">
     </avue-dialog>
+
+
+<!--    <el-dialog-->
+<!--        v-model="showDialog"-->
+<!--        title="Tips"-->
+<!--        width="500"-->
+<!--        :before-close="closeDialog"-->
+<!--    >-->
+<!--      <span>This is a message</span>-->
+<!--      <template #footer>-->
+<!--        <div class="dialog-footer">-->
+<!--          <el-button @click="closeDialog = false">Cancel</el-button>-->
+<!--          <el-button type="primary" @click="showDialog=false">-->
+<!--            Confirm-->
+<!--          </el-button>-->
+<!--        </div>-->
+<!--      </template>-->
+<!--    </el-dialog>-->
   </div>
 </template>
 
@@ -233,7 +254,6 @@ export default {
       this.showDialog = true;
     },
     testClickSubmit(row, hide) {
-      debugger;
       this.$message.success("提交结果 : " + JSON.stringify(row));
       hide();
       this.showDialog = false;

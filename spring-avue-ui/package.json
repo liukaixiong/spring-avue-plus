@@ -23,6 +23,7 @@
     "json-editor-vue3": "^1.1.1",
     "jsoneditor": "^10.1.0",
     "pinia": "^2.1.7",
+    "simple-mind-map": "^0.10.4",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },

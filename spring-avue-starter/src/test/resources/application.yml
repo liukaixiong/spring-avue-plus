@@ -1,0 +1,22 @@
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 8765
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+test:
+  url: http://localhost:8765
+
+spring:
+  avue:
+    debug: true
+    accept-token: abc12345
+  main:
+    allow-circular-references: true
+  web:
+    resources:
+      static-locations: classpath:/static/

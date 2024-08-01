@@ -116,8 +116,6 @@ import aVueDialog from "../avue-dialog.vue"
 import dialogSubmitEvent from "@/api/crud/event/dialogSubmitEvent.js"
 // 注册组件
 
-console.log("进入页面啦~~")
-
 const jsonData = `{
     "employees": [{
       "firstName": "Bill",

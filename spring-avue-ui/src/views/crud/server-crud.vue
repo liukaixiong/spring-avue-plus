@@ -54,19 +54,15 @@
         </span>
       </template>
 
-
-<!--      <template v-for="item in option.registerFieldComponents" #[getSlotFormName(item)]="{column,value}">-->
-<!--        <span>{{ column }} - {{ value }} - {{ item }}</span>-->
-<!--      </template>-->
-
-
       <!-- 表单层 值组件展示层 getSlotFormName 这里主要是为了通过函数匹配字段改变组件展示-->
       <template
           v-for="item in option.registerFieldComponents" #[getSlotFormName(item)]="{column,value}">
         <!-- 引入新的组件  json: https://github.com/guyue88/json-editor-vue3 -->
         <span v-if="column.type === 'json'">
-            <span>{{ column }} - {{ value }} - {{ item }}</span>
-            <json-editor-vue class="editor" ref="editor" :name="column.prop" :options="jsonEditorOption" :modelValue="JSON.parse(value|| '{}')" @blur="jsonFormat(column.prop)" />
+<!--            <span>{{ column }} - {{ value }} - {{ item }}</span>-->
+            <json-editor-vue class="editor" :ref="'editor-'+column.prop" :name="column.prop"
+                             :modelValue="JSON.parse(value|| '{}')"
+                             @blur="jsonFormat(this,column.prop)"/>
           <!--                    <p>-->
           <!--            <el-button @click="jsonFormat(column.prop)">格式化验证JSON字符串</el-button>-->
           <!--          </p>-->
@@ -103,19 +99,15 @@
 
 import * as eventMethod from "@/api/crud/event/rowClickEvent"
 import crudUtil from "@/utils/server-crud"
-import aVueDialog from "./avue-dialog.vue"
+import aVueDialog from "@/views/crud/avue-dialog.vue"
 import dialogSubmitEvent from "@/api/crud/event/dialogSubmitEvent"
 import serverCrud from '@/mixins/server-crud.js'
 import JsonEditorVue from 'json-editor-vue3'
+import crudComponents from "@/mixins/crud-components.js";
 
 export default serverCrud({
       data() {
         return {
-          jsonEditorOption:{
-            onBlur: function(){
-              debugger;
-            }
-          },
           dialogConfig: {
             config: {},
             showDialogProps: false,
@@ -129,6 +121,7 @@ export default serverCrud({
         }
       },
       components: {
+        // 新增组件注册位置,例如: <avue-dialog> 、<json-editor-vue>
         'avue-dialog': aVueDialog,
         JsonEditorVue
       },
@@ -143,14 +136,11 @@ export default serverCrud({
 
         //新增前操作方法
         addBefore(form, index, done, loading) {
-          let check = this.componentsBefore(form, done, loading);
-          console.log("添加 提交后端的值:", form);
-          return check;
+          return this.componentsBefore(form, done, loading);
         },
         //新增后操作方法
         addAfter(row, done, loading, data) {
-          // this.processDML(data, done, loading);
-          if (crudUtil.processDMLResponse(this, data)) {
+          if (crudUtil.processDMLResponse(this, data) && this.componentsAfter(row, done, loading)) {
             done();
           } else {
             loading();
@@ -160,15 +150,12 @@ export default serverCrud({
         //修改前操作方法
         updateBefore(form, index, done, loading) {
           this.form.updateUser = 'small'
-          let check = this.componentsBefore(form, done, loading);
-          console.log("修改 提交后端的值:", form);
-          return check;
+          return this.componentsBefore(form, done, loading);
         },
 
         //修改后操作方法
         updateAfter(row, index, done, loading, data) {
-          // this.processDML(data, done, loading);
-          if (crudUtil.processDMLResponse(this, data)) {
+          if (crudUtil.processDMLResponse(this, data) && this.componentsAfter(row, done, loading)) {
             done();
           } else {
             loading();
@@ -176,71 +163,38 @@ export default serverCrud({
         },
 
         // //删除前操作方法
-        // delBefore() {
-        // },
+        delBefore() {
+        },
 
         //删除后操作方法
         delAfter() {
         },
-        // 按钮点击触发的方法
+
+        /**
+         * 按钮触发方式
+         * @param item
+         * @param row
+         * @param index
+         */
         btnClick(item, row, index) {
           eventMethod[item.methodName](this, item, row, index);
         },
+        /**
+         * 弹出层触发方式
+         * @param item
+         * @param row
+         * @param index
+         * @returns {*}
+         */
         btnClickOpenTab(item, row, index) {
           return eventMethod[item.methodName](this, item, row, index);
         },
         getSlotFormName(item) {
           return item + "-form";
         },
-        isJson(val) {
-          try {
-            if (JSON.parse(val.trim())) {
-              return true;
-            }
-            return false;
-          } catch (e) {
-            return false;
-          }
-        },
-        jsonComponents(form, done, loading) {
-          // json 组件
-          let jsonObject = this.$refs['editor'];
-
-          let value = jsonObject.json;
-          if (value && !this.isJson(JSON.stringify(value))) {
-            this.$message.error("非标准的JSON,请检查!");
-            return false;
-          }
-          if (value) {
-            let name = jsonObject.$attrs['name'];
-            this.form[name] = JSON.stringify(value);
-          }
-          return true;
-        },
         // json的格式化插件
-        jsonFormat(name) {
-          debugger;
-          let jsonObject = this.$refs['editor'];
-          for (let i = 0; i < jsonObject.length; i++) {
-            let attrName = jsonObject[i].$attrs['name'];
-            if (name === attrName) {
-              jsonObject[i].formatCode();
-              let value = jsonObject[i].getValue();
-              if (value && !this.isJson(value)) {
-                this.$message.error("非标准的JSON,请检查!");
-              }
-            }
-          }
-        },
-        // 初始化的value可能是没有值的
-        getJsonString(value) {
-          if (!value) {
-            return "";
-          }
-          if (value instanceof Object) {
-            return JSON.stringify(value);
-          }
-          return value;
+        jsonFormat(self, name) {
+          crudComponents["json-editor-vue"].jsonFormat(self, name);
         },
 
         /**
@@ -251,23 +205,50 @@ export default serverCrud({
          * @returns {boolean}
          */
         componentsBefore(form, done, loading) {
-          return this.jsonComponents(form, done, loading);
+          let allComponentList = this.$options.components;
+          let check = true;
+          Object.values(allComponentList).forEach(value => {
+            let componentObject = crudComponents[value.name];
+            if (componentObject) {
+              if (!componentObject.before(this, form, done, loading)) {
+                check = false;
+                return check;
+              }
+            }
+          });
+          return check;
+        },
+        componentsAfter(form, done, loading) {
+          let allComponentList = this.$options.components;
+          let check = true;
+          Object.values(allComponentList).forEach(value => {
+            let componentObject = crudComponents[value.name];
+            if (componentObject) {
+              if (!componentObject.after(this, form, done, loading)) {
+                check = false;
+                return check;
+              }
+            }
+          });
+          return check;
         },
         componentsDialogClickSubmit(row, hide) {
           dialogSubmitEvent[this.dialogConfig.config["submitEventName"] || 'defaultSubmit'](this, row, hide);
         },
         closeDialog() {
           this.dialogConfig.showDialogProps = false;
-        }, componentsDialogClickClose() {
+        },
+        componentsDialogClickClose() {
           this.closeDialog();
-        }, componentsDialogResetForm() {
+        },
+        componentsDialogResetForm() {
         },
         debugMethod(row) {
           debugger;
         }
       }
     },
-    {
+    { // 针对服务端的配置
       name: 'crud/crud',//模块名字
       configUrl: "/avue/crud",
       // domain:'', // 服务访问根路径
@@ -275,7 +256,7 @@ export default serverCrud({
       // update: 'update',//更新接口名字
       // add: 'add',//新增接口名字
       // del: 'del',//删除接口名字
-      // rowKey: 'id',//主键
+      rowKey: 'id',//主键
       // 下面是分页与后端字段属性的适配
       pageNumber: 'pageNumber',//页码
       pageTotal: 'total', // 页总数

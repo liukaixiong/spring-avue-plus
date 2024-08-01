@@ -3,6 +3,8 @@ import crudTest from '@/views/crud/component-demo/crud-test.vue'
 import vueJsonTest from '@/views/crud/component-demo/vue-json-test.vue'
 import serverCrud from '@/views/crud/server-crud.vue'
 import jsonTest from '@/views/crud/component-demo/json-test.vue'
+import dialogTest from '@/views/crud/component-demo/dialog-test.vue'
+import avueComponent from '@/views/crud/avue-component.vue'
 import jsonEdit from '@/views/crud/component-demo/json-editor-vue3.vue'
 
 const router = createRouter({
@@ -36,6 +38,14 @@ const router = createRouter({
             path: '/json-edit-demo',
             name: 'json-edit-demo',
             component: jsonEdit
+        }, {
+            path: '/dialog-test',
+            name: 'json-edit-demo',
+            component: dialogTest
+        }, {
+            path: '/avue-component',
+            name: 'avue-component',
+            component: avueComponent
         }
     ]
 })

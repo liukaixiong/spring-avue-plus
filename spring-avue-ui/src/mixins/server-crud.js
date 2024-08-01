@@ -83,12 +83,12 @@ export default (app, clientOption = {}) => {
                     this.loading = true;
                     let pageParams = {}
                     pageParams[this.getOption(page.pageNumber) || 'pageNumber'] = this.page.currentPage
-                    pageParams[this.getOption(page.pageSize) || 'pageSize'] = this.page.pageSize
+                    pageParams[this.getOption(page.pageSize) || 'pageSize'] = this.page.pageSize || 10;
                     crudUtil.mergeParams(this.$route.query, this.params, false);
                     const data = Object.assign(pageParams, this.params)
                     this.data = [];
                     this.api[this.getOption("list") || 'list'](_self, data).then(res => {
-                        let _self1 = this;
+                        debugger;
                         this.loading = false;
                         let data = this.getRootData(res);
                         this.page.total = data[this.getPageInfo(page.pageTotal) || 'total'];

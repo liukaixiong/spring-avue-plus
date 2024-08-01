@@ -8,7 +8,7 @@ import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/auve',
+  base: '/avue',
   plugins: [
     vue(),
     vueDevTools(),
