@@ -3,7 +3,7 @@ package com.liukx.spring.client.handler;
 //import com.alibaba.fastjson.JSON;
 
 import com.liukx.spring.client.RuoYiClientTestApplication;
-import com.liukx.spring.client.annotation.AVueTableOption;
+import com.liukx.spring.client.annotation.AVueCrudOption;
 import com.liukx.spring.client.annotation.EnableAVue;
 import com.liukx.spring.client.annotation.column.AVueUpload;
 import com.liukx.spring.client.config.props.AVueProperties;
@@ -39,7 +39,7 @@ public class AVueAnnotationHandlerTest extends TestCase {
 
         Map<String, Object> optionValue = new LinkedHashMap<>();
         optionValue.put("highlightCurrentRow", true);
-        ObjectConfigCacheHelper.getINSTANCE().registerAnnotationValue(AVueTableOption.class, optionValue);
+        ObjectConfigCacheHelper.getINSTANCE().registerAnnotationValue(AVueCrudOption.class, optionValue);
 
         Map<String, Map<String, Object>> parse = annotationHandler.parse(AVueCrudModel.class);
         System.out.println(JsonParseUtils.toJson(parse));

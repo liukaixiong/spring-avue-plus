@@ -4,7 +4,7 @@
                v-on="onEvent"
                v-model="form"
                ref="crud"
-               :page.sync="page"
+               v-model:page="page"
     >
       <template is="option.tableRowButtons && option.tableRowButtons.length > 0" #menu="{row,index}" slot="menu">
         <span v-for="item in option.tableRowButtons">
@@ -61,7 +61,7 @@
         <span v-if="column.type === 'json'">
 <!--            <span>{{ column }} - {{ value }} - {{ item }}</span>-->
             <json-editor-vue class="editor" :ref="'editor-'+column.prop" :name="column.prop"
-                             :modelValue="JSON.parse(value|| '{}')"
+                             :modelValue="JSON.parse(value|| '{}')" :current-mode="column.currentMode"
                              @blur="jsonFormat(this,column.prop)"/>
           <!--                    <p>-->
           <!--            <el-button @click="jsonFormat(column.prop)">格式化验证JSON字符串</el-button>-->
@@ -250,7 +250,8 @@ export default serverCrud({
     },
     { // 针对服务端的配置
       name: 'crud/crud',//模块名字
-      configUrl: "/avue/crud",
+      configUrl: import.meta.env.VITE_APP_AVUE_API_PATH,
+      domain: import.meta.env.VITE_API_URL,
       // domain:'', // 服务访问根路径
       // list: 'list',//列表接口名字
       // update: 'update',//更新接口名字

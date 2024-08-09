@@ -4,11 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode development",
+    "prod": "vite --mode production",
     "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
+    "build:dev": "vite build --mode development",
+    "build:prod": "vite build --mode production",
+    "preview": "vite preview --mode development",
     "test:unit": "vitest",
-    "build-only": "vite build",
+    "build-only": "vite build --mode production",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
@@ -23,7 +26,6 @@
     "json-editor-vue3": "^1.1.1",
     "jsoneditor": "^10.1.0",
     "pinia": "^2.1.7",
-    "simple-mind-map": "^0.10.4",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },

@@ -18,10 +18,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 public class AVueMvcWebMvcConfigurer implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/avue/**").addResourceLocations("classpath:/META-INF/resources/");
-//        registry.addResourceHandler("/test").addResourceLocations("classpath:/static/test.html");
-
-//                .resourceChain(false);
+        registry.addResourceHandler("/avue/**").addResourceLocations("classpath:/META-INF/avue/");
     }
 
     @Bean
@@ -39,10 +36,5 @@ public class AVueMvcWebMvcConfigurer implements WebMvcConfigurer {
                 .allowedOrigins("*")
                 .allowedMethods("GET", "POST", "DELETE", "PUT")
                 .maxAge(3600);
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        WebMvcConfigurer.super.addInterceptors(registry);
     }
 }

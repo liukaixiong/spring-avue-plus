@@ -37,10 +37,11 @@ public @interface AVueJson {
     String type() default "json";
 
     /**
-     * 展示的样式 : https://wangbin3162.gitee.io/bin-code-editor/#/jsonEditor
+     * 展示模式 : ["tree", "code", "form", "text", "view"]
+     *
      * @return
      */
-    String theme() default "eclipse";
+    String currentMode() default "code";
 
     /**
      * 字段排序

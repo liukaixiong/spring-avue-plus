@@ -44,7 +44,7 @@ export default (app, clientOption = {}) => {
             },
             onEvent() {
                 return {
-                    'on-load': this.getList,
+                    // 'on-load': this.getList,
                     'row-save': this.rowSave,
                     'row-update': this.rowUpdate,
                     'row-del': this.rowDel,
@@ -68,13 +68,12 @@ export default (app, clientOption = {}) => {
                 } else {
                     // 根据请求路径参数获取服务路由编号,根据编号获取domain
                     // let res = await getServer(query.server);
-
-                    let res = {
-                        domain: "http://localhost:8765",
+                    let serverInfo = {
+                        domain: clientOption.domain,
                         acceptToken: "abc12345"
                     }
                     // // 开始渲染数据
-                    apiJs.renderData(_self, clientOption, query, res);
+                    apiJs.renderData(_self, clientOption, query, serverInfo, () => this.getList());
                 }
             },
             getList() {
@@ -82,13 +81,12 @@ export default (app, clientOption = {}) => {
                     let _self = this;
                     this.loading = true;
                     let pageParams = {}
-                    pageParams[this.getOption(page.pageNumber) || 'pageNumber'] = this.page.currentPage
-                    pageParams[this.getOption(page.pageSize) || 'pageSize'] = this.page.pageSize || 10;
+                    pageParams[this.getPageInfo(page.pageNumber) || 'pageNumber'] = this.page.currentPage || 1;
+                    pageParams[this.getPageInfo(page.pageSize) || 'pageSize'] = this.page.pageSize || 10;
                     crudUtil.mergeParams(this.$route.query, this.params, false);
                     const data = Object.assign(pageParams, this.params)
                     this.data = [];
                     this.api[this.getOption("list") || 'list'](_self, data).then(res => {
-                        debugger;
                         this.loading = false;
                         let data = this.getRootData(res);
                         this.page.total = data[this.getPageInfo(page.pageTotal) || 'total'];
@@ -100,13 +98,12 @@ export default (app, clientOption = {}) => {
                         }
                     })
                 }
-                if (this.config.domain) {
-                    if (this.listBefore) {
-                        this.listBefore()
-                    }
-                    callback();
-                } else {
-                    console.warn(" config的配置域名还未加载完成 ... ")
+                if (this.listBefore) {
+                    this.listBefore()
+                }
+                callback();
+                if (this.listAfter) {
+                    this.listAfter();
                 }
             },
             rowSave(row, done, loading) {

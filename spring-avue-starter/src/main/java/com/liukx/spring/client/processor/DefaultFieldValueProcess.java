@@ -25,12 +25,12 @@ public class DefaultFieldValueProcess implements AVueAttrPostProcess {
     @Autowired
     private AVueProperties prop;
 
-    private Object nullObject = new Object();
+    private final Object nullObject = new Object();
 
     @Override
     public void attrPostProcess(AVueAttrLevel level, AnnotatedElement element, Map<String, Object> attrMap) {
         if (level == AVueAttrLevel.OPTION_COLUMN) {
-            Object classDefaultValue = getAttrDefaultValueCache((Field)element);
+            Object classDefaultValue = getAttrDefaultValueCache((Field) element);
             if (classDefaultValue != null) {
                 attrMap.put("value", classDefaultValue);
             }
@@ -47,7 +47,7 @@ public class DefaultFieldValueProcess implements AVueAttrPostProcess {
         }
 
         Object value =
-            objectFieldMap.computeIfAbsent(simpleName + "-" + name, k -> getClazzDefaultValue(declaringClass, element));
+                objectFieldMap.computeIfAbsent(simpleName + "-" + name, k -> getClazzDefaultValue(declaringClass, element));
 
         if (value != null && value != nullObject) {
             return value;
@@ -60,9 +60,7 @@ public class DefaultFieldValueProcess implements AVueAttrPostProcess {
         if (prop.isDebug()) {
             clazzObject = newObject(declaringClass);
         } else {
-            clazzObject = objectFieldMap.computeIfAbsent(declaringClass.getSimpleName(), k -> {
-                return newObject(declaringClass);
-            });
+            clazzObject = objectFieldMap.computeIfAbsent(declaringClass.getSimpleName(), k -> newObject(declaringClass));
         }
 
         if (clazzObject == null || nullObject == clazzObject) {

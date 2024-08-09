@@ -17,7 +17,7 @@ public class AVueProperties {
     private boolean showDefaultValue = false;
 
     /**
-     * 是否开启开发模式， 该模式不会对数据进行缓存
+     * 是否开启开发模式， 该模式不会对数据进行缓存,但是每次都会重新构建，方便开发调试。生产请关闭！
      */
     private boolean debug = false;
 

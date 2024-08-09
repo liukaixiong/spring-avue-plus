@@ -47,6 +47,7 @@ public @interface AVuePage {
      * @return
      */
     String pageData() default "data";
+
     /**
      * 分页 - 页码的属性名称
      *
@@ -60,6 +61,28 @@ public @interface AVuePage {
      * @return
      */
     int pagerCount() default 5;
+
+    /**
+     * 每页显示个数选择器的选项设置
+     *
+     * @return
+     */
+    int[] pageSizes() default {10, 20, 30, 40, 50, 100};
+
+    /**
+     * 是否为分页按钮添加背景色
+     *
+     * @return
+     */
+    boolean background() default false;
+
+    /**
+     * 组件布局，子组件名用逗号分隔
+     * 可选值: sizes, prev, pager, next, jumper, ->, total, slot
+     *
+     * @return
+     */
+    String layout() default "";
 
     /**
      * 回车按键触发提交表单
@@ -110,33 +133,6 @@ public @interface AVuePage {
      */
     String size() default "small";
 
-    /**
-     * 重值不清空的字段
-     *
-     * @return
-     */
-    String[] clearExclude() default {};
-
-    /**
-     * 提交按钮显隐
-     *
-     * @return
-     */
-    boolean submitBtn() default true;
-
-    /**
-     * 提交按钮文案
-     *
-     * @return
-     */
-    String submitText() default "提交";
-
-    /**
-     * 清空按钮显隐
-     *
-     * @return
-     */
-    boolean emptyBtn() default true;
 
     /**
      * 数据为空文案

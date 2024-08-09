@@ -1,9 +1,9 @@
 package com.liukx.spring.client.model;
 
 import com.liukx.spring.client.annotation.AVueConfig;
+import com.liukx.spring.client.annotation.AVueCrudOption;
 import com.liukx.spring.client.annotation.AVueRouteKey;
 import com.liukx.spring.client.annotation.AVueRule;
-import com.liukx.spring.client.annotation.AVueTableOption;
 import com.liukx.spring.client.annotation.column.AVueInput;
 import com.liukx.spring.client.annotation.column.AVueNumber;
 import com.liukx.spring.client.annotation.column.AVueSelect;
@@ -16,9 +16,10 @@ import com.liukx.spring.client.controller.AVueConfigControllerTest;
  * @author liukaixiong
  * @Email liukx@elab-plus.com
  * @date 2021/8/17 - 13:02
-// */
-@AVueRouteKey(groupKey = "test-config")
-@AVueTableOption(title = "这是一个测试")
+ * //
+ */
+@AVueRouteKey(groupKey = "test-config", title = "简单的模版路由", description = "这是一个比较简单的测试，主要是用来展示简单的增删改查需要用的一些简单的参数")
+@AVueCrudOption(title = "这是一个测试")
 @AVueConfig(list = AVueConfigControllerTest.LIST_URL, update = AVueConfigControllerTest.UPDATE_URL, save = AVueConfigControllerTest.UPDATE_URL, successKeyword = "true", successField = "success", messageField = "message")
 public class AVueSimpleModel {
 
@@ -26,7 +27,7 @@ public class AVueSimpleModel {
     private String id;
 
     @AVueInput(prop = "configGroup", label = "组名称", search = true, row = true, rules = {
-        @AVueRule(required = true, message = "组名称要填咧"), @AVueRule(min = 5, max = 10, message = "我跟你讲最小5个,最大10个.")})
+            @AVueRule(required = true, message = "组名称要填咧"), @AVueRule(min = 5, max = 10, message = "我跟你讲最小5个,最大10个.")})
     private String configGroup;
 
     @AVueInput(prop = "configName", label = "配置名称", search = true, required = true, row = true)

@@ -2,11 +2,10 @@
   <span v-if="componentType === 'avue-card'">
     <avue-card :option="option"
                :data="data"
-               @row-click="tip"
-               @row-add="tip">
+               @row-click="cardJumpLink"
+    >
       <template #menu="scope">
-        <span @click.stop="tip(scope.row,scope.index)">操作1</span>
-        <span @click.stop="tip(scope.row,scope.index)">操作2</span>
+        <span @click.stop="cardJumpLink(scope.row,scope.index)">{{ option.btnName || '点击跳转' }}</span>
       </template>
     </avue-card>
   </span>
@@ -22,8 +21,8 @@
   </span>
 
 
-  <span v-if="componentType === 'avue-tree'">
-    <template>
+  <span v-if="componentType === 'avue-mind'">
+<template>
   <div class="mindMapDemo">
     <div id="mindMapContainer"></div>
     <div class="toolbar">
@@ -39,10 +38,10 @@ import _remote from "@/api/crud/remoteApi.js";
 
 export default {
   mounted() {
-    let query = this.$route.query;
-    let domain = "http://localhost:8765";
     let self = this;
-    let configUrl = "/avue/crud";
+    let query = this.$route.query;
+    let domain = import.meta.env.VITE_API_URL;
+    let configUrl = import.meta.env.VITE_APP_AVUE_API_PATH;
     let params = {
       "group": query.group,
     }
@@ -50,8 +49,8 @@ export default {
       self.option = configObject.option;
       self.data = configObject.data;
       self.componentType = configObject.componentType;
-      debugger;
     });
+
   },
   data() {
     return {
@@ -61,10 +60,17 @@ export default {
     }
   },
   methods: {
-    tip(row, index) {
+    /**
+     * 卡片点击事件
+     * @param row
+     * @param index
+     */
+    cardJumpLink(row, index) {
       this.$message.success('查看控制台')
       console.log(row, index)
-    }
+      let path = row.path;
+      window.open(path);
+    },
   }
 }
 </script>

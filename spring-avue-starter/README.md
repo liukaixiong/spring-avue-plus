@@ -1,39 +1,184 @@
+## 项目背景
 
-# 测试相关介绍
+​
+作为一个后端小伙伴，最大的痛点就是写完的接口需要拥有一些可视化的页面去承载这些功能使用【如果是给后端那么swagger也足够了，非后端有点呛】如果有专业前端去弄确实也快，但是小公司呀~~~
 
-## 单个实体进行测试
+​ 学呗~妈呀，现在的前端也挺卷，vue3啊element-ui呀typescript啊vite啊【我其实只想要一个简单的页面维护数据】
+
+​ 了解到[AVue](https://avuejs.com/)之后，觉得挺不错，降低不少门槛。内置的组件还挺多，嗯，不错。如果能把这种能力赋能给后端就更好了。
+
+优势:
+
+- 不用过多关注前端【不用前端环境，集成SpringBoot的项目即可使用】
+- CRUD可以直接基于模版完成【完全基于注解来定义模版，用过Spring的都懂】
+- 集成简单、使用方便
+- 很多复杂的数据提取步骤统统标准化起来，各种拓展，轻松玩转。【5分钟即可完成增删改查，试试呗~】
+
+## 如何使用?
+
+### 1、clone 项目
+
+### 2、编译项目
+
+### 3、客户端引入依赖
+
+```xml
+
+<dependency>
+    <groupId>com.liukx.spring</groupId>
+    <artifactId>spring-avue-starter</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+```
+
+### 4、启用注解
+
+`@EnableAVue(basePackages = {"你的模版存放包路径"})`
+
+开启avue的接口扫描能力
+
+### 5、定制模版
+
+案例整体参考测试用例... `com.liukx.spring.client.model`
+
+### 6、访问路径
+
+> 端口号请更换成你的项目端口号
+
+| 路径地址                                                        | 路径描述          |
+|-------------------------------------------------------------|---------------|
+| http://localhost:9403/avue/server-crud?group=你的模版groupKey   | 查看crud的列表页面   |
+| http://localhost:9403/avue/avue-component?group=avueUrlList | 所有avue的路由卡片列表 |
+
+以上步骤即可渲染出增删改查页面，内置丰富的组件能力。[详细参考AVue的crud](https://avuejs.com/crud/crud-doc.html)
+
+## 模版测试介绍
+
+### 单个实体进行测试
+
 `com.ruoyi.client.handler.AVueAnnotationHandlerTest` : 可针对单个实体进行测试得到JSON字符串.
 
-## 整体测试
+### 整体测试
+
 `com.ruoyi.client.RuoYiClientTestApplication` : 针对整个client配置进行测试
 
-### 相关的样例实体
+### 1、简单的模版
+
+`com.liukx.spring.client.model.AVueSimpleModel`
+
+```java
+
+@AVueRouteKey(groupKey = "test-config")
+@AVueCrudOption(title = "这是一个测试")
+// 增删改查的接口定义
+@AVueConfig(list = AVueConfigControllerTest.LIST_URL, update = AVueConfigControllerTest.UPDATE_URL, save =
+// 返回结果定义
+        AVueConfigControllerTest.UPDATE_URL, successKeyword = "true", successField = "success", messageField = "message")
+public class AVueSimpleModel {
+
+    @AVueInput(prop = "id", label = "主键", addDisplay = false, row = true, editDisabled = true, search = true)
+    private String id;
+
+    @AVueInput(prop = "configGroup", label = "组名称", search = true, row = true, rules = {
+            @AVueRule(required = true, message = "组名称要填咧"), @AVueRule(min = 5, max = 10, message = "我跟你讲最小5个,最大10个.")})
+    private String configGroup;
+
+    @AVueInput(prop = "configName", label = "配置名称", search = true, required = true, row = true)
+    private String configName;
+
+    @AVueSelect(prop = "configCode", label = "配置值", dicData = "StatusEnums", search = true, required = true, row = true)
+    private String configCode;
+
+    @AVueNumber(prop = "validDay", label = "有效天数", search = true, required = true, row = true)
+    private Integer validDay;
+
+    @AVueSwitch(prop = "status", label = "状态", dicData = "StatusEnums", row = true)
+    private int status;
+
+}
+```
+
+#### **对应的展示效果**
+
+![image-20240809171518462](../doc/img/image-20240809171518462.png)
+
+![image-20240809171609589](../doc/img/image-20240809171609589.png)
+
+### 2、复杂的模版
 
 test目录下 : `com.ruoyi.client.model.AVueCrudModel`
 
 ```java
+// 模版对应的编号
 @AVueRouteKey(groupKey = "test-route")
-@AVueTableOption(title = "这是一个测试", dialogDrag = true)
-@AVueConfig(list = AVueControllerTest.LIST_URL, update = AVueControllerTest.UPDATE_URL, save = AVueControllerTest.UPDATE_URL)
+// 表格的标题
+@AVueCrudOption(title = "这是一个复杂的模版", dialogDrag = true)
+// 构建自己的页面自定义数据结构
+//@AVuePage(pageData = "data", pageNumber = "pageNo", pageSize = "pSize", pageTotal = "pageTotal")
+// 适配后台服务的对应的处理接口
+@AVueConfig(list = AVueControllerTest.LIST_URL, update = AVueControllerTest.UPDATE_URL, save = AVueControllerTest.UPDATE_URL, successKeyword = "true", successField = "success", messageField = "message")
+// 设置后台接口调用之后成功或者失败的结构模型
+@AVueEventButtons(
+        // 每一行的按钮及事件定义
+        tableRowButtons = {
+                // 指定方法名称，还有按钮名称
+                @AVueClickButton(methodName = "testA", btnName = "测试按钮A"),
+                @AVueClickButton(methodName = "testB", btnName = "测试按钮B"),
+                // 指定方法名称按钮事件名称
+                @AVueClickButton(methodName = "confirmClickRemoteApi", btnName = "确认按钮", attrExt = {
+                        @AVueAttr(name = "title", value = "小伙子，你确定吗？有惊喜喔!"),
+                        @AVueAttr(name = "url", value = AVueControllerTest.BODY_URL)}),
+                // 指定事件
+                @AVueClickButton(type = "success", btnName = "弹层按钮测试", methodName = "openWindowJsonRemote", attrExt = {
+                        // 当前弹层的提交路径
+                        @AVueAttr(name = "submitUrl", value = AVueControllerTest.BODY_URL),
+                        // 找下一个模版
+                        @AVueAttr(name = "group", value = "test-config")})
+        },
+        // 左上角按钮事件
+        tableTopLeftButtons = {
+                @AVueClickButton(methodName = "hrefClick", btnName = "跳转链接", type = "success", icon = "el-icon-setting", attrExt = {
+                        @AVueAttr(name = "url", value = "https://www.baidu.com")})
+        }
+)
 public class AVueCrudModel {
 
+    /**
+     * 注解介绍
+     *
+     * @AVueInput: 组件类型以@AVue开始，后面是具体的组件。
+     * - input  ： 代表文本框
+     * - select ： 代表选择框
+     * - number ： 代表数字框
+     * - json   ： 代表json组件
+     * <p>
+     * 属性介绍：
+     * addDisplay       ： 表示新增的时候是否展示
+     * editDisabled     ： 表示修改的时候是否不可编辑
+     * search           ： 代表列表页是否为搜索条件
+     * searchRequired   ： 代表搜索条件是否为必填
+     * dicData          ： 代表枚举字典
+     * dicUrl           ： 代表后台拉取对象
+     * 具体属性释义可参考 :  <a href="https://avuejs.com/views/doc.html">...</a>
+     * 注解文档参考 : <a href="https://gitee.com/liukaixiong/RuoYi-AVue-Plus/blob/master/doc/annotation.md">...</a>
+     */
     @AVueInput(prop = "id", label = "主键", addDisplay = false, editDisabled = true, search = true)
     private String id;
 
-    @AVueInput(prop = "username", label = "用户名称", search = true)
+    @AVueInput(prop = "username", label = "用户名称", search = true, searchRequired = true, onClick = "testB")
     private String username;
 
     @AVueSelect(prop = "checkStatus", label = "认证状态", dicData = "CheckStatusEnums", search = true)
-    private String checkStatus;
+    private String checkStatus = CheckStatusEnums.FOOTBALL.getCode().toString();
 
-    @AVueSelect(prop = "likeStar", label = "喜欢明星", dicData = "test-likeStar-map")
+    @AVueSelect(prop = "likeStar", label = "喜欢明星", dicData = "test-likeStar-map", dicUrl = "/liukx")
     private Integer likeStar;
 
     @AVueNumber(prop = "age", label = "年龄", labelTip = "这是选择年龄的地方")
-    private Integer age;
+    private Integer age = 18;
 
     @AVueRadio(prop = "sex", label = "性别", border = true, dicData = "SexEnums")
-    private int sex;
+    private int sex = (int) SexEnums.UNKNOWN.getCode();
 
     @AVueDatetime(prop = "validDate", label = "有效时间")
     private Date validDate;
@@ -42,7 +187,7 @@ public class AVueCrudModel {
     private Date time;
 
     @AVueTimeRange(prop = "timeRange", label = "时分秒范围", rangeSeparator = "-")
-    private String timeRange;
+    private List<String> timeRange;
 
     @AVueDateRange(prop = "dateRange", rangeSeparator = "-", label = "日期范围", search = true, valueFormat = "yyyy-MM-dd", format = "yyyy-MM-dd")
     private List<Date> dateRange;
@@ -53,9 +198,33 @@ public class AVueCrudModel {
     @AVueSwitch(prop = "status", label = "状态", dicData = "StatusEnums")
     private int status;
 
-    @AVueDynamic(prop = "simpleModel", label = "子表单测试")
-    private AVueSimpleModel simpleModel;
+    /**
+     * 单图上传
+     */
+    @AVueUpload(prop = "image", label = "单图上传", listType = "picture-img", action = "/upload", propsHttp = @AVueUploadPropsHttp(res = "single", name = "fileName"))
+    private String image;
 
+    /**
+     * 多图上传
+     */
+    @AVueUpload(prop = "imageList", dataType = "array", listType = "picture-card", label = "单图上传", action = "/upload", propsHttp = @AVueUploadPropsHttp(res = "single", name = "fileName"))
+    private List<String> imageList;
+
+    /**
+     * json组件
+     */
+    @AVueJson(prop = "dataJson", label = "拓展字段")
+    private String dataJson;
+
+    /**
+     * 支持模版嵌套
+     */
+    @AVueDynamic(prop = "simpleModel", label = "子表单测试")
+    private AVueNodeModel simpleModel;
+
+    /**
+     * 支持分组类型
+     */
     @AVueGroup(prop = "groupModel", label = "分组测试1")
     private AVueNodeModel groupModel;
 
@@ -63,31 +232,35 @@ public class AVueCrudModel {
     private AVueNodeModel groupModel2;
 
 }
+
 ```
 
-## 演示注意事项
+#### 展示效果
 
-### 1. 注册地址
+![image-20240809171638603](../doc/img/image-20240809171638603.png)
 
-测试用例中的端口为`8765` ， 请确认前端菜单栏中
+![image-20240809171707615](../doc/img/image-20240809171707615.png)
 
--> [系统管理-服务注册] -> 是否注册有测试服务的地址
+点击弹层按钮测试
 
-### 2. 注册菜单
+![image-20240809171727211](../doc/img/image-20240809171727211.png)
 
-1. 确认是否有菜单栏出现，比如案例脚本中会涵盖`测试案例`的模块。如果没有请到项目根目录下找到`sql`目录下的server.sql的脚本内有菜单栏的SQL执行.
-2. 查看菜单栏中的路由地址: `service?server=1&&group=test-route` 
+更多测试案例:`com.liukx.spring.client.model`
 
-### 3. 授权字样
+### 3. 配置项
 
 `RuoYi-AVue-Plus\ruoyi-avue-client\src\test\resources\application.yml` 
 
 ```yaml
 spring:
   avue:
-    debug: true
-    accept-token: abc12345
+    debug: true  # 开发环境开启调试模式，IDEA->Build -> 模版类即可立即生效
 ```
 
-请查看注册服务节点是否`accept-token`值一致。
+## 更多文档
+
+- 本地调试文档
+- 开发文档
+
+
 

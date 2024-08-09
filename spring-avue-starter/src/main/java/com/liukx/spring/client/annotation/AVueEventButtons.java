@@ -16,22 +16,16 @@ public @interface AVueEventButtons {
 
     /**
      * 基于行的按钮点击事件
-     *
-     * @return
      */
     AVueClickButton[] tableRowButtons() default {};
 
     /**
      * 基于表格左上方的按钮点击事件
-     *
-     * @return
      */
     AVueClickButton[] tableTopLeftButtons() default {};
 
     /**
      * 基于表格右上方的按钮点击事件
-     *
-     * @return
      */
     AVueClickButton[] tableTopRightButtons() default {};
 

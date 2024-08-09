@@ -18,4 +18,26 @@ public class AVueConstants {
 
     public static final String SEARCH_REQUIRED = "searchRequired";
 
+
+    public static class Path {
+        /**
+         * crud的接口路径
+         */
+        public static final String DEFAULT_URL = "/avue/crud";
+
+        /**
+         * 组件的接口路径
+         */
+        public static final String COMPONENT_URL = "/avue/component";
+        /**
+         * 客户端的CRUD页面入口访问路径
+         */
+        public static final String INDEX_CRUD_URL = "/avue/server-crud";
+
+        /**
+         * 客户端的通用组件入口访问路径
+         */
+        public static final String INDEX_COMPONENT_URL = "/avue/avue-component";
+    }
+
 }

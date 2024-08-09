@@ -6,6 +6,8 @@ import com.liukx.spring.client.annotation.column.AVueJson;
 import com.liukx.spring.client.annotation.column.AVueTable;
 import com.liukx.spring.client.config.props.AVueProperties;
 import com.liukx.spring.client.handler.impl.*;
+import com.liukx.spring.client.handler.impl.json.AVueAllUrlListConvert;
+import com.liukx.spring.client.handler.impl.json.DataPropsConvertProcessor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

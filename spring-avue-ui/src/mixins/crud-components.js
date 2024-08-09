@@ -49,9 +49,8 @@ let components = {
             done();
         },
         jsonFormat(self, name) {
-            debugger;
             let jsonObject = utils.getPrefixNameRefsList(self, 'editor-', name);
-            if (jsonObject) {
+            if (jsonObject && jsonObject.length > 0) {
                 let value = jsonObject[0].editor.getText();
                 if (value && !utils.isJson(value)) {
                     this.$message.error("非标准的JSON,请检查!");

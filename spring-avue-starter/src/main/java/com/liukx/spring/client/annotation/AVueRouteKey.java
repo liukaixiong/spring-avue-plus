@@ -13,6 +13,24 @@ import java.lang.annotation.*;
 @Documented
 public @interface AVueRouteKey {
 
+    /**
+     * 路由标记
+     */
     String groupKey();
+
+    /**
+     * 路由标题
+     */
+    String title();
+
+    /**
+     * 功能详情描述
+     */
+    String description() default "";
+
+    /**
+     * 仅仅只是为了card图片
+     */
+    String img() default "https://avuejs.com/images/logo.png";
 
 }

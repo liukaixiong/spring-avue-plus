@@ -14,50 +14,36 @@ import java.lang.annotation.*;
 public @interface AVueConfig {
     /**
      * 列表的服务路径
-     *
-     * @return
      */
     String list();
 
     /**
      * 保存的服务请求路径
-     *
-     * @return
      */
     String save() default "";
 
     /**
      * 修改的服务路径
-     *
-     * @return
      */
     String update() default "";
 
     /**
      * 删除的服务路径
-     *
-     * @return
      */
     String del() default "";
 
     /**
      * 接口的消息字段
-     *
-     * @return
      */
     String messageField() default "";
 
     /**
      * 接口的标识成功的字段名称
-     *
-     * @return
      */
     String successField() default "";
 
     /**
      * 接口的成功关键字
-     *
-     * @return
      */
     String successKeyword() default "";
 

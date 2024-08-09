@@ -35,12 +35,12 @@ public class DefaultAnnotationHandler implements AVueHandler {
     @Override
     public boolean preHandler(AVueAttrLevel level, Annotation element) {
         return element.annotationType().getPackage().getName().startsWith(defaultPackagePrefix) && !excludeAnnotationSet
-            .contains(element.annotationType());
+                .contains(element.annotationType());
     }
 
     @Override
     public void handler(AVueAttrLevel level, AnnotatedElement element, Annotation annotation,
-        Map<String, Object> levelMap) {
+                        Map<String, Object> levelMap) {
         // doSomething
     }
 
@@ -66,18 +66,26 @@ public class DefaultAnnotationHandler implements AVueHandler {
                     if (!V.equals(defaultValue) || K.equals("type")) {
                         Class<?> fieldClazz = V.getClass();
                         if (fieldClazz.isArray() && !fieldClazz.getName().startsWith("[Ljava.lang")) {
-                            Object[] arrayAnnotation = (Object[])V;
-                            if (arrayAnnotation.length > 0) {
-                                List<Map<String, Object>> ruleList = new ArrayList<>();
-                                for (Object annotationObject : arrayAnnotation) {
-                                    ruleList.add(getAnnotationValueMap(null, (Annotation)annotationObject));
+
+                            if (V instanceof int[]) {
+                                int[] arrayAnnotation = (int[]) V;
+                                if (arrayAnnotation.length > 0) {
+                                    updateValueMap.put(K, arrayAnnotation);
                                 }
-                                updateValueMap.put(K, ruleList);
+                            } else {
+                                Object[] arrayAnnotation = (Object[]) V;
+                                if (arrayAnnotation.length > 0) {
+                                    List<Map<String, Object>> ruleList = new ArrayList<>();
+                                    for (Object annotationObject : arrayAnnotation) {
+                                        ruleList.add(getAnnotationValueMap(null, (Annotation) annotationObject));
+                                    }
+                                    updateValueMap.put(K, ruleList);
+                                }
                             }
                         }
                         // 如果是值是注解内容，那么递归再获取一遍
                         else if (V instanceof Annotation) {
-                            updateValueMap.put(K, getAnnotationValueMap(null, (Annotation)V));
+                            updateValueMap.put(K, getAnnotationValueMap(null, (Annotation) V));
                         } else {
                             updateValueMap.put(K, V);
                         }
@@ -92,9 +100,9 @@ public class DefaultAnnotationHandler implements AVueHandler {
     protected String getKey(AnnotatedElement element, Annotation annotation) {
         String elementSimpleName = null;
         if (element instanceof Class) {
-            elementSimpleName = ((Class)element).getSimpleName();
+            elementSimpleName = ((Class) element).getSimpleName();
         } else if (element instanceof Field) {
-            Field field = (Field)element;
+            Field field = (Field) element;
             elementSimpleName = field.getDeclaringClass().getSimpleName() + "-" + field.getName();
         }
         String annotationSimpleName = annotation.annotationType().getSimpleName();

@@ -26,9 +26,8 @@ import java.util.Set;
  * @date 2021/8/18 - 17:13
  */
 public class AVueBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
-    private ClassPathScanningCandidateComponentProvider provider =
+    private final ClassPathScanningCandidateComponentProvider provider =
             new ClassPathScanningCandidateComponentProvider(false);
-
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
@@ -75,7 +74,7 @@ public class AVueBeanDefinitionRegistrar implements ImportBeanDefinitionRegistra
             });
         }
 
-        final String resourceList[] = (String[]) annotationAttributes.get("jsonResourceDir");
+        final String[] resourceList = (String[]) annotationAttributes.get("jsonResourceDir");
         JsonAVueCacheHelper.getINSTANCE().registerJsonPaths(resourceList == null ? new String[0] : resourceList);
     }
 

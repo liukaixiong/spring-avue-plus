@@ -1,10 +1,8 @@
 package com.liukx.spring.client.handler.impl;
 
-import com.liukx.spring.client.handler.impl.DefaultAnnotationHandler;
 import com.liukx.spring.client.annotation.AVueConfig;
-import com.liukx.spring.client.annotation.AVueFromOption;
 import com.liukx.spring.client.annotation.AVuePage;
-import com.liukx.spring.client.annotation.AVueTableOption;
+import com.liukx.spring.client.annotation.AVueCrudOption;
 import com.liukx.spring.client.enums.AVueAttrLevel;
 import com.liukx.spring.client.helper.AttrPostProcessHelper;
 import com.liukx.spring.client.helper.HandlerHelper;
@@ -29,8 +27,7 @@ public class DefaultAnnotationHandlerTest {
     public void init() {
         annotationMap.put(AVueConfig.class, AVueAttrLevel.CONFIG);
         annotationMap.put(AVuePage.class, AVueAttrLevel.PAGE);
-        annotationMap.put(AVueFromOption.class, AVueAttrLevel.OPTION);
-        annotationMap.put(AVueTableOption.class, AVueAttrLevel.OPTION);
+        annotationMap.put(AVueCrudOption.class, AVueAttrLevel.OPTION);
     }
 
     @Test

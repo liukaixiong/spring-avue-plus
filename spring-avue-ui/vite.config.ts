@@ -2,7 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import vueDevTools from 'vite-plugin-vue-devtools'
+// import vueDevTools from 'vite-plugin-vue-devtools'
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
 
 
@@ -11,7 +11,7 @@ export default defineConfig({
   base: '/avue',
   plugins: [
     vue(),
-    vueDevTools(),
+      // vueDevTools(),
     viteCommonjs()
   ],
   resolve: {

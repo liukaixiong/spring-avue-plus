@@ -3,6 +3,8 @@ package com.liukx.spring.client.helper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,19 +15,23 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class RouteKeyHelper {
 
-    private Map<String, Class> classMap = new ConcurrentHashMap<>();
-    private static Logger logger = LoggerFactory.getLogger(RouteKeyHelper.class);
-    private static RouteKeyHelper INSTANCE = new RouteKeyHelper();
+    private final Map<String, Class<?>> classMap = new ConcurrentHashMap<>();
+    private static final Logger logger = LoggerFactory.getLogger(RouteKeyHelper.class);
+    private static final RouteKeyHelper INSTANCE = new RouteKeyHelper();
 
     public static RouteKeyHelper getInstance() {
         return INSTANCE;
     }
 
-    public void register(String key, Class clazz) {
-        Class oldValue = classMap.put(key, clazz);
+    public void register(String key, Class<?> clazz) {
+        Class<?> oldValue = classMap.put(key, clazz);
         if (oldValue != null) {
             logger.warn("route key 存在重复 : " + key + " , " + clazz.getName() + "\t " + oldValue.getName());
         }
+    }
+
+    public List<Class<?>> getAllRouteClass() {
+        return new ArrayList<>(classMap.values());
     }
 
     public Class get(String key) {

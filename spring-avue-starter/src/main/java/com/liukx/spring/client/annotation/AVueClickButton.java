@@ -15,51 +15,41 @@ import java.lang.annotation.*;
 public @interface AVueClickButton {
 
     /**
-     * 类型 参考 element-ui -> https://element.eleme.cn/#/zh-CN/component/button
-     *
-     * @return
+     * 类型 参考 element-ui -> <a href="https://element-plus.org/zh-CN/component/button.html#button-attributes">点击查看</a>
+     * 可选项 : 'primary'| 'success'| 'warning'| 'danger'| 'info'| 'text'(delete)
      */
     String type() default "";
 
     /**
-     * 标题
-     *
-     * @return
+     * 图标 : <a href="https://element-plus.org/zh-CN/component/icon.html">点击参考</a>
      */
     String icon() default "";
 
     /**
-     * 按钮大小
-     *
-     * @return
+     * 按钮大小: 'large'| 'default'| 'small'
      */
     String size() default "";
 
     /**
      * 事件方法
-     *
-     * @return
      */
     String methodName();
 
     /**
      * 按钮名称
      *
-     * @return
      */
     String btnName();
 
     /**
      * 该方法触发的字段名称
      *
-     * @return
      */
     String[] fieldNames() default {};
 
     /**
      * 自定义字段名称,该注解跟随触发事件的方法进行指定
      *
-     * @return
      */
     AVueAttr[] attrExt() default {};
 

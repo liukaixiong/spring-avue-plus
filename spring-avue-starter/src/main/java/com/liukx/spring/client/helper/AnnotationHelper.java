@@ -1,10 +1,8 @@
 package com.liukx.spring.client.helper;
 
-import com.liukx.spring.client.annotation.AVueFromOption;
 import org.springframework.core.annotation.AnnotationUtils;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -57,7 +55,5 @@ public class AnnotationHelper {
             .computeIfAbsent(annotatedElement, k -> AnnotationUtils.getAnnotationAttributes(annotatedElement));
     }
 
-    public static void main(String[] args) {
-        Method[] methods = AVueFromOption.class.getMethods();
-    }
+
 }

@@ -49,8 +49,10 @@ let utils = {
         let refs = self.$refs;
         let list = [];
         Object.entries(refs).forEach(([key, value]) => {
-            if (key.startsWith(prefix) && value.$attrs['name'] === name) {
-                list.push(value);
+            if (value) {
+                if (key.startsWith(prefix) && value.$attrs['name'] === name) {
+                    list.push(value);
+                }
             }
         });
         return list;

@@ -31,7 +31,6 @@ public class AVueAnnotationHandler implements InitializingBean {
     private Map<Class<? extends Annotation>, AVueAttrLevel> annotationMap = new HashMap<>();
 
     public Map<String, Map<String, Object>> parse(Class clazz) {
-
         // 获取类的
         Annotation[] declaredAnnotations = clazz.getDeclaredAnnotations();
 
@@ -43,14 +42,14 @@ public class AVueAnnotationHandler implements InitializingBean {
             Annotation declaredAnnotation = declaredAnnotations[i];
 
             AVueAttrLevel aVueAttrLevel =
-                annotationMap.getOrDefault(declaredAnnotation.annotationType(), AVueAttrLevel.CUSTOMIZE);
+                    annotationMap.getOrDefault(declaredAnnotation.annotationType(), AVueAttrLevel.CUSTOMIZE);
 
             String keyName = aVueAttrLevel.getKeyName();
 
             // 这里应该是个List
 
             Map<String, Object> handlerResult = handlerHelper.handler(aVueAttrLevel, clazz, declaredAnnotation);
-            if (handlerResult.size() > 0) {
+            if (!handlerResult.isEmpty()) {
 
                 attrPostProcessHelper.handler(aVueAttrLevel, clazz, handlerResult);
 
@@ -61,7 +60,7 @@ public class AVueAnnotationHandler implements InitializingBean {
         }
 
         Map<String, Object> option =
-            jsonData.computeIfAbsent(AVueAttrLevel.OPTION.getKeyName(), k -> new LinkedHashMap<>());
+                jsonData.computeIfAbsent(AVueAttrLevel.OPTION.getKeyName(), k -> new LinkedHashMap<>());
 
         // option级别
         Field[] declaredFields = clazz.getDeclaredFields();
@@ -81,12 +80,12 @@ public class AVueAnnotationHandler implements InitializingBean {
                     Annotation fieldAnnotation = declaredField.getDeclaredAnnotations()[j];
 
                     AVueAttrLevel level =
-                        annotationMap.getOrDefault(fieldAnnotation.annotationType(), AVueAttrLevel.OPTION_COLUMN);
+                            annotationMap.getOrDefault(fieldAnnotation.annotationType(), AVueAttrLevel.OPTION_COLUMN);
 
                     // 如果是非列的又是属于option层级下面的数据
                     if (level == AVueAttrLevel.OPTION_COLUMN) {
                         Map<String, Object> handlerResult =
-                            handlerHelper.handler(level, declaredField, fieldAnnotation);
+                                handlerHelper.handler(level, declaredField, fieldAnnotation);
                         fieldMap.putAll(handlerResult);
                     }
 
@@ -112,8 +111,7 @@ public class AVueAnnotationHandler implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         annotationMap.put(AVueConfig.class, AVueAttrLevel.CONFIG);
         annotationMap.put(AVuePage.class, AVueAttrLevel.PAGE);
-        annotationMap.put(AVueFromOption.class, AVueAttrLevel.OPTION);
-        annotationMap.put(AVueTableOption.class, AVueAttrLevel.OPTION);
+        annotationMap.put(AVueCrudOption.class, AVueAttrLevel.OPTION);
         annotationMap.put(AVueEventButtons.class, AVueAttrLevel.OPTION);
         annotationMap.put(AVueGroup.class, AVueAttrLevel.OPTION_GROUP);
     }

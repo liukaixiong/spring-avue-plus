@@ -18,9 +18,11 @@ import java.util.List;
  * @date 2021/8/17 - 13:02
  */
 // 模版对应的编号
-@AVueRouteKey(groupKey = "test-route")
+@AVueRouteKey(groupKey = "test-route", title = "复杂模版路由", description = "这个是用来处理一些比较复杂的模版，里面涵盖了crud，按钮，以及后端的接口路径的定义，包括分页的参数设置等等一系列的demo操作", img = "https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png")
 // 表格的标题
-@AVueTableOption(title = "这是一个复杂的模版", dialogDrag = true)
+@AVueCrudOption(title = "这是一个复杂的模版", dialogDrag = true)
+// 构建自己的页面自定义数据结构
+//@AVuePage(pageData = "data", pageNumber = "pageNo", pageSize = "pSize", pageTotal = "pageTotal")
 // 适配后台服务的对应的处理接口
 @AVueConfig(list = AVueControllerTest.LIST_URL, update = AVueControllerTest.UPDATE_URL, save = AVueControllerTest.UPDATE_URL, successKeyword = "true", successField = "success", messageField = "message")
 // 设置后台接口调用之后成功或者失败的结构模型
