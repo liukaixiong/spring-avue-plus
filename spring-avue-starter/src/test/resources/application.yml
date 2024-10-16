@@ -15,6 +15,9 @@ spring:
   avue:
     debug: true
     accept-token: abc12345
+    username: admin
+    password: 1234
+    enable-login: false
   main:
     allow-circular-references: true
   web:

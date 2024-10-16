@@ -1,5 +1,7 @@
 package com.liukx.spring.client.annotation;
 
+import com.liukx.spring.client.enums.AVueJsFunctionEnum;
+
 import java.lang.annotation.*;
 
 /**
@@ -32,24 +34,23 @@ public @interface AVueClickButton {
 
     /**
      * 事件方法
+     * 可用方法参考{@link AVueJsFunctionEnum}
      */
-    String methodName();
+    AVueJsFunctionEnum methodName();
 
     /**
      * 按钮名称
-     *
      */
     String btnName();
 
     /**
      * 该方法触发的字段名称
-     *
      */
     String[] fieldNames() default {};
 
     /**
      * 自定义字段名称,该注解跟随触发事件的方法进行指定
-     *
+     * 可用方法参考{@link AVueJsFunctionEnum} 中的argsDescription
      */
     AVueAttr[] attrExt() default {};
 

@@ -7,6 +7,7 @@ import java.lang.annotation.*;
 
 /**
  * 描述: input属性
+ * <a href="https://avuejs.com/form/form-checkbox.html">文档参考</a>
  *
  * @author liukx
  * @date 2021/8/16 18:51
@@ -23,8 +24,7 @@ public @interface AVueCheckbox {
     /**
      * 属性名称
      */
-    String prop();
-
+    String prop() default "";
     /**
      * 文本描述
      */

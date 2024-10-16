@@ -55,7 +55,7 @@ public class DefaultAnnotationHandler implements AVueHandler {
 
     private Map<String, Object> getAnnotationValueMap(AnnotatedElement element, Annotation annotation) {
         Map<String, Object> annotationValueMap = AnnotationUtils.getAnnotationAttributes(element, annotation);
-        // 直接显示默认值
+        // 直接显示默认值 有bug,前端会存在不兼容，还是不要显示默认值了，如果有需要自己在注解里面指定就好了
         if (prop.isShowDefaultValue()) {
             return annotationValueMap;
         } else {

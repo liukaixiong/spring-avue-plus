@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 
 /**
  * 描述: 单选框
- *
+ * <a href="https://avuejs.com/form/form-radio.html">查看用法</a>
  * @author liukx
  * @date 2021/8/16 18:51
  */
@@ -26,7 +26,7 @@ public @interface AVueRadio {
      *
      *
      */
-    String prop();
+    String prop() default "";
 
     /**
      * 文本描述

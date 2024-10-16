@@ -4,6 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * 自定义的事件按钮
+ * 详情实现方法参考: rowClickEvent.js
  *
  * @author liukaixiong
  * @Email liukx@elab-plus.com

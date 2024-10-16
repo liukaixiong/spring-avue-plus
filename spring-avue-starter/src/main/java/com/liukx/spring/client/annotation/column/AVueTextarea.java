@@ -7,6 +7,7 @@ import java.lang.annotation.*;
 
 /**
  * 描述: textarea属性
+ * <a href="https://avuejs.com/form/form-input.html#%E6%96%87%E6%9C%AC%E5%9F%9F">查看用法</a>
  *
  * @author liukx
  * @date 2021/8/16 18:51
@@ -23,7 +24,7 @@ public @interface AVueTextarea {
     /**
      * 属性名称
      */
-    String prop();
+    String prop() default "";
 
     /**
      * 文本描述

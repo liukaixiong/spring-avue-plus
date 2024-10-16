@@ -12,8 +12,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "spring.avue")
 public class AVueProperties {
     /**
-     * 是否显示默认值
+     * 是否显示默认值 有bug,前端存在不兼容,有一些特殊属性会引起冲突
      */
+    @Deprecated
     private boolean showDefaultValue = false;
 
     /**
@@ -25,6 +26,46 @@ public class AVueProperties {
      * 授权访问的token
      */
     private String acceptToken;
+
+    /**
+     * 是否启用登录
+     */
+    private boolean enableLogin;
+
+    /**
+     * 用户名
+     */
+    private String username;
+
+    /**
+     * 密码
+     */
+    private String password;
+
+
+    public boolean isEnableLogin() {
+        return enableLogin;
+    }
+
+    public void setEnableLogin(boolean enableLogin) {
+        this.enableLogin = enableLogin;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getAcceptToken() {
         return acceptToken;

@@ -7,6 +7,7 @@ import java.lang.annotation.*;
 
 /**
  * 描述: 开关属性
+ * <a href="https://avuejs.com/form/form-switch.html">查看用法</a>
  *
  * @author liukx
  * @date 2021/8/16 18:51
@@ -23,12 +24,14 @@ public @interface AVueSwitch {
     /**
      * 属性名称
      */
-    String prop();
+    String prop() default "";
 
     /**
      * 文本描述
      */
     String label();
+
+    boolean cell() default false;
 
     /**
      * 字段排序

@@ -1,11 +1,10 @@
 ## 项目背景
 
-​
-作为一个后端小伙伴，最大的痛点就是写完的接口需要拥有一些可视化的页面去承载这些功能使用【如果是给后端那么swagger也足够了，非后端有点呛】如果有专业前端去弄确实也快，但是小公司呀~~~
+作为一个后端小伙伴，最大的痛点就是写完的接口需要拥有一些可视化的页面去承载这些功能使用【如果是只给后端那么swagger也足够了，非后端有点呛】如果有专业前端去弄确实也快，但是小公司呀~~~
 
-​ 学呗~妈呀，现在的前端也挺卷，vue3啊element-ui呀typescript啊vite啊【我其实只想要一个简单的页面维护数据】
+学呗~妈呀，现在的前端也挺卷，vue3啊element-ui呀typescript啊vite啊【我其实只想要一个简单的页面维护数据】
 
-​ 了解到[AVue](https://avuejs.com/)之后，觉得挺不错，降低不少门槛。内置的组件还挺多，嗯，不错。如果能把这种能力赋能给后端就更好了。
+了解到[AVue](https://avuejs.com/)之后，觉得挺不错，降低不少门槛。内置的组件还挺多，嗯，不错。如果能把这种能力赋能给后端就更好了。
 
 优势:
 
@@ -33,7 +32,13 @@
 
 ### 4、启用注解
 
-`@EnableAVue(basePackages = {"你的模版存放包路径"})`
+```java
+@EnableAVue(basePackages = {"你的模版路径"})
+```
+
+- **模版类路径指定【必填】**
+- 枚举类路径指定【非必填】 : `enumsPackages` 、 `enumsPackagesClasses`
+- 静态资源指定【非必填】: `jsonResourceDir`
 
 开启avue的接口扫描能力
 
@@ -45,10 +50,11 @@
 
 > 端口号请更换成你的项目端口号
 
-| 路径地址                                                        | 路径描述          |
-|-------------------------------------------------------------|---------------|
-| http://localhost:9403/avue/server-crud?group=你的模版groupKey   | 查看crud的列表页面   |
-| http://localhost:9403/avue/avue-component?group=avueUrlList | 所有avue的路由卡片列表 |
+| 路径地址                                                        | 路径描述            |
+|-------------------------------------------------------------|-----------------|
+| http://localhost:9403/avue/server-crud?group=你的模版groupKey   | 查看crud的列表页面     |
+| http://localhost:9403/avue/avue-component?group=avueUrlList | 所有avue的路由模版卡片列表 |
+| http://localhost:9403/avue/list                             | 所有avue的路由模版卡片列表 |
 
 以上步骤即可渲染出增删改查页面，内置丰富的组件能力。[详细参考AVue的crud](https://avuejs.com/crud/crud-doc.html)
 
@@ -249,18 +255,27 @@ public class AVueCrudModel {
 
 ### 3. 配置项
 
-`RuoYi-AVue-Plus\ruoyi-avue-client\src\test\resources\application.yml` 
+`RuoYi-AVue-Plus\ruoyi-avue-client\src\test\resources\application.yml`
 
 ```yaml
 spring:
   avue:
-    debug: true  # 开发环境开启调试模式，IDEA->Build -> 模版类即可立即生效
+    debug: true  # 开发环境开启调试模式，IDEA->Build -> Rebuild 模版类即可立即生效
+    enable-login: true  # 是否开启登录模式
+    username: admin     # 登录帐号
+    password: 1234      # 登录的密码
 ```
+
+####  
 
 ## 更多文档
 
 - 本地调试文档
 - 开发文档
+    - [开发介绍](../doc/develop.md)
+    - [拓展点](../doc/ext.md)
+    - 静态资源配置介绍
+    - 如何编写一个新的组件【前后端】
 
 
 

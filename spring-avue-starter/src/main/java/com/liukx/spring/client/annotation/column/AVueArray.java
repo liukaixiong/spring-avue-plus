@@ -6,8 +6,8 @@ import com.liukx.spring.client.annotation.AVueRule;
 import java.lang.annotation.*;
 
 /**
- * 描述: input属性
- * <a href="https://avuejs.com/form/form-input.html">查看文档</a>
+ * 描述: array数组框
+ * <a href="https://avuejs.com/form/form-array.html">查看用法</a>
  *
  * @author liukx
  * @date 2021/8/16 18:51
@@ -15,11 +15,11 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface AVueInput {
+public @interface AVueArray {
     /**
      * 展现类型
      */
-    String type() default "input";
+    String type() default "array";
 
     /**
      * 属性名称
@@ -30,42 +30,6 @@ public @interface AVueInput {
      * 文本描述
      */
     String label();
-
-    /**
-     * 对应列的宽度
-     */
-    String width() default "";
-
-    /**
-     * 列是否固定在左侧或者右侧，true 表示固定在左侧 true/left/right
-     */
-    String fixed() default "";
-
-    /**
-     * 列的单元格自定义类名
-     */
-    String className() default "";
-
-    /**
-     * 列标题的自定义类名
-     */
-    String labelClassName() default "";
-
-    /**
-     * 对齐方式
-     */
-    String align() default "left";
-
-    /**
-     * 表头对齐方式，若不设置该项，则使用表格的对齐方式
-     */
-    String headerAlign() default "left";
-
-
-    /**
-     * 数据过滤的选项。
-     */
-    boolean filters() default false;
 
     /**
      * 字段排序
@@ -83,7 +47,7 @@ public @interface AVueInput {
     boolean clearable() default false;
 
     /**
-     * 弹出表单是否禁止
+     * 是否禁止编辑
      */
     boolean disabled() default false;
 
@@ -116,21 +80,20 @@ public @interface AVueInput {
     boolean readonly() default false;
 
     /**
-     * 弹出表单是否显示
+     * 是否可见
      */
     boolean display() default false;
-
-    /**
-     * 表格页面是否展示
-     */
-    boolean hide() default false;
-
     /* ********************************** 表单常用属性 ***************************************** */
 
     /**
      * 比例 12 代表一行的一半，24则铺满整行
      */
     int span() default 12;
+
+    /**
+     * 表格页面是否展示
+     */
+    boolean hide() default false;
 
     /**
      * 表单新增时是否禁止
@@ -155,7 +118,7 @@ public @interface AVueInput {
     /**
      * 表单编辑时是否可见
      */
-    boolean editDisplay() default true;
+    boolean editDisplay() default false;
 
     /**
      * 表单编辑时是否为查看模式
@@ -169,44 +132,20 @@ public @interface AVueInput {
 
     /* ********************************** ********** ******************************************/
 
-    /********************************** 事件属性 ***********************************/
-    String onClick() default "";
-
-    String onBlur() default "";
-
-    String onFocus() default "";
-
-    String onChange() default "";
+    /**
+     * 显示边框
+     */
+    boolean border() default false;
 
     /**
-     * 最小行/最小值
+     * 按钮组类型
      */
-    int minRows() default 2;
+    boolean button() default false;
 
     /**
-     * 最大行/最大值
+     * 本地枚举
      */
-    int maxRows() default 4;
-
-    /**
-     * 密码是否可见
-     */
-    boolean showPassword() default true;
-
-    /**
-     * 是否显示输入字数统计
-     */
-    boolean showWordLimit() default true;
-
-    /**
-     * 输入框头部图标
-     */
-    String prefixIcon() default "";
-
-    /**
-     * 输入框尾部图标
-     */
-    String suffixIcon() default "";
+    String dicData() default "";
 
     /**
      * 是否作为搜索字段
@@ -234,5 +173,4 @@ public @interface AVueInput {
      * 查询是否必填
      */
     boolean searchRequired() default false;
-
 }

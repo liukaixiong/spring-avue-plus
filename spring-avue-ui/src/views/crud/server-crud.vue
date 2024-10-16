@@ -5,6 +5,8 @@
                v-model="form"
                ref="crud"
                v-model:page="page"
+               @size-change="pageSizeChange"
+               @current-change="currentPageChange"
     >
       <template is="option.tableRowButtons && option.tableRowButtons.length > 0" #menu="{row,index}" slot="menu">
         <span v-for="item in option.tableRowButtons">
@@ -115,6 +117,9 @@ export default serverCrud({
             objectData: {},
             dialogOption: {}
           },
+          page: {
+            currentPage: 1
+          },
           option: {
             dialogDrag: true, // 这里会有一个延迟问题,如果通过接口返回的话,即便为true也不会生效
           }
@@ -133,7 +138,16 @@ export default serverCrud({
         //列表后操作方法
         listAfter() {
         },
-
+        // 当前页码发生变化
+        currentPageChange(val) {
+          this.page.currentPage = val;
+          this.getList();
+        },
+        // 当前页码发生变化
+        pageSizeChange(val) {
+          this.page.pageSize = val;
+          this.getList();
+        },
         //新增前操作方法
         addBefore(form, index, done, loading) {
           return this.componentsBefore(form, done, loading);

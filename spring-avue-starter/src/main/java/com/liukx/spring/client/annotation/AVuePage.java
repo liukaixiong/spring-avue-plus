@@ -4,6 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * 描述: 选项配置
+ * <a href="https://avuejs.com/crud/crud-page.html">分页参数</a>
  *
  * @author liukx
  * @date 2021/8/16 18:51

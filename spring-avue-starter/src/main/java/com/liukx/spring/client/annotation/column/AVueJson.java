@@ -6,7 +6,7 @@ import com.liukx.spring.client.annotation.AVueRule;
 import java.lang.annotation.*;
 
 /**
- * 描述: 级联选择器
+ * 描述: json插件,用的是json-editor-vue插件
  *
  * @author liukx
  * @date 2021/8/16 18:51
@@ -20,7 +20,7 @@ public @interface AVueJson {
      *
      * @return
      */
-    String prop();
+    String prop() default "";
 
     /**
      * 文本描述

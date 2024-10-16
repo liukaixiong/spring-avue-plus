@@ -5,6 +5,7 @@ import serverCrud from '@/views/crud/server-crud.vue'
 import jsonTest from '@/views/crud/component-demo/json-test.vue'
 import dialogTest from '@/views/crud/component-demo/dialog-test.vue'
 import avueComponent from '@/views/crud/avue-component.vue'
+import loginComponent from '@/views/login.vue'
 import jsonEdit from '@/views/crud/component-demo/json-editor-vue3.vue'
 
 const router = createRouter({
@@ -12,8 +13,13 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            name: 'server-crud-home',
-            component: serverCrud
+            name: 'loginIndex',
+            component: loginComponent
+        },
+        {
+            path: '/login.html',
+            name: 'login',
+            component: loginComponent
         }
         , {
             path: '/json-test',

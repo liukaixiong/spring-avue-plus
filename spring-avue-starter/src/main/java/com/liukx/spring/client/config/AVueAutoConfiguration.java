@@ -6,8 +6,10 @@ import com.liukx.spring.client.annotation.column.AVueJson;
 import com.liukx.spring.client.annotation.column.AVueTable;
 import com.liukx.spring.client.config.props.AVueProperties;
 import com.liukx.spring.client.handler.impl.*;
-import com.liukx.spring.client.handler.impl.json.AVueAllUrlListConvert;
-import com.liukx.spring.client.handler.impl.json.DataPropsConvertProcessor;
+import com.liukx.spring.client.service.IAVueLoginService;
+import com.liukx.spring.client.service.IAVueTokenService;
+import com.liukx.spring.client.service.impl.IAVueConfigLoginServiceImpl;
+import com.liukx.spring.client.service.impl.IAVueMd5TokenServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -64,6 +66,18 @@ public class AVueAutoConfiguration {
         newImportComponentsHandler.addRegisterComponent(AVueJson.class);
         newImportComponentsHandler.addRegisterComponent(AVueTable.class);
         return newImportComponentsHandler;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(value = IAVueLoginService.class)
+    public IAVueLoginService aVueConfigLoginServiceImpl() {
+        return new IAVueConfigLoginServiceImpl();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(value = IAVueTokenService.class)
+    public IAVueTokenService aVueMd5TokenServiceImpl() {
+        return new IAVueMd5TokenServiceImpl();
     }
 
 }

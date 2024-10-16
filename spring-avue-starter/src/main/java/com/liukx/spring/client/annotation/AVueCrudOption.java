@@ -34,6 +34,7 @@ public @interface AVueCrudOption {
      */
     boolean stripe() default false;
 
+    boolean cellBtn() default false;
     /**
      * 是否有序号
      * 可选值:-

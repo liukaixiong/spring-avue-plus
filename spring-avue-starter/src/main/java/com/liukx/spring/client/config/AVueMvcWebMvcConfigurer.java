@@ -1,5 +1,8 @@
 package com.liukx.spring.client.config;
 
+import com.liukx.spring.client.enums.AVueConstants;
+import com.liukx.spring.client.handler.LoginHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,9 +19,21 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 public class AVueMvcWebMvcConfigurer implements WebMvcConfigurer {
+
+    @Autowired
+    private LoginHandler loginHandler;
+
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/avue/**").addResourceLocations("classpath:/META-INF/avue/");
+        registry.addResourceHandler(AVueConstants.Path.INDEX_FULL_URL).addResourceLocations("classpath:/META-INF/avue/");
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginHandler).addPathPatterns(AVueConstants.Path.INDEX_FULL_URL)
+                .excludePathPatterns(AVueConstants.Path.LOGIN_HTML_PATH, AVueConstants.Path.DEFAULT_LOGIN_URL, AVueConstants.Path.INDEX_FORWARD_URL)
+                .excludePathPatterns("/avue/assets/**");
     }
 
     @Bean
@@ -32,9 +47,13 @@ public class AVueMvcWebMvcConfigurer implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         // 跨域问题
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedMethods("GET", "POST", "DELETE", "PUT")
+        registry.addMapping("/**") // 允许跨域的路径
+                .allowedOrigins("*") // 允许跨域请求的域名
+                .allowedMethods("GET", "POST", "PUT", "DELETE") // 允许的请求方法
+                .allowedHeaders("*") // 允许的请求头
+//                .allowCredentials(true) // 是否允许证书（cookies）
                 .maxAge(3600);
     }
+
+
 }

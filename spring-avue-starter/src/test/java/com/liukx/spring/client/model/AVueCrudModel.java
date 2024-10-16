@@ -4,6 +4,7 @@ import com.liukx.spring.client.annotation.*;
 import com.liukx.spring.client.annotation.column.*;
 import com.liukx.spring.client.annotation.column.props.AVueUploadPropsHttp;
 import com.liukx.spring.client.controller.AVueControllerTest;
+import com.liukx.spring.client.enums.AVueJsFunctionEnum;
 import com.liukx.spring.client.enums.CheckStatusEnums;
 import com.liukx.spring.client.enums.SexEnums;
 
@@ -19,7 +20,7 @@ import java.util.List;
  */
 // 模版对应的编号
 @AVueRouteKey(groupKey = "test-route", title = "复杂模版路由", description = "这个是用来处理一些比较复杂的模版，里面涵盖了crud，按钮，以及后端的接口路径的定义，包括分页的参数设置等等一系列的demo操作", img = "https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png")
-// 表格的标题
+// 表格的标题,整个CRUD的配置,和table渲染相关的
 @AVueCrudOption(title = "这是一个复杂的模版", dialogDrag = true)
 // 构建自己的页面自定义数据结构
 //@AVuePage(pageData = "data", pageNumber = "pageNo", pageSize = "pSize", pageTotal = "pageTotal")
@@ -29,15 +30,12 @@ import java.util.List;
 @AVueEventButtons(
         // 每一行的按钮及事件定义
         tableRowButtons = {
-                // 指定方法名称，还有按钮名称
-                @AVueClickButton(methodName = "testA", btnName = "测试按钮A"),
-                @AVueClickButton(methodName = "testB", btnName = "测试按钮B"),
                 // 指定方法名称按钮事件名称
-                @AVueClickButton(methodName = "confirmClickRemoteApi", btnName = "确认按钮", attrExt = {
+                @AVueClickButton(methodName = AVueJsFunctionEnum.confirmClickRemoteApi, btnName = "确认按钮", attrExt = {
                         @AVueAttr(name = "title", value = "小伙子，你确定吗？有惊喜喔!"),
                         @AVueAttr(name = "url", value = AVueControllerTest.BODY_URL)}),
                 // 指定事件
-                @AVueClickButton(type = "success", btnName = "弹层按钮测试", methodName = "openWindowJsonRemote", attrExt = {
+                @AVueClickButton(type = "success", btnName = "弹层按钮测试", methodName = AVueJsFunctionEnum.openWindowJsonRemote, attrExt = {
                         // 当前弹层的提交路径
                         @AVueAttr(name = "submitUrl", value = AVueControllerTest.BODY_URL),
                         // 找下一个模版
@@ -45,7 +43,7 @@ import java.util.List;
         },
         // 左上角按钮事件
         tableTopLeftButtons = {
-                @AVueClickButton(methodName = "hrefClick", btnName = "跳转链接", type = "success", icon = "el-icon-setting", attrExt = {
+                @AVueClickButton(methodName = AVueJsFunctionEnum.hrefClick, btnName = "跳转链接", type = "success", icon = "el-icon-setting", attrExt = {
                         @AVueAttr(name = "url", value = "https://www.baidu.com")})
         }
 )

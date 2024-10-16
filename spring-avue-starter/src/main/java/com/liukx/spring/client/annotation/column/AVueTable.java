@@ -7,6 +7,7 @@ import java.lang.annotation.*;
 
 /**
  * 描述: dynamic属性 子表单
+ * <a href="https://avuejs.com/form/form-input-table.html">查看用法</a>
  *
  * @author liukx
  * @date 2021/8/16 18:51
@@ -23,7 +24,7 @@ public @interface AVueTable {
     /**
      * 属性名称
      */
-    String prop();
+    String prop() default "";
 
     /**
      * 文本描述

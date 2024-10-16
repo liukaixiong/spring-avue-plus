@@ -2,6 +2,7 @@ package com.liukx.spring.client.config;
 
 import com.liukx.spring.client.annotation.AVueRouteKey;
 import com.liukx.spring.client.annotation.EnableAVue;
+import com.liukx.spring.client.enums.AVueDicStatusEnum;
 import com.liukx.spring.client.helper.DicEnumsHelper;
 import com.liukx.spring.client.helper.JsonAVueCacheHelper;
 import com.liukx.spring.client.helper.RouteKeyHelper;
@@ -53,6 +54,8 @@ public class AVueBeanDefinitionRegistrar implements ImportBeanDefinitionRegistra
         }
 
         Set<String> enumPackages = getEnumPackages(annotationAttributes);
+        // 加入默认的class
+        enumPackages.add(AVueDicStatusEnum.class.getPackageName());
 
         provider.resetFilters(true);
 

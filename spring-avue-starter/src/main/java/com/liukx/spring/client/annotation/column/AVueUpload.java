@@ -8,6 +8,7 @@ import java.lang.annotation.*;
 
 /**
  * 描述: 上传组件
+ * 参考:{@code @AVueUpload(prop = "image", label = "图片", listType = "picture-img", action = "http://localhost:9403/xxxx/uploadV3", accept = "String", dataType = "String", row = true, propsHttp = @AVueUploadPropsHttp(res = "data", url = "downloadUrl", name = "newFileName"))}
  *
  * @author liukx
  * @date 2021/8/16 18:51
@@ -90,7 +91,7 @@ public @interface AVueUpload {
     /**
      * 属性名称
      */
-    String prop();
+    String prop() default "";
 
     /**
      * 文本描述

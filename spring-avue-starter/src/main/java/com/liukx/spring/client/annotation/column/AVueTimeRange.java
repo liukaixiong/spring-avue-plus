@@ -7,6 +7,7 @@ import java.lang.annotation.*;
 
 /**
  * 描述: 级联选择器
+ * <a href="https://avuejs.com/form/form-time.html#%E6%97%B6%E9%97%B4%E8%8C%83%E5%9B%B4">查看用法</a>
  *
  * @author liukx
  * @date 2021/8/16 18:51
@@ -23,7 +24,7 @@ public @interface AVueTimeRange {
     /**
      * 属性名称
      */
-    String prop();
+    String prop() default "";
 
     /**
      * 文本描述

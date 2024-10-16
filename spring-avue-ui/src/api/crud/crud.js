@@ -34,6 +34,11 @@ export function update(_self, data) {
     return http(_self.config, _self.config.update, data);
 }
 
+export function login(url, data) {
+    console.log("----------------login---------------------")
+    return httpPost(url, data);
+}
+
 /**
  * 执行远程请求
  * @param config
@@ -44,6 +49,10 @@ export function update(_self, data) {
 function http(config, path, data) {
     let domain = config.domain;
     let url = domain + path;
+    return httpPost(url, data);
+}
+
+function httpPost(url, data) {
     return new Promise((resolve, reject) => {
         _remote.post(url, data, (res) => {
             resolve(res);

@@ -39,7 +39,6 @@ export function testB(self, item, row, index) {
  * @param index
  */
 export function hrefClick(self, item, row, index) {
-  debugger;
   let json = listToJson(item['attrExt']);
   if (json) {
     window.open(json.url);

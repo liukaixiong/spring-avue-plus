@@ -21,7 +21,7 @@ let components = {
             // json 组件
             let jsonObjectList = utils.getPrefixRefsList(self, 'editor-');
 
-            let check = false
+            let check = true;
             // 检测json是否符合,并重新设置值
             jsonObjectList.forEach(vars => {
                 let value = vars.editor.getText();
