@@ -29,6 +29,7 @@ public class AVueDocCase {
         String fileName =
                 "D:\\tmp\\avue.xlsx";
         ReadAsMapListener readAsMapListener = new ReadAsMapListener();
+
         EasyExcel.read(fileName).sheet(0).headRowNumber(1).registerReadListener(readAsMapListener).doRead();
         List<Map<String, Object>> dataList = readAsMapListener.getDataList();
 

@@ -21,7 +21,7 @@ import java.util.List;
 // 模版对应的编号
 @AVueRouteKey(groupKey = "test-route", title = "复杂模版路由", description = "这个是用来处理一些比较复杂的模版，里面涵盖了crud，按钮，以及后端的接口路径的定义，包括分页的参数设置等等一系列的demo操作", img = "https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png")
 // 表格的标题,整个CRUD的配置,和table渲染相关的
-@AVueCrudOption(title = "这是一个复杂的模版", dialogDrag = true)
+@AVueCrudOption(title = "这是一个复杂的模版", dialogDrag = true, border = true)
 // 构建自己的页面自定义数据结构
 //@AVuePage(pageData = "data", pageNumber = "pageNo", pageSize = "pSize", pageTotal = "pageTotal")
 // 适配后台服务的对应的处理接口
@@ -95,7 +95,7 @@ public class AVueCrudModel {
     @AVueTimeRange(prop = "timeRange", label = "时分秒范围", rangeSeparator = "-")
     private List<String> timeRange;
 
-    @AVueDateRange(prop = "dateRange", rangeSeparator = "-", label = "日期范围", search = true, valueFormat = "yyyy-MM-dd", format = "yyyy-MM-dd")
+    @AVueDateRange(prop = "dateRange", rangeSeparator = "-", label = "日期范围", searchRange = true, search = true)
     private List<Date> dateRange;
 
     @AVueCheckbox(prop = "interest", label = "兴趣爱好", dicData = "InterestEnums")

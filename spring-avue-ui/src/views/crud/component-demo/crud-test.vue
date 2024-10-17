@@ -69,8 +69,8 @@
 
       <!-- 表单层 特定属性 -->
       <template
-        slot-scope="{ column,value,size,disabled,type}" v-for="item in option.registerFieldComponents"
-        :slot="getSlotName(item)">
+          slot-scope="{ column,value,size,disabled,type}" v-for="item in option.registerFieldComponents"
+          :slot="getSlotName(item)">
         <el-tag>{{ column }}</el-tag>
         <!-- 引入新的组件  json  JSON.stringify(jsonStr,null,2)-->
         <span v-if="column.type === 'json'">
@@ -116,6 +116,8 @@ import aVueDialog from "../avue-dialog.vue"
 import dialogSubmitEvent from "@/api/crud/event/dialogSubmitEvent.js"
 // 注册组件
 
+console.log("进入页面啦~~")
+
 const jsonData = `{
     "employees": [{
       "firstName": "Bill",
@@ -131,7 +133,6 @@ const jsonData = `{
 
 export default {
   beforeCreate() {
-
   },
   components: {
     'avue-dialog': aVueDialog
@@ -153,253 +154,637 @@ export default {
         objectData: {},
         dialogOption: {}
       },
-      "customize": {
-        "description": "负责维护一些缓存的开关，控制某些key是否动态走缓存。",
-        "groupKey": "dynamicCacheList",
-        "img": "https://avuejs.com/images/logo.png",
-        "title": "动态缓存key维护"
+      "config": {
+        "save": "/liukx/update",
+        "update": "/liukx/update",
+        "list": "/liukx/list",
+        "domain": "http://127.0.0.1:8765",
+        acceptToken: "abc12345",
+        successField: "success",
+        successKeyword: "true"
       },
-
+      "data": [
+        {
+          "id": "0",
+          "username": "测试数据_0",
+          "checkStatus": "BASKETBALL",
+          "likeStar": "1",
+          "age": 0,
+          "sex": "MAN",
+          "validDate": "2021-08-20T02:27:13.811+0000",
+          "interest": [
+            "BADMINTON",
+            "BASKETBALL"
+          ],
+          "status": 1
+          , "dataJson": JSON.stringify({
+            "test": "a",
+            "test1": "b",
+            "test2": "c",
+          })
+          , "extComponents": JSON.stringify({
+            "extTest": "a",
+            "extTest1": "b",
+            "extTest2": "c",
+          })
+        },
+        {
+          "id": "1",
+          "username": "测试数据_1",
+          "checkStatus": "BASKETBALL",
+          "likeStar": "1",
+          "age": 2,
+          "sex": "MAN",
+          "validDate": "2021-08-20T02:27:13.811+0000",
+          "interest": [
+            "BADMINTON",
+            "BASKETBALL"
+          ],
+          "status": 1
+        },
+        {
+          "id": "2",
+          "username": "测试数据_2",
+          "checkStatus": "BASKETBALL",
+          "likeStar": "1",
+          "age": 4,
+          "sex": "MAN",
+          "validDate": "2021-08-20T02:27:13.811+0000",
+          "interest": [
+            "BADMINTON",
+            "BASKETBALL"
+          ],
+          "status": 1
+        },
+        {
+          "id": "3",
+          "username": "测试数据_3",
+          "checkStatus": "BASKETBALL",
+          "likeStar": "1",
+          "age": 6,
+          "sex": "MAN",
+          "validDate": "2021-08-20T02:27:13.811+0000",
+          "interest": [
+            "BADMINTON",
+            "BASKETBALL"
+          ],
+          "status": 1
+        },
+        {
+          "id": "4",
+          "username": "测试数据_4",
+          "checkStatus": "BASKETBALL",
+          "likeStar": "1",
+          "age": 8,
+          "sex": "MAN",
+          "validDate": "2021-08-20T02:27:13.811+0000",
+          "interest": [
+            "BADMINTON",
+            "BASKETBALL"
+          ],
+          "status": 1
+        },
+        {
+          "id": "5",
+          "username": "测试数据_5",
+          "checkStatus": "BASKETBALL",
+          "likeStar": "1",
+          "age": 10,
+          "sex": "MAN",
+          "validDate": "2021-08-20T02:27:13.811+0000",
+          "interest": [
+            "BADMINTON",
+            "BASKETBALL"
+          ],
+          "status": 1
+        },
+        {
+          "id": "6",
+          "username": "测试数据_6",
+          "checkStatus": "BASKETBALL",
+          "likeStar": "1",
+          "age": 12,
+          "sex": "MAN",
+          "validDate": "2021-08-20T02:27:13.811+0000",
+          "interest": [
+            "BADMINTON",
+            "BASKETBALL"
+          ],
+          "status": 1
+        },
+        {
+          "id": "7",
+          "username": "测试数据_7",
+          "checkStatus": "BASKETBALL",
+          "likeStar": "1",
+          "age": 14,
+          "sex": "MAN",
+          "validDate": "2021-08-20T02:27:13.811+0000",
+          "interest": [
+            "BADMINTON",
+            "BASKETBALL"
+          ],
+          "status": 1
+        },
+        {
+          "id": "8",
+          "username": "测试数据_8",
+          "checkStatus": "BASKETBALL",
+          "likeStar": "1",
+          "age": 16,
+          "sex": "MAN",
+          "validDate": "2021-08-20T02:27:13.811+0000",
+          "interest": [
+            "BADMINTON",
+            "BASKETBALL"
+          ],
+          "status": 1
+        },
+        {
+          "id": "9",
+          "username": "测试数据_9",
+          "checkStatus": "BASKETBALL",
+          "likeStar": "1",
+          "age": 18,
+          "sex": "MAN",
+          "validDate": "2021-08-20T02:27:13.811+0000",
+          "interest": [
+            "BADMINTON",
+            "BASKETBALL"
+          ],
+          "status": 1
+        }
+      ],
+      "form": {},
+      "params": {},
+      "api": {},
+      "loading": false,
+      "page": {
+        "pageSize": 10,
+        "total": 100
+      },
       "option": {
-        "addBtn": true,
-        "addBtnIcon": "",
-        "addBtnText": "新增",
-        "addTitle": "新增",
-        "border": false,
-        "cancelBtn": true,
-        "cancelBtnIcon": "",
-        "cancelBtnText": "取消",
-        "columnBtn": true,
-        "copyBtn": false,
-        "defaultExpandAll": false,
-        // "defaultSort": "ascending",
-        "delBtn": true,
-        "delBtnIcon": "",
-        "delBtnText": "删除",
-        "dialogClickModal": false,
-        "dialogCloseBtn": true,
-        "dialogCustomClass": "",
-        "dialogDirection": "rtl",
-        "dialogDrag": false,
-        "dialogEscape": true,
-        "dialogFullscreen": false,
-        "dialogMenuPosition": "right",
-        "dialogModal": true,
-        "dialogTop": 25,
-        "dialogType": "dialog",
-        "dialogWidth": "60%",
-        "editBtn": true,
-        "editBtnIcon": "",
-        "editBtnText": "修改",
-        "editTitle": "修改",
-        "emptyBtn": true,
-        "emptyBtnIcon": "",
-        "emptyBtnText": "清空",
-        "emptyText": "暂无数据",
-        "enter": false,
-        "excelBtn": false,
-        "expand": false,
-        "expandClassName": "",
-        "expandFixed": "true",
-        "expandLabelClassName": "",
-        "expandWidth": 50,
-        "filterBtn": false,
-        "fit": true,
-        "gridBackground": "",
-        "gridBackgroundImage": "",
-        "gridBtn": true,
-        "gridSpan": 8,
-        "header": false,
-        "height": "",
-        "highlightCurrentRow": false,
-        "index": false,
-        "indexClassName": "",
-        "indexFixed": "true",
-        "indexLabelClassName": "",
-        "indexWidth": 50,
-        "labelPosition": "left",
-        "labelSuffix": ":",
-        "labelWidth": "80",
-        "lazy": false,
-        "menu": true,
-        "menuAlign": "center",
-        "menuBtn": true,
-        "menuClassName": "",
-        "menuFixed": "true",
-        "menuHeaderAlign": "center",
-        "menuLabelClassName": "",
-        "menuPosition": "center",
-        "menuSpan": 24,
-        "menuTitle": "标题",
-        "menuType": "text",
-        "menuWidth": 220,
-        "printBtn": false,
-        "refreshBtn": true,
-        "reserveSelection": false,
-        "rowKey": "id",
-        "rowParentKey": "parentId",
-        "saveBtn": false,
-        "saveBtnIcon": "",
-        "saveBtnText": "保存",
-        "searchBtn": true,
-        "searchBtnIcon": "",
-        "searchBtnText": "搜索",
-        "searchIcon": false,
-        "searchIndex": 2,
-        "searchLabelPosition": "left",
-        "searchLabelWidth": 80,
-        "searchMenuPosition": "center",
-        "searchPlaceholder": "",
-        "searchShow": true,
-        "searchShowBtn": true,
-        "searchSpan": 8,
-        "selection": false,
-        "selectionClassName": "",
-        "selectionFixed": "true",
-        "selectionLabelClassName": "",
-        "selectionWidth": 50,
-        "showHeader": true,
-        "showOverflowTooltip": false,
-        "showSummary": false,
-        "size": "small",
-        "stripe": false,
-        "submitBtn": true,
-        "submitText": "提交",
-        "tabs": false,
-        "title": "动态缓存key维护111",
-        "tooltipEffect": "dark",
-        // "tooltipOptions": "left",
-        "updateBtn": true,
-        "updateBtnIcon": "",
-        "updateBtnText": "修改",
-        "viewBtn": true,
-        "viewBtnIcon": "",
-        "viewBtnText": "查看",
-        "viewTitle": "查看",
-        "column": [
+        "title": "这是一个测试",
+        viewBtn: true,
+        dialogDrag: true,
+        registerFieldComponents: [
+          "dataJson",
+          "nodeTableModel",
+          "extJson"
+        ],
+        tableRowButtons: [
           {
-            "addDetail": false,
-            "addDisabled": false,
-            "addDisplay": true,
-            "align": "left",
-            "bind": "",
-            "className": "",
-            "clearable": false,
-            "disabled": false,
-            "display": false,
-            "editDetail": false,
-            "editDisabled": false,
-            "editDisplay": true,
-            "filters": false,
-            "fixed": "",
-            "headerAlign": "left",
-            "hide": false,
-            "label": "缓存key",
-            "labelClassName": "",
-            "labelTip": "",
-            "maxRows": 4,
-            "minRows": 2,
-            "onBlur": "",
-            "onChange": "",
-            "onClick": "",
-            "onFocus": "",
-            "order": 0,
-            "placeholder": "",
-            "prefixIcon": "",
-            "prop": "cacheKey",
-            "readonly": false,
-            "row": true,
-            "rules": [
-              {
-                "message": "缓存key 是必填项!",
-                "required": true
-              }
-            ],
-            "search": true,
-            "searchRequired": false,
-            "searchRequireds": [],
-            "showPassword": true,
-            "showWordLimit": true,
-            "sortable": false,
-            "span": 12,
-            "suffixIcon": "",
-            "tip": "",
-            "type": "input",
-            "width": "",
-            "searchRules": [
-              {
-                "message": "缓存key 是必填项!",
-                "required": true
-              }
-            ]
+            btnName: '行按钮1',
+            methodName: 'testA',
+            type: "text",
+            icon: "el-icon-check",
+            size: "mini"
           },
           {
-            "addDetail": false,
-            "addDisabled": false,
+            btnName: '行按钮2',
+            methodName: 'testB'
+          },
+          {
+            btnName: '确认按钮',
+            methodName: 'confirmClickRemoteApi',
+            type: "text",
+            icon: "el-icon-check",
+            size: "mini",
+            attrExt: {
+              title: '小心点喔,你确定要点击吗?有惊喜喔!',
+              url: '/test/abc'
+            }
+          },
+          {
+            btnName: '弹层表单按钮',
+            methodName: 'openWindowJsonRemote',
+            type: "text",
+            icon: "el-icon-check",
+            size: "mini",
+            attrExt: {
+              group: 'test-config',
+              url: '/avue/crud',
+              submitUrl: '/test/body'
+            }
+          }, {
+            btnName: 'Tab级别跳转',
+            methodName: 'openTabLink',
+            type: "text",
+            icon: "el-icon-check",
+            size: "mini",
+            attrExt: {
+              group: 'test-route',
+              server: 1,
+              query: 'id=#{id}&&username=#{username}'
+            }
+          }],
+        tableTopLeftButtons: [{
+          btnName: '左上角1',
+          methodName: 'testA'
+        },
+          {
+            btnName: '左上角2',
+            methodName: 'testB'
+          }],
+        tableTopRightButtons: [
+          {
+            btnName: '右上角1',
+            methodName: 'testA'
+          },
+          {
+            btnName: '右上角2',
+            methodName: 'testB'
+          }],
+        "column": [
+          {
             "addDisplay": true,
-            "align": "left",
-            "bind": "",
-            "className": "",
-            "clearable": false,
-            "disabled": false,
-            "display": false,
-            "editDetail": false,
-            "editDisabled": false,
-            "editDisplay": true,
-            "filters": false,
-            "fixed": "",
-            "headerAlign": "left",
-            "hide": false,
-            "label": "是否开启",
-            "labelClassName": "",
-            "labelTip": "",
-            "maxRows": 4,
-            "minRows": 2,
-            "onBlur": "",
-            "onChange": "",
-            "onClick": "",
-            "onFocus": "",
-            "order": 0,
-            "placeholder": "",
-            "prefixIcon": "",
-            "prop": "cacheValue",
-            "readonly": false,
-            "row": true,
-            "rules": [
+            "prop": "id",
+            "disabled": true,
+            "label": "id",
+            "type": "input"
+          },
+          {
+            label: "时间范围",
+            prop: 'timerange',
+            type: 'timerange',
+            hide: true,
+            search: true,
+            searchRange: true,
+            defaultTime: "['12:00:00', '08:00:00']",
+            format: 'HH:mm:ss',
+            valueFormat: 'HH:mm:ss',
+            startPlaceholder: '时间开始范围自定义',
+            endPlaceholder: '时间结束范围自定义',
+          }, {
+            label: '日期',
+            prop: 'date2',
+            type: 'datetime',
+            searchSpan: 12,
+            searchRange: true,
+            search: true,
+            valueFormat: 'YYYY-MM-DD HH:mm:ss',
+            format: 'YYYY年MM月DD日 HH:mm:ss'
+          },
+          {
+            "prop": "username",
+            "label": "用户名称",
+            "type": "input",
+            search: true,
+            "rules": [{
+              "type": null,
+              "required": true,
+              "message": "用户昵称你得填啊老哥"
+            }]
+            , "onClick": "btn"
+            , "fieldClick": "btnTestClick"
+            // searchRules: [{
+            //   required: false,
+            //   message: "请输入姓名",
+            //   trigger: "blur"
+            // }],
+            // hide: true
+          },
+          {
+            "dicData": [
               {
-                "message": "是否开启 是必填项!",
-                "required": true
+                "label": "已认证",
+                "value": "1"
+              },
+              {
+                "label": "未认证",
+                "value": "0"
+              },
+              {
+                "label": "已失效",
+                "value": "-99"
+              },
+              {
+                "label": "已拒绝",
+                "value": "-1"
               }
             ],
-            "search": false,
-            "searchRequired": false,
-            "searchRequireds": [],
-            "showPassword": true,
-            "showWordLimit": true,
-            "sortable": false,
-            "span": 12,
-            "suffixIcon": "",
-            "tip": "",
-            "type": "input",
-            "width": "",
-            "value": false,
-            "searchRules": [
+            "prop": "checkStatus",
+            "label": "认证状态",
+            "type": "select",
+            "props": {
+              "label": "label",
+              "value": "value"
+            }, "rules": [{
+              "type": "string",
+              "required": true,
+              "pattern": null,
+              "len": null,
+              "min": null,
+              "max": null,
+              "message": null
+            }]
+          },
+          {
+            "dicData": [
               {
-                "message": "是否开启 是必填项!",
-                "required": true
+                "id": "1",
+                "username": "周杰伦"
+              },
+              {
+                "id": "2",
+                "username": "林俊杰"
+              },
+              {
+                "id": "3",
+                "username": "王力宏"
+              },
+              {
+                "id": "4",
+                "username": "许嵩"
               }
-            ]
+            ],
+            "prop": "likeStar",
+            "label": "喜欢明星",
+            "type": "select",
+            "props": {
+              "label": "username",
+              "value": "id"
+            }
+          },
+          {
+            "labelTip": "这是选择年龄的地方",
+            "prop": "age",
+            "label": "年龄",
+            "type": "number",
+            "viewDisplay": false
+          },
+          {
+            "border": true,
+            "dicData": [
+              {
+                "label": "男",
+                "value": 1
+              },
+              {
+                "label": "女",
+                "value": 0
+              },
+              {
+                "label": "未知",
+                "value": -1
+              }
+            ],
+            "prop": "sex",
+            "label": "性别",
+            "type": "radio",
+            "props": {
+              "label": "label",
+              "value": "value"
+            }
+          },
+          {
+            "prop": "validDate",
+            "label": "有效时间",
+            "type": "datetime"
+          },
+          {
+            "dicData": [
+              {
+                "label": "篮球",
+                "value": "basketball"
+              },
+              {
+                "label": "足球",
+                "value": "football"
+              },
+              {
+                "label": "羽毛球",
+                "value": "badminton"
+              },
+              {
+                "label": "乒乓球",
+                "value": "pingpong"
+              },
+              {
+                "label": "桌球",
+                "value": "billiards"
+              }
+            ],
+            "prop": "interest",
+            "label": "兴趣爱好",
+            "type": "checkbox",
+            "props": {
+              "label": "label",
+              "value": "value"
+            }
+          },
+          {
+            label: '照片墙',
+            prop: 'imgUrlList',
+            type: 'upload',
+            span: 24,
+            limit: 2,
+            listType: 'picture-card',
+            tip: '只能上传jpg/png文件，且不超过500kb',
+            loadText: '附件上传中，请稍等',
+            propsHttp: {
+              home: 'https://avuejs.com',
+              res: 'single',
+              name: 'fileName'
+            },
+            action: 'http://127.0.0.1:8765/upload'
+          },
+          {
+            label: '单图',
+            prop: 'imgUrl3',
+            type: 'upload',
+            listType: 'picture-img',
+            // canvasOption: {
+            //   text: 'avue',
+            //   ratio: 0.1
+            // },
+            tip: '只能上传jpg/png用户头像，且不超过500kb',
+            drag: true,
+            propsHttp: {
+              res: 'single',
+              name: 'fileName'
+            },
+            action: 'http://127.0.0.1:8765/upload'
+          },
+          {
+            label: '文本图',
+            prop: 'imgUrlText',
+            type: 'upload',
+            span: 24,
+            listType: 'text',
+            tip: '只能上传jpg/png文件，且不超过500kb',
+            loadText: '附件上传中，请稍等',
+            propsHttp: {
+              res: 'single',
+              name: 'fileName'
+            },
+            action: 'http://127.0.0.1:8765/upload'
+          },
+          {
+            "prop": "status",
+            "label": "状态",
+            "type": "switch"
           }
+          , {
+            "prop": "dataJson",
+            "label": "拓展参数",
+            "type": "json"
+          }
+          , {
+            "prop": "remark",
+            "label": "备注",
+            "type": "textarea"
+          }
+          , {
+            "prop": "nodeTableModel",
+            "label": "子表单测试",
+            "type": "table",
+            "row": true,
+            span: 24,
+            "children": {
+              "column": [
+                {
+                  "addDisplay": false,
+                  "prop": "id",
+                  "editDisabled": true,
+                  "label": "主键",
+                  "row": true,
+                  "type": "input"
+                },
+                {
+                  "prop": "configGroup",
+                  "rules": [
+                    {
+                      "message": "组名称要填咧",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "min": 5,
+                      "max": 10,
+                      "message": "我跟你讲最小5个,最大10个.",
+                      "type": "string"
+                    }
+                  ],
+                  "label": "组名称",
+                  "row": true,
+                  "type": "input"
+                },
+                {
+                  "prop": "configName",
+                  "label": "配置名称",
+                  "row": true,
+                  "type": "input",
+                  "rules": [
+                    {
+                      "message": "配置名称 是必填项!",
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "dicData": [
+                    {
+                      "label": "无效",
+                      "value": -1
+                    },
+                    {
+                      "label": "有效",
+                      "value": 1
+                    }
+                  ],
+                  "prop": "configCode",
+                  "label": "配置值",
+                  "row": true,
+                  "type": "select",
+                  "props": {
+                    "label": "label",
+                    "value": "value"
+                  },
+                  "rules": [
+                    {
+                      "message": "配置值 是必填项!",
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "prop": "validDay",
+                  "label": "有效天数",
+                  "row": true,
+                  "type": "number",
+                  "rules": [
+                    {
+                      "message": "有效天数 是必填项!",
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "dicData": [
+                    {
+                      "label": "无效",
+                      "value": -1
+                    },
+                    {
+                      "label": "有效",
+                      "value": 1
+                    }
+                  ],
+                  "prop": "status",
+                  "label": "状态",
+                  "row": true,
+                  "type": "switch",
+                  "value": 0,
+                  "props": {
+                    "label": "label",
+                    "value": "value"
+                  }
+                }
+              ]
+            }
+          }
+          // , {
+          //   prop: "extJson",
+          //   label: "拓展组件",
+          //   labelWidth: 40,
+          //   span: 24,
+          //   type: "json",
+          //   params: {},
+          //   theme: "idea",
+          //   height: 120
+          // }
         ]
       },
-      "config": {
-        "del": "",
-        "list": "/debug/avue/dynamicCacheList",
-        "messageField": "message",
-        "save": "/debug/avue/editDynamicCache",
-        "successField": "success",
-        "successKeyword": "true",
-        "update": "/debug/avue/editDynamicCache"
+      rotateOption: {
+        span: 8,
+        data: [
+          {
+            click: function (item) {
+              alert(JSON.stringify(item));
+            },
+            count: '150',
+            title: '新订单',
+            icon: 'el-icon-warning',
+            color: 'rgb(49, 180, 141)'
+          }, {
+            click: function (item) {
+              alert(JSON.stringify(item));
+            },
+            count: '53%',
+            title: '跳出率',
+            icon: 'el-icon-view',
+            color: '#00a65a'
+          }, {
+            click: function (item) {
+              alert(JSON.stringify(item));
+            },
+            count: '44',
+            title: '用户注册数',
+            icon: 'el-icon-setting',
+            color: '#f39c12'
+          }
+        ]
       }
     };
   }, methods: {

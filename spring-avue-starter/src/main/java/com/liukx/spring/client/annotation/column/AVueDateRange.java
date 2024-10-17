@@ -92,6 +92,7 @@ public @interface AVueDateRange {
 
     /**
      * 查询时是否开启范围查询功能
+     * <a href="https://avuejs.com/crud/crud-doc.html#column-%E5%85%B1%E7%94%A8%E5%B1%9E%E6%80%A7">共用属性</a>
      */
     boolean searchRange() default false;
 

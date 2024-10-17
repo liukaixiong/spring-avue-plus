@@ -52,6 +52,11 @@ const router = createRouter({
             path: '/avue-component',
             name: 'avue-component',
             component: avueComponent
+        },
+        {
+            path: '/list',
+            name: 'list',
+            redirect: {path: '/avue-component', query: {group: 'avueUrlList'}}
         }
     ]
 })

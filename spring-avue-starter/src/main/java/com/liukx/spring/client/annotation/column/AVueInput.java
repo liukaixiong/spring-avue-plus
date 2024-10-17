@@ -214,6 +214,78 @@ public @interface AVueInput {
     boolean search() default false;
 
     /**
+     * 搜索项初始化值
+     * 可选值:—
+     */
+    String searchValue() default "";
+
+    /**
+     * 搜索项辅助文字
+     * 可选值:—
+     */
+    String searchPlaceholder() default "";
+
+    /**
+     * 搜索项框栅列
+     * 可选值:—
+     */
+    int searchSpan() default 8;
+
+    /**
+     * 搜索项位置排序，序号越大越靠前
+     * 可选值:—
+     */
+    int searchOrder() default 100;
+
+//    /**
+//     * 搜索项框间距
+//     * 可选值:—
+//     */
+//    int searchGutter() default "";
+
+    /**
+     * 搜索项为范围搜索
+     * 可选值:—
+     */
+    boolean searchRange() default false;
+
+    /**
+     * 搜索项的类型
+     * 可选值:—
+     */
+    String searchType() default "";
+
+    /**
+     * 搜索项标题宽度
+     * 可选值:—
+     */
+    int searchLabelWidth() default 80;
+
+    /**
+     * 搜索项清除
+     * 可选值:—
+     */
+    boolean searchClearable() default false;
+
+    /**
+     * 搜索项是否多选
+     * 可选值:—
+     */
+    boolean searchMultiple() default false;
+
+    /**
+     * 搜索项将选中值按文字的形式展示
+     * 可选值:—
+     */
+    boolean searchTags() default false;
+
+    /**
+     * 搜索项标题位置
+     * 可选值:left/right/top
+     */
+    String searchLabelPosition() default "left";
+
+    /**
      * 拓展字段
      */
     AVueAttr[] attrExt() default {};
