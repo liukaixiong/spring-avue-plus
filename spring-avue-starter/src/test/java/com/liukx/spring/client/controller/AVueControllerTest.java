@@ -7,6 +7,7 @@ import com.liukx.spring.client.enums.InterestEnums;
 import com.liukx.spring.client.enums.SexEnums;
 import com.liukx.spring.client.enums.StatusEnums;
 import com.liukx.spring.client.model.AVueCrudModel;
+import com.liukx.spring.client.model.PropsModel;
 import com.liukx.spring.client.utils.JsonParseUtils;
 import junit.framework.TestCase;
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ public class AVueControllerTest extends TestCase {
     private static final String HAL_MEDIA_TYPE = "application/hal+json";
 
     public static final String LIST_URL = "/liukx/list";
+    public static final String DIC_URL = "/liukx/dic";
     public static final String UPDATE_URL = "/liukx/update";
     public static final String SAVE_URL = "/liukx/save";
     public static final String BODY_URL = "/test/body";
@@ -53,6 +55,8 @@ public class AVueControllerTest extends TestCase {
 
             crudModel.setLikeStar(mockInteger(1, 4));
 
+            crudModel.setRemoteDic(mockInteger(1, 4) + "");
+
             crudModel.setSex((Integer) JMockData.mock(SexEnums.class).getCode());
             crudModel.setStatus((Integer) JMockData.mock(StatusEnums.class).getCode());
             crudModel.setValidDate(JMockData.mock(Date.class));
@@ -67,9 +71,6 @@ public class AVueControllerTest extends TestCase {
         resultMap.put("total", 100);
         resultMap.put("pageSize", 10);
         resultMap.put("data", crudModels);
-        //        String json =
-        //            "{\"pageSize\":5,\"total\":20,\"data\":[{\"id\":1,\"parentId\":2,\"label\":\"标签11\",\"serverId\":1,\"path\":\"/tags\",\"component\":1,\"icon\":\"icon-caidan\",\"creator\":\"liukx\",\"created\":\"2021-02-01 23:55:33\"},{\"id\":2,\"parentId\":1,\"label\":\"标签2\",\"serverId\":2,\"path\":\"/tags\",\"component\":1,\"icon\":\"icon-caidan\",\"creator\":\"liukx\",\"created\":\"2021-02-01 23:55:33\"}]}";
-        //        Map data = JsonParseUtils.parse(json, Map.class);
         return ResponseEntity.ok(resultMap);
     }
 
@@ -107,6 +108,26 @@ public class AVueControllerTest extends TestCase {
         return ResponseEntity.ok(result);
     }
 
+    @RequestMapping(value = DIC_URL, method = RequestMethod.POST, produces = {APPLICATION_JSON_VALUE, HAL_MEDIA_TYPE})
+    @ResponseBody
+    public ResponseEntity<Object> dicList(
+            @RequestBody
+            AVueCrudModel body) {
+        logger.info("dic request : " + JsonParseUtils.toJson(body));
+
+
+        List<PropsModel> mockList = new ArrayList<>();
+        mockList.add(PropsModel.builder("1", "韩信"));
+        mockList.add(PropsModel.builder("2", "李白"));
+        mockList.add(PropsModel.builder("3", "王昭君"));
+
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("total", 100);
+        resultMap.put("pageSize", 10);
+        resultMap.put("data", mockList);
+        return ResponseEntity.ok(resultMap);
+    }
+
     public Map<String, Object> ok(Object obj) {
         return result(true, null, obj);
     }
@@ -125,11 +146,9 @@ public class AVueControllerTest extends TestCase {
 
     @PostMapping(BODY_URL)
     @ResponseBody
-    public ResponseEntity testBody(
-            @RequestBody
-            Map<String, Object> request) {
+    public ResponseEntity<Object> fastBody(@RequestBody Map<String, Object> request) {
         logger.info("后台请求到的数据: " + JsonParseUtils.toJson(request));
-        return ResponseEntity.ok(ok(null));
+        return ResponseEntity.ok(null);
     }
 
     private Integer mockInteger(int min, int max) {
@@ -137,4 +156,5 @@ public class AVueControllerTest extends TestCase {
         mockConfig.intRange(min, max);
         return JMockData.mock(Integer.class, mockConfig);
     }
+
 }

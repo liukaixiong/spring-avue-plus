@@ -16,9 +16,16 @@ import java.lang.annotation.*;
 @Documented
 public @interface AVueCascader {
     /**
+     * 是否展示所有选择的级别
+     * @return
+     */
+    boolean showAllLevels() default true;
+
+    /**
      * 属性名称
      */
     String prop() default "";
+
     /**
      * 文本描述
      */
@@ -123,6 +130,18 @@ public @interface AVueCascader {
      * 表单编辑时是否为查看模式
      */
     boolean editDetail() default false;
+
+    /**
+     * 表单查看时是否可见
+     * @return
+     */
+    boolean viewDisplay() default true;
+
+    /**
+     * 表单查看时是否禁止
+     * @return
+     */
+    boolean viewDisabled() default false;
 
     /**
      * 开启排序

@@ -8,18 +8,31 @@ package com.liukx.spring.client.model;
  * @date 2021/8/19 - 10:23
  */
 public class PropsModel {
+    /**
+     * label的字段名称
+     */
+    private String label = "label";
+
+    /**
+     * code的字段名称
+     */
+    private Object value = "value";
 
     public PropsModel() {
     }
 
-    public PropsModel(String label, String value) {
-        this.label = label;
-        this.value = value;
+    public static PropsModel builder() {
+        return new PropsModel();
     }
 
-    private String label = "label";
+    public static PropsModel builder(String codeKey, String labelKey) {
+        return new PropsModel(codeKey, labelKey);
+    }
 
-    private Object value = "value";
+    public PropsModel(String codeKey, String labelKey) {
+        this.label = labelKey;
+        this.value = codeKey;
+    }
 
     public String getLabel() {
         return label;

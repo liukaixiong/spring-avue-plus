@@ -23,9 +23,12 @@ public interface DictionaryDataCallback<T> {
      */
     public String callName();
 
-    default PropsModel props() {
-        return new PropsModel();
-    }
+    /**
+     * 配置属性
+     * {@code PropsModel#builder(code, value)}
+     * @return
+     */
+    PropsModel props();
 
     /**
      * 加载方法回调

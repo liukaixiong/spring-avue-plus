@@ -91,7 +91,10 @@ export function renderData(self, clientConfig, pageRouteInfo, serverInfo, listFu
     let configUrl = clientConfig.configUrl || "/crud/config"
 
     // 拿到配置文件option
-    _remote.post(domain + configUrl, params, (configObject) => {
+    /**
+     * 如果不同步的话，在一些需要渲染的组件，比如select的组件属性dicUrl会不生效，不等待服务端返回的配置，默认用空的配置去初始化，导致字典渲染失败
+     */
+    _remote.syncPost(domain + configUrl, params, (configObject) => {
 
         // 根据配置文件的信息获取数据
         let responseConfig = clientConfig.res(configObject);
@@ -104,7 +107,6 @@ export function renderData(self, clientConfig, pageRouteInfo, serverInfo, listFu
         let responsePage = responseConfig.page;
 
         // todo 修复page的路径不匹配
-        let initQuery = {};
         if (responsePage) {
             let pageInfo = {};
             Object.keys(responsePage).forEach(function (key) {
@@ -121,7 +123,6 @@ export function renderData(self, clientConfig, pageRouteInfo, serverInfo, listFu
         postRenderData(self.$data);
 
         listFunction();
-
         // let pageSizeKey = self.getPageInfo(page.pageSize);
         // let pageNumberKey = self.getPageInfo(page.pageNumber);
         // initQuery[pageSizeKey] = 20;
@@ -150,7 +151,7 @@ export function renderData(self, clientConfig, pageRouteInfo, serverInfo, listFu
         //
         //     // self.$data.page = pageObject;
         // })
-    })
+    });
 }
 
 /**

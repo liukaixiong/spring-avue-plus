@@ -16,7 +16,7 @@ import _remote from "@/api/crud/remoteApi";
  * @param index   下标对象
  */
 export function testA(self, item, row, index) {
-  self.$message.success('testA --> ' + JSON.stringify(item) + ' 值 ' + JSON.stringify(row));
+    self.$message.success('testA --> ' + JSON.stringify(item) + ' 值 ' + JSON.stringify(row));
 }
 
 /**
@@ -27,7 +27,7 @@ export function testA(self, item, row, index) {
  * @param index   下标对象
  */
 export function testB(self, item, row, index) {
-  self.$message.success('testB --> ' + JSON.stringify(item) + ' 值' + JSON.stringify(row));
+    self.$message.success('testB --> ' + JSON.stringify(item) + ' 值' + JSON.stringify(row));
 }
 
 
@@ -39,12 +39,12 @@ export function testB(self, item, row, index) {
  * @param index
  */
 export function hrefClick(self, item, row, index) {
-  let json = listToJson(item['attrExt']);
-  if (json) {
-    window.open(json.url);
-  } else {
-    self.message.error("没有配置跳转链接，无法跳转！")
-  }
+    let json = listToJson(item['attrExt']);
+    if (json) {
+        window.open(json.url);
+    } else {
+        self.message.error("没有配置跳转链接，无法跳转！")
+    }
 }
 
 /**
@@ -55,52 +55,84 @@ export function hrefClick(self, item, row, index) {
  * @param index
  */
 export function confirmClickRemoteApi(self, item, row, index) {
-  let param = listToJson(item['attrExt']);
-  let title = param.title || '您确认执行该操作吗?';
-  let url = param.url;
-  let method = param.method || 'post';
+    let param = listToJson(item['attrExt']);
+    let title = param.title || '您确认执行该操作吗?';
+    let url = param.url;
+    let method = param.method || 'post';
 
-  if (!url) {
-    self.$message.error("该操作会触发远程调用,请回填url参数!");
-    return;
-  } else {
-    url = crudUtil.completionDomain(self, url);
-  }
+    if (!url) {
+        self.$message.error("该操作会触发远程调用,请回填url参数!");
+        return;
+    } else {
+        url = crudUtil.completionDomain(self, url);
+    }
 
-  // 触发远程调用操作
-  self.$confirm(title, '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning'
-  }).then(() => {
-    _remote.api(url, method, row, (data) => {
-      if (crudUtil.processDMLResponse(self, data)) {
-        // 刷新表格
-        self.$refs.crud.refreshChange();
-      }
-    });
-  })
+    // 触发远程调用操作
+    self.$confirm(title, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+    }).then(() => {
+        _remote.api(url, method, row, (data) => {
+            if (crudUtil.processDMLResponse(self, data)) {
+                // 刷新表格
+                self.$refs.crud.refreshChange();
+            }
+        });
+    })
 }
 
 export function openTabLink(self, item, row, index) {
-  let param = listToJson(item['attrExt']);
-  let requestParams = param["query"];
-  let param2Obj = convertQueryParam(requestParams, row);
-  let routeLink = {};
-  let query = self.$route.query;
+    let param = listToJson(item['attrExt']);
+    let requestParams = param["query"];
+    let param2Obj = convertQueryParam(requestParams, row);
+    let routeLink = {};
+    let query = self.$route.query;
 
-  let requestJson = param2Obj || {};
-  requestJson["server"] = param.server || query.server;
-  // requestJson["group"]=param.group;
-  requestJson["group"] = param.group;
+    let requestJson = param2Obj || {};
+    requestJson["server"] = param.server || query.server;
+    // requestJson["group"]=param.group;
+    requestJson["group"] = param.group;
 
-  // 需要配置一个临时承载页
-  routeLink["path"] = "/temp/link";
-  // routeLink["name"]="abc";
-  routeLink["query"] = requestJson;
-  return routeLink;
-  // routeLink["params"]="";
+    // 需要配置一个临时承载页
+    routeLink["path"] = "/temp/link";
+    // routeLink["name"]="abc";
+    routeLink["query"] = requestJson;
+    return routeLink;
+    // routeLink["params"]="";
 }
+
+/**
+ * 复制字段
+ *
+ * @param self
+ * @param item
+ * @param row
+ * @param index
+ */
+export function copyField(self, item, row, index) {
+    let param = listToJson(item['attrExt']);
+    let copyObject = row;
+    if (param) {
+        let fieldName = param["name"];
+        if (fieldName) {
+            copyObject = row[fieldName];
+        }
+    }
+
+    if (typeof copyObject !== 'string') {
+        copyObject = JSON.stringify(copyObject);
+    }
+
+    self.$Clipboard({
+        text: copyObject
+    }).then(() => {
+        self.$message.success('复制成功! -> ' + copyObject)
+    }).catch(() => {
+        self.$message.error('复制失败,请手动复制!')
+    });
+}
+
 
 /**
  * 打开一个弹层，输入json参数给后端
@@ -110,33 +142,45 @@ export function openTabLink(self, item, row, index) {
  * @param index
  */
 export function openWindowJsonRemote(self, item, row, index) {
-  // 显示弹窗窗口
-  let param = listToJson(item['attrExt']);
-  let submitUrl = param.submitUrl;
-  let submitEventName = param.submitEventName;
-  let requestUrl = crudUtil.completionDomain(self, param.url || '/avue/crud');
-  // 先清空对象
-  self.dialogConfig.objectData = {};
+    // 显示弹窗窗口
+    let param = listToJson(item['attrExt']);
+    // 提交按钮指向的后端地址
+    let submitUrl = param.submitUrl;
+    // 提交事件
+    let submitEventName = param.submitEventName;
+    // 配置模版
+    let group = param.group;
+    let fieldConvertMap = param.fieldConvertMap;
+    // 做一层值转换
+    if (fieldConvertMap) {
+        let convertObject = parseKeyValuePairs(fieldConvertMap);
+        Object.entries(convertObject).forEach(([k, v]) => {
+            row[v] = row[k];
+        });
+    }
 
-  let group = param.group;
-  let acceptToken = self.config.acceptToken;
-  let requestBody = {
-    "group": group,
-    "acceptToken": acceptToken
-  }
-  _remote.post(requestUrl, requestBody, (res) => {
-    // 定义后端的请求路径
-    // self.dialogConfig.config = res.config;
-    self.dialogConfig.config = {};
-    self.dialogConfig.config["submitUrl"] = submitUrl;
-    self.dialogConfig.config["submitEventName"] = submitEventName;
-    self.dialogConfig.formOption = res.option;
-    self.dialogConfig.dialogOption = {
-      title: res.option.title || '弹窗操作'
-    };
-    self.dialogConfig.objectData = row;
-    self.dialogConfig.showDialogProps = true;
-  });
+    let requestUrl = crudUtil.completionDomain(self, param.url || '/avue/crud');
+    // 先清空对象
+    self.dialogConfig.objectData = {};
+
+    let acceptToken = self.config.acceptToken;
+    let requestBody = {
+        "group": group,
+        "acceptToken": acceptToken
+    }
+    _remote.post(requestUrl, requestBody, (res) => {
+        // 定义后端的请求路径
+        // self.dialogConfig.config = res.config;
+        self.dialogConfig.config = {};
+        self.dialogConfig.config["submitUrl"] = submitUrl;
+        self.dialogConfig.config["submitEventName"] = submitEventName;
+        self.dialogConfig.formOption = res.option;
+        self.dialogConfig.dialogOption = {
+            title: res.option.title || '弹窗操作'
+        };
+        self.dialogConfig.objectData = row;
+        self.dialogConfig.showDialogProps = true;
+    });
 }
 
 /**
@@ -146,17 +190,17 @@ export function openWindowJsonRemote(self, item, row, index) {
  * @returns {{}}
  */
 function convertQueryParam(search, objectData) {
-  const obj = {}
-  const searchArr = search.split('&')
-  searchArr.forEach(v => {
-    const index = v.indexOf('=')
-    if (index !== -1) {
-      const name = v.substring(0, index)
-      const val = v.substring(index + 1, v.length)
-      obj[name] = objectData[parseTag(val, "#{", "}")];
-    }
-  })
-  return obj;
+    const obj = {}
+    const searchArr = search.split('&')
+    searchArr.forEach(v => {
+        const index = v.indexOf('=')
+        if (index !== -1) {
+            const name = v.substring(0, index)
+            const val = v.substring(index + 1, v.length)
+            obj[name] = objectData[parseTag(val, "#{", "}")];
+        }
+    })
+    return obj;
 }
 
 /**
@@ -166,7 +210,7 @@ function convertQueryParam(search, objectData) {
  * @param end
  */
 function parseTag(val, start, end) {
-  return val.replace(start, '').replace(end, '');
+    return val.replace(start, '').replace(end, '');
 }
 
 /**
@@ -174,13 +218,28 @@ function parseTag(val, start, end) {
  * @param valueList
  */
 function listToJson(valueList) {
-  if (valueList && Array.isArray(valueList)) {
-    let result = {};
-    for (let i = 0; i < valueList.length; i++) {
-      let name = valueList[i].name;
-      result[name] = valueList[i].value;
+    if (valueList && Array.isArray(valueList)) {
+        let result = {};
+        for (let i = 0; i < valueList.length; i++) {
+            let name = valueList[i].name;
+            result[name] = valueList[i].value;
+        }
+        return result;
     }
+    return valueList;
+}
+
+function parseKeyValuePairs(str) {
+    str = str.replaceAll("&&", "&");
+    const pairs = str.split('&');
+    const result = {};
+
+    pairs.forEach(pair => {
+        const [key, value] = pair.split('=');
+        if (key && value) {
+            result[key.trim()] = value.trim();
+        }
+    });
+
     return result;
-  }
-  return valueList;
 }

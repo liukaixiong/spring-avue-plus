@@ -171,6 +171,17 @@ public @interface AVueJson {
     boolean editDetail() default false;
 
     /**
+     * 表单查看时是否可见
+     * @return
+     */
+    boolean viewDisplay() default true;
+
+    /**
+     * 表单查看时是否禁止
+     * @return
+     */
+    boolean viewDisabled() default false;
+    /**
      * 开启排序
      *
      * @return

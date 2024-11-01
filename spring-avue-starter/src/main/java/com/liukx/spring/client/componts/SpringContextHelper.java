@@ -31,7 +31,7 @@ public class SpringContextHelper implements ApplicationContextAware {
         newValue.set(value);
         parseProperties(value, (result) -> {
             String property = this.applicationContext.getEnvironment().getProperty(result);
-            if (!StringUtils.isEmpty(result)) {
+            if (StringUtils.hasText(result) && StringUtils.hasText(property)) {
                 newValue.set(newValue.get().replaceAll("\\$\\{" + result + "}", property));
             }
         });

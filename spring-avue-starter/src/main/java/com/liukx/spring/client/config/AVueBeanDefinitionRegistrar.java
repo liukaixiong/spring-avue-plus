@@ -2,7 +2,7 @@ package com.liukx.spring.client.config;
 
 import com.liukx.spring.client.annotation.AVueRouteKey;
 import com.liukx.spring.client.annotation.EnableAVue;
-import com.liukx.spring.client.enums.AVueDicStatusEnum;
+import com.liukx.spring.client.dic.AVueDicStatusEnum;
 import com.liukx.spring.client.helper.DicEnumsHelper;
 import com.liukx.spring.client.helper.JsonAVueCacheHelper;
 import com.liukx.spring.client.helper.RouteKeyHelper;
@@ -26,6 +26,7 @@ import java.util.Set;
  * @Email liukx@elab-plus.com
  * @date 2021/8/18 - 17:13
  */
+@SuppressWarnings("unchecked")
 public class AVueBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
     private final ClassPathScanningCandidateComponentProvider provider =
             new ClassPathScanningCandidateComponentProvider(false);

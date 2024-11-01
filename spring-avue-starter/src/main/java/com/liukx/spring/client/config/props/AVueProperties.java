@@ -23,6 +23,11 @@ public class AVueProperties {
     private boolean debug = false;
 
     /**
+     * web访问域名地址
+     */
+    private String webDomain;
+
+    /**
      * 授权访问的token
      */
     private String acceptToken;
@@ -42,6 +47,13 @@ public class AVueProperties {
      */
     private String password;
 
+    public String getWebDomain() {
+        return webDomain;
+    }
+
+    public void setWebDomain(String webDomain) {
+        this.webDomain = webDomain;
+    }
 
     public boolean isEnableLogin() {
         return enableLogin;

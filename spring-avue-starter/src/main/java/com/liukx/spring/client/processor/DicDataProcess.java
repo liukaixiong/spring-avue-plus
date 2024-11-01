@@ -56,7 +56,7 @@ public class DicDataProcess implements AVueAttrPostProcess, InitializingBean {
 
         // 将扫描到的字典注入执行器
         DicEnumCallback dictionaryDataCallback = new DicEnumCallback();
-        DicEnumsHelper.getINSTANCE().getKeys().stream().forEach((enums) -> {
+        DicEnumsHelper.getINSTANCE().getKeys().forEach((enums) -> {
             dictionaryDataCallbackMap.put(enums, dictionaryDataCallback);
         });
     }

@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@originjs/vite-plugin-commonjs": "^1.0.3",
-    "@smallwei/avue": "^3.4.7",
+    "@smallwei/avue": "^3.5.3",
     "axios": "^1.7.2",
     "codemirror": "^5.65.17",
     "codemirror-editor-vue3": "^2.7.0",

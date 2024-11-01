@@ -8,17 +8,23 @@
         v-model="showDialog"
         width="60%" @close='closeDialog'>
       <avue-form ref="form" :modelValue="objectData" :option="formOption" @reset-change="resetForm" @submit="submit">
-        <template #[getSlotFormName(item)]="{column,value}" v-for="item in formOption.registerFieldComponents">
+        <!--    #[item] -> https://avuejs.com/form/form-slot.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%86%85%E5%AE%B9    -->
+        <template #[item]="{column,value}" v-for="item in formOption.registerFieldComponents">
           <!--          &lt;!&ndash; 引入新的组件  json &ndash;&gt;-->
           <span v-if="column.type==='json'">
             <json-editor-vue class="editor" :ref="'editor-'+column.prop" :name="column.prop"
                              :modelValue="JSON.parse(value|| '{}')"
                              @blur="jsonFormat(this,column.prop)"/>
-          </span>
 
+          </span>
         </template>
       </avue-form>
+      <!--      <json-editor-vue class="editor" ref="editor-" name="column.prop"-->
+      <!--                       :modelValue="JSON.parse( '{}')"-->
+      <!--                       @blur="jsonFormat(this,'{}')"/>-->
     </el-dialog>
+
+
   </div>
 </template>
 

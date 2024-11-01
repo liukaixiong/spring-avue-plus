@@ -26,7 +26,7 @@ public class TestModelProcessor implements DictionaryDataCallback<Map<String, Ob
 
     @Override
     public PropsModel props() {
-        return new PropsModel("username", "id");
+        return PropsModel.builder("id", "username");
     }
 
     @Override

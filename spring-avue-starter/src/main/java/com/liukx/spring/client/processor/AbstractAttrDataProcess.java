@@ -18,9 +18,9 @@ import java.util.Set;
  */
 public abstract class AbstractAttrDataProcess implements AVueAttrPostProcess {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private Set<String> fieldList = new HashSet<>();
+    private final Set<String> fieldList = new HashSet<>();
 
     @Override
     public void attrPostProcess(AVueAttrLevel level, AnnotatedElement element, Map<String, Object> attrMap) {

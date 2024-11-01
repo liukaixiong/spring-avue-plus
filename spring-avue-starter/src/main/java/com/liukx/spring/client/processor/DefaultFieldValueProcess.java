@@ -2,6 +2,8 @@ package com.liukx.spring.client.processor;
 
 import com.liukx.spring.client.config.props.AVueProperties;
 import com.liukx.spring.client.enums.AVueAttrLevel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +19,11 @@ import java.util.Map;
  */
 @Component
 public class DefaultFieldValueProcess implements AVueAttrPostProcess {
+    private final Logger logger = LoggerFactory.getLogger(DefaultFieldValueProcess.class);
     /**
      * 对象属性缓存
      */
-    private Map<String, Object> objectFieldMap = new HashMap<>();
+    private final Map<String, Object> objectFieldMap = new HashMap<>();
 
     @Autowired
     private AVueProperties prop;
@@ -71,16 +74,16 @@ public class DefaultFieldValueProcess implements AVueAttrPostProcess {
             element.setAccessible(true);
             return element.get(clazzObject);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("new error", e);
         }
         return null;
     }
 
     private Object newObject(Class<?> declaringClass) {
         try {
-            return declaringClass.newInstance();
+            return declaringClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("new error", e);
         }
         return nullObject;
     }

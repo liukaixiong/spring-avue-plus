@@ -186,6 +186,12 @@ public @interface AVueCrudOption {
     boolean border() default false;
 
     /**
+     * 对应列是否可以通过拖动改变宽度（需要在option中border属性为真）
+     * @return
+     */
+    boolean resizable() default true;
+
+    /**
      * 在数据更新之后保留之前选中的数据（需指定 rowKey）
      * 可选值:-
      */

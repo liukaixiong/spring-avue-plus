@@ -7,6 +7,8 @@ import axios from 'axios'
 import App from './App.vue'
 import router from './router'
 import Avue from '@smallwei/avue'
+// 源码版本调试,
+// import Avue from '@smallwei/avue/lib/avue.js'
 import '@smallwei/avue/lib/index.css'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 

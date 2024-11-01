@@ -26,6 +26,11 @@ public class DicEnumCallback implements DictionaryDataCallback<PropsModel> {
     }
 
     @Override
+    public PropsModel props() {
+        return PropsModel.builder();
+    }
+
+    @Override
     public List<PropsModel> call(AVueAttrLevel level, AnnotatedElement element, Map<String, Object> attrMap) {
         String dicData = attrMap.get("dicData").toString();
         return getPropsModels(DicEnumsHelper.getINSTANCE().get(dicData));
@@ -37,7 +42,7 @@ public class DicEnumCallback implements DictionaryDataCallback<PropsModel> {
         }
         return Arrays.stream(e.getEnumConstants()).map(enums -> {
             if (enums instanceof DicEnumData) {
-                DicEnumData dicEnumData = (DicEnumData)enums;
+                DicEnumData dicEnumData = (DicEnumData) enums;
                 PropsModel propsModel = new PropsModel();
                 propsModel.setLabel(dicEnumData.getLabel());
                 propsModel.setValue(dicEnumData.getCode());

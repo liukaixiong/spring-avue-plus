@@ -166,6 +166,7 @@ export default {
       "data": [
         {
           "id": "0",
+          "select2": "510000",
           "username": "测试数据_0",
           "checkStatus": "BASKETBALL",
           "likeStar": "1",
@@ -190,6 +191,7 @@ export default {
         },
         {
           "id": "1",
+          "select2": "450000",
           "username": "测试数据_1",
           "checkStatus": "BASKETBALL",
           "likeStar": "1",
@@ -396,6 +398,16 @@ export default {
             methodName: 'testB'
           }],
         "column": [
+          {
+            label: '下拉框',
+            prop: 'select2',
+            type: 'select',
+            props: {
+              label: 'name',
+              value: 'code'
+            },
+            dicUrl: 'https://cli.avuejs.com/api/area/getProvince'
+          },
           {
             "addDisplay": true,
             "prop": "id",
@@ -682,6 +694,7 @@ export default {
                     }
                   ]
                 },
+
                 {
                   "dicData": [
                     {

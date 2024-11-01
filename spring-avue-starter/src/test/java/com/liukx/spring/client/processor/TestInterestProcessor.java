@@ -26,7 +26,7 @@ public class TestInterestProcessor implements DictionaryDataCallback<Map<String,
 
     @Override
     public PropsModel props() {
-        return new PropsModel("code", "label");
+        return PropsModel.builder();
     }
 
     @Override

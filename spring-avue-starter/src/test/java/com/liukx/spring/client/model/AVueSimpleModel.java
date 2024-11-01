@@ -4,10 +4,7 @@ import com.liukx.spring.client.annotation.AVueConfig;
 import com.liukx.spring.client.annotation.AVueCrudOption;
 import com.liukx.spring.client.annotation.AVueRouteKey;
 import com.liukx.spring.client.annotation.AVueRule;
-import com.liukx.spring.client.annotation.column.AVueInput;
-import com.liukx.spring.client.annotation.column.AVueNumber;
-import com.liukx.spring.client.annotation.column.AVueSelect;
-import com.liukx.spring.client.annotation.column.AVueSwitch;
+import com.liukx.spring.client.annotation.column.*;
 import com.liukx.spring.client.controller.AVueConfigControllerTest;
 
 /**
@@ -41,6 +38,9 @@ public class AVueSimpleModel {
 
     @AVueSwitch(prop = "status", label = "状态", dicData = "StatusEnums", row = true)
     private int status;
+
+    @AVueJson(label = "配置json")
+    private String configJson;
 
     public String getId() {
         return id;

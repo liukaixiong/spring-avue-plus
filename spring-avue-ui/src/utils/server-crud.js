@@ -9,19 +9,19 @@
  * @param data
  */
 function processDMLResponse(self, data) {
-  let successField = self.config['successField'];
-  let successKeyword = self.config['successKeyword'];
-  let successValue = data[successField];
+    let successField = self.config['successField'];
+    let successKeyword = self.config['successKeyword'];
+    let successValue = data[successField];
 
-  if (successValue && successValue + '' === successKeyword) {
-    self.$message.success('操作成功');
-    return true;
-  } else {
-    let messageField = self.config['messageField'];
-    let consoleMsg = data[messageField] || "messageField 没有找到";
-    self.$message.error(consoleMsg);
-    return false;
-  }
+    if (successValue && successValue + '' === successKeyword) {
+        self.$message.success('操作成功');
+        return true;
+    } else {
+        let messageField = self.config['messageField'];
+        let consoleMsg = data[messageField] || "messageField 没有找到";
+        self.$message.error(consoleMsg);
+        return false;
+    }
 }
 
 /**
@@ -31,10 +31,10 @@ function processDMLResponse(self, data) {
  * @returns {*}
  */
 function completionDomain(self, path) {
-  if (!path.startsWith("http")) {
-    return self.config.domain + path;
-  }
-  return path;
+    if (!path.startsWith("http")) {
+        return self.config.domain + path;
+    }
+    return path;
 }
 
 /**
@@ -43,28 +43,30 @@ function completionDomain(self, path) {
  * @param name
  */
 function jsonFormat(_self, name) {
-  let jsonObject = _self.$refs['editor'];
-  for (let i = 0; i < jsonObject.length; i++) {
-    let attrName = jsonObject[i].$attrs['name'];
-    if (name === attrName) {
-      jsonObject[i].formatCode();
-      let value = jsonObject[i].getValue();
-      if (value && !isJson(value)) {
-        _self.$message.error("非标准的JSON,请检查!");
-      }
+    let jsonObject = _self.$refs['editor'];
+    if (jsonObject) {
+        for (let i = 0; i < jsonObject.length; i++) {
+            let attrName = jsonObject[i].$attrs['name'];
+            if (name === attrName) {
+                jsonObject[i].formatCode();
+                let value = jsonObject[i].getValue();
+                if (value && !isJson(value)) {
+                    _self.$message.error("非标准的JSON,请检查!");
+                }
+            }
+        }
     }
-  }
 }
 
 function isJson(val) {
-  try {
-    if (JSON.parse(val.trim())) {
-      return true;
+    try {
+        if (JSON.parse(val.trim())) {
+            return true;
+        }
+        return false;
+    } catch (e) {
+        return false;
     }
-    return false;
-  } catch (e) {
-    return false;
-  }
 }
 
 /**
@@ -73,7 +75,7 @@ function isJson(val) {
  * @returns {string}
  */
 function getSlotFormName(item) {
-  return item + "Form";
+    return item + "Form";
 }
 
 /**
@@ -82,13 +84,13 @@ function getSlotFormName(item) {
  * @returns {string|*}
  */
 function getJsonString(value) {
-  if (!value) {
-    return "";
-  }
-  if (value instanceof Object) {
-    return JSON.stringify(value);
-  }
-  return value;
+    if (!value) {
+        return "";
+    }
+    if (value instanceof Object) {
+        return JSON.stringify(value);
+    }
+    return value;
 }
 
 /**
@@ -99,18 +101,18 @@ function getJsonString(value) {
  * @param allMerge 是否默认直接合并 true or false
  */
 function mergeParams(target, source, allMerge) {
-  for (let key of Object.keys(target)) {
-    if (allMerge || !source[key]) {
-      source[key] = target[key];
+    for (let key of Object.keys(target)) {
+        if (allMerge || !source[key]) {
+            source[key] = target[key];
+        }
     }
-  }
 }
 
 export default {
-  processDMLResponse,
-  completionDomain,
-  getJsonString,
-  getSlotFormName,
-  jsonFormat,
-  mergeParams
+    processDMLResponse,
+    completionDomain,
+    getJsonString,
+    getSlotFormName,
+    jsonFormat,
+    mergeParams
 }

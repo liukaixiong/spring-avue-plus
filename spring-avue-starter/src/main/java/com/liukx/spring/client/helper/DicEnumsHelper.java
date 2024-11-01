@@ -11,11 +11,12 @@ import java.util.stream.Collectors;
  * @Email liukx@elab-plus.com
  * @date 2021/8/19 - 16:30
  */
+@SuppressWarnings("rawtypes")
 public class DicEnumsHelper {
 
-    private static DicEnumsHelper INSTANCE = new DicEnumsHelper();
+    private static final DicEnumsHelper INSTANCE = new DicEnumsHelper();
 
-    private Map<String, Class<? extends Enum>> enumCache = new HashMap<>();
+    private final Map<String, Class<? extends Enum>> enumCache = new HashMap<>();
 
     public static DicEnumsHelper getINSTANCE() {
         return INSTANCE;

@@ -21,7 +21,7 @@ import java.util.List;
 // 模版对应的编号
 @AVueRouteKey(groupKey = "test-route", title = "复杂模版路由", description = "这个是用来处理一些比较复杂的模版，里面涵盖了crud，按钮，以及后端的接口路径的定义，包括分页的参数设置等等一系列的demo操作", img = "https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png")
 // 表格的标题,整个CRUD的配置,和table渲染相关的
-@AVueCrudOption(title = "这是一个复杂的模版", dialogDrag = true, border = true)
+@AVueCrudOption(title = "这是一个复杂的模版", dialogClickModal = true, dialogDrag = true, border = true, viewBtn = true)
 // 构建自己的页面自定义数据结构
 //@AVuePage(pageData = "data", pageNumber = "pageNo", pageSize = "pSize", pageTotal = "pageTotal")
 // 适配后台服务的对应的处理接口
@@ -39,7 +39,17 @@ import java.util.List;
                         // 当前弹层的提交路径
                         @AVueAttr(name = "submitUrl", value = AVueControllerTest.BODY_URL),
                         // 找下一个模版
-                        @AVueAttr(name = "group", value = "test-config")})
+                        @AVueAttr(name = "group", value = "test-config"),
+                        // 由于不是同一套模版，允许将数据结构进行转换填充。这里指定关系
+                        @AVueAttr(name = "fieldConvertMap", value = "dataJson=configJson&&age=validDay")
+                }),
+                // 指定事件
+                @AVueClickButton(type = "success", btnName = "复制拓展字段", methodName = AVueJsFunctionEnum.copyField, attrExt = {
+                        // 当前弹层的提交路径
+                        @AVueAttr(name = "name", value = "dataJson"),
+                }),
+                // 指定事件
+                @AVueClickButton(type = "success", btnName = "复制行", methodName = AVueJsFunctionEnum.copyField)
         },
         // 左上角按钮事件
         tableTopLeftButtons = {
@@ -74,11 +84,24 @@ public class AVueCrudModel {
     @AVueInput(prop = "username", label = "用户名称", search = true, searchRequired = true, onClick = "testB")
     private String username;
 
+    // 普通枚举
     @AVueSelect(prop = "checkStatus", label = "认证状态", dicData = "CheckStatusEnums", search = true)
     private String checkStatus = CheckStatusEnums.FOOTBALL.getCode().toString();
 
-    @AVueSelect(prop = "likeStar", label = "喜欢明星", dicData = "test-likeStar-map", dicUrl = "/liukx")
+    @AVueSelect(prop = "likeStar", label = "喜欢明星", dicData = "test-likeStar-map")
     private Integer likeStar;
+
+    @AVueSelect(label = "远端字典", dicUrl = "http://localhost:8765" + AVueControllerTest.DIC_URL, props = "{'label':'label','value':'value','res':'data'}", dicMethod = "post", dicQuery = "{'key':'key'}", search = true)
+    private String remoteDic;
+    /**
+     * 联动 省市区
+     */
+    @AVueSelect(label = "省份", cascader = {"city"}, dicUrl = "https://cli.avuejs.com/api/area/getProvince", props = "{'label':'name','value':'code'}", dicMethod = "get", dicQuery = "{'key':'key'}", search = true)
+    private String province;
+    @AVueSelect(label = "城市", cascader = {"area"}, dicUrl = "https://cli.avuejs.com/api/area/getCity/{{key}}?province={{province}}", props = "{'label':'name','value':'code'}", dicMethod = "get", dicQuery = "{'key':'key'}", search = true)
+    private String city;
+    @AVueSelect(label = "地区", dicUrl = "https://cli.avuejs.com/api/area/getArea/{{key}}?city={{city}}", props = "{'label':'name','value':'code'}", dicMethod = "get", dicQuery = "{'key':'key'}", search = true)
+    private String area;
 
     @AVueNumber(prop = "age", label = "年龄", labelTip = "这是选择年龄的地方")
     private Integer age = 18;
@@ -97,6 +120,7 @@ public class AVueCrudModel {
 
     @AVueDateRange(prop = "dateRange", rangeSeparator = "-", label = "日期范围", searchRange = true, search = true)
     private List<Date> dateRange;
+
 
     @AVueCheckbox(prop = "interest", label = "兴趣爱好", dicData = "InterestEnums")
     private List<String> interest;
@@ -137,6 +161,13 @@ public class AVueCrudModel {
     @AVueGroup(prop = "groupModel2", label = "分组测试2")
     private AVueNodeModel groupModel2;
 
+    public void setRemoteDic(String remoteDic) {
+        this.remoteDic = remoteDic;
+    }
+
+    public String getRemoteDic() {
+        return remoteDic;
+    }
     //    public AVueNodeModel getGroupModel() {
     //        return groupModel;
     //    }
@@ -160,6 +191,30 @@ public class AVueCrudModel {
     //    public void setSimpleModel(AVueSimpleModel simpleModel) {
     //        this.simpleModel = simpleModel;
     //    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
 
     public String getDataJson() {
         return dataJson;
