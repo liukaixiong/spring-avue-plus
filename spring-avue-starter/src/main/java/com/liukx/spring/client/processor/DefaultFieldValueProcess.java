@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author liukaixiong
@@ -23,7 +23,7 @@ public class DefaultFieldValueProcess implements AVueAttrPostProcess {
     /**
      * 对象属性缓存
      */
-    private final Map<String, Object> objectFieldMap = new HashMap<>();
+    private final Map<String, Object> objectFieldMap = new ConcurrentHashMap<>();
 
     @Autowired
     private AVueProperties prop;
