@@ -1,9 +1,9 @@
 package com.liukx.spring.client.helper;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -16,25 +16,25 @@ public class DicEnumsHelper {
 
     private static final DicEnumsHelper INSTANCE = new DicEnumsHelper();
 
-    private final Map<String, Class<? extends Enum>> enumCache = new HashMap<>();
+    private final Map<String, Class<? extends Enum>> enumCache = new ConcurrentHashMap<>();
 
     public static DicEnumsHelper getINSTANCE() {
         return INSTANCE;
     }
 
-    public void register(Class<? extends Enum> clazz){
-        enumCache.put(clazz.getSimpleName(),clazz);
+    public void register(Class<? extends Enum> clazz) {
+        enumCache.put(clazz.getSimpleName(), clazz);
     }
 
-    public Class<? extends Enum> get(String simpleName){
-       return enumCache.get(simpleName);
+    public Class<? extends Enum> get(String simpleName) {
+        return enumCache.get(simpleName);
     }
 
-    public Set<String> getKeys(){
-        return  enumCache.keySet();
+    public Set<String> getKeys() {
+        return enumCache.keySet();
     }
 
-    public List<Class<? extends Enum>> getValues(){
+    public List<Class<? extends Enum>> getValues() {
         return enumCache.values().stream().collect(Collectors.toList());
     }
 }

@@ -5,6 +5,7 @@ import com.liukx.spring.client.helper.JsonAVueCacheHelper;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,7 @@ import java.util.Map;
  * @date 2024/8/9 - 13:44
  */
 @Component
-public class AVueJsonCacheHandler {
+public class AVueJsonCacheHandler implements InitializingBean {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Resource
     private AVueProperties vueProperties;
@@ -40,4 +41,9 @@ public class AVueJsonCacheHandler {
         return jsonObject;
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        // 初始化json相关的缓存信息
+        JsonAVueCacheHelper.getINSTANCE().refreshCache();
+    }
 }

@@ -10,9 +10,9 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.StreamUtils;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * json缓存设置
@@ -22,7 +22,7 @@ import java.util.Objects;
  */
 public class JsonAVueCacheHelper {
     private final static Logger logger = LoggerFactory.getLogger(JsonAVueCacheHelper.class);
-    private final Map<String, Map<String, Object>> jsonObjectMap = new HashMap<>();
+    private final Map<String, Map<String, Object>> jsonObjectMap = new ConcurrentHashMap<>();
     private final Gson gson = new GsonBuilder().setStrictness(Strictness.LENIENT).create();
     private final PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
     private static final JsonAVueCacheHelper INSTANCE = new JsonAVueCacheHelper();
