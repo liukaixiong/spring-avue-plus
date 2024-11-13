@@ -37,6 +37,25 @@ public @interface AVueJson {
     String type() default "json";
 
     /**
+     * 对应列的宽度
+     */
+    String width() default "";
+
+    /**
+     * 列是否固定在左侧或者右侧，true 表示固定在左侧 true/left/right
+     */
+    String fixed() default "";
+
+    /**
+     * 最小宽度
+     */
+    String minWidth() default "";
+
+    /**
+     * 对应列是否可以通过拖动改变宽度（需要在option中border属性为真）
+     */
+    boolean resizable() default true;
+    /**
      * 展示模式 : ["tree", "code", "form", "text", "view"]
      *
      * @return

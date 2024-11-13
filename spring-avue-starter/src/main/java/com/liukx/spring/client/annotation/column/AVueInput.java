@@ -42,6 +42,16 @@ public @interface AVueInput {
     String fixed() default "";
 
     /**
+     * 最小宽度
+     */
+    String minWidth() default "";
+
+    /**
+     * 对应列是否可以通过拖动改变宽度（需要在option中border属性为真）
+     */
+    boolean resizable() default true;
+
+    /**
      * 列的单元格自定义类名
      */
     String className() default "";

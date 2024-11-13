@@ -22,7 +22,6 @@ public class AnnotationHelper {
     private Map<Annotation, Map> annotatedElementCache = new ConcurrentHashMap<>();
 
     private Set<String> skipMethod = new HashSet<>();
-
     {
         skipMethod.add("equals");
         skipMethod.add("toString");

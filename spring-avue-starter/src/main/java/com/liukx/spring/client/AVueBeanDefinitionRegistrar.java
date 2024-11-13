@@ -1,4 +1,4 @@
-package com.liukx.spring.client.config;
+package com.liukx.spring.client;
 
 import com.liukx.spring.client.annotation.AVueRouteKey;
 import com.liukx.spring.client.annotation.EnableAVue;

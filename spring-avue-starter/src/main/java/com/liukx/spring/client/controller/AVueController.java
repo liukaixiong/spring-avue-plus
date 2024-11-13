@@ -1,7 +1,7 @@
 package com.liukx.spring.client.controller;
 
 import com.liukx.spring.client.enums.AVueConstants;
-import com.liukx.spring.client.handler.AVueAnnotationHandler;
+import com.liukx.spring.client.handler.AVueAnnotationHandlerManager;
 import com.liukx.spring.client.handler.AVueJsonCacheHandler;
 import com.liukx.spring.client.helper.RouteKeyHelper;
 import com.liukx.spring.client.model.ConfigMappingModel;
@@ -38,7 +38,7 @@ public class AVueController {
     @Autowired(required = false)
     private IAVueTokenService tokenService;
     @Autowired
-    private AVueAnnotationHandler handler;
+    private AVueAnnotationHandlerManager handlerManager;
 
     @Resource
     private AVueJsonCacheHandler jsonCacheHandler;
@@ -75,7 +75,7 @@ public class AVueController {
             logger.warn("没有找到AVue对应的模版route-key : " + group);
             return ResponseEntity.notFound().build();
         } else {
-            Map<String, Map<String, Object>> parse = handler.parse(clazz);
+            Map<String, Map<String, Object>> parse = handlerManager.parse(clazz);
             return ResponseEntity.ok(parse);
         }
     }

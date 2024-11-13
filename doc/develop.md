@@ -41,3 +41,26 @@
 关于枚举类
 
 DicEnumData
+
+## 注意事项
+
+### 使用相关
+
+1、关于模版和接口相关
+模版配置的话，
+
+- 配置相关 @AVueCrudOption 负责crud相关的配置参数
+    - enter: 回车触发搜索
+    - delBtn : 是否展示删除按钮
+    - addBtn : 是否展示新增按钮
+- 字段相关
+    - 搜索条件字段：如果是纯搜索字段，那么可以配置hide = true，search = true
+    - 列表字段：如果你有格式化的需求，比如状态：1 || 0 ， 希望展示有效或者无效 dicData = "AVueDicStatusEnum"
+      ,具体参考一下该枚举类,实现DicEnumData即可
+    - 时间范围搜索: 请在搜索字段中配置`searchRange=true`即可
+
+### 组件相关
+
+#### 时间组件
+
+1. 如果你希望搜索的时候是范围查询，那么请确保注解中加入了`searchRange=true`

@@ -27,7 +27,6 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = {"com.liukx.spring.client"})
 @Configuration
 public class AVueAutoConfiguration {
-
     @Bean
     @ConditionalOnMissingBean(value = DefaultAnnotationHandler.class)
     public DefaultAnnotationHandler defaultAnnotationHandler() {

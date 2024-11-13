@@ -9,6 +9,9 @@ import * as rowClickEvent from './event/rowClickEvent';
  * @returns {Promise<unknown>}
  */
 export function list(_self, data) {
+    if (!_self.config.list) {
+        _self.$message.error("请先配置查询接口的后端请求地址!")
+    }
     return http(_self.config, _self.config.list, data);
 }
 
@@ -17,6 +20,9 @@ export function list(_self, data) {
  * @returns {Promise<unknown>}
  */
 export function add(_self, data) {
+    if (!_self.config.save) {
+        _self.$message.error("请先配置新增接口的后端请求地址!")
+    }
     return http(_self.config, _self.config.save, data);
 }
 
@@ -26,11 +32,17 @@ export function add(_self, data) {
  */
 export function del(_self, data) {
     console.log("----------------del---------------------")
+    if (!_self.config.del) {
+        _self.$message.error("请先配置删除接口的后端请求地址!")
+    }
     return http(_self.config, _self.config.del, data);
 }
 
 export function update(_self, data) {
     console.log("----------------update---------------------")
+    if (!_self.config.update) {
+        _self.$message.error("请先配置修改接口的后端请求地址!")
+    }
     return http(_self.config, _self.config.update, data);
 }
 
@@ -54,11 +66,14 @@ function http(config, path, data) {
 
 function httpPost(url, data) {
     return new Promise((resolve, reject) => {
-        _remote.post(url, data, (res) => {
-            resolve(res);
-        })
-    }).catch(error => {
-        reject(error);
+        try {
+            _remote.post(url, data, (res) => {
+                resolve(res);
+            });
+        } catch (error) {
+            console.warn(`url:${url} 请求失败! data:`, data);
+            reject(error);
+        }
     });
 }
 

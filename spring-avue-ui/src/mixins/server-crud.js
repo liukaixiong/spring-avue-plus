@@ -161,20 +161,20 @@ export default (app, clientOption = {}) => {
                         } else {
                             this.$message.success('删除成功')
                         }
+                    }, (error) => {
+                        this.$message.error(`删除失败${error}`)
                     })
                 }
                 if (this.delBefore) {
                     this.delBefore(row, index)
-                    callback()
-                } else {
-                    this.$confirm(`此操作将永久删除序号【${index}】的数据, 是否继续?`, '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    }).then(() => {
-                        callback()
-                    })
                 }
+                this.$confirm(`此操作将删除序号【${index}】的数据, 是否继续?`, '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    callback()
+                })
             },
             searchChange(params, done) {
                 if (done) done();

@@ -1,5 +1,6 @@
 package com.liukx.spring.client.handler.impl;
 
+import com.liukx.spring.client.annotation.EnableAVue;
 import com.liukx.spring.client.config.props.AVueProperties;
 import com.liukx.spring.client.enums.AVueAttrLevel;
 import com.liukx.spring.client.handler.AVueHandler;
@@ -10,7 +11,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 默认的注解处理器
@@ -23,9 +23,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DefaultAnnotationHandler implements AVueHandler {
 
-    private String defaultPackagePrefix = "com.liukx.spring.client.annotation";
+    private final String defaultPackagePrefix = EnableAVue.class.getPackageName();
 
-    private Map<String, Map<String, Object>> cacheMap = new ConcurrentHashMap<>();
+    private final Map<String, Map<String, Object>> cacheMap = new HashMap<>();
 
     @Autowired
     private AVueProperties prop;

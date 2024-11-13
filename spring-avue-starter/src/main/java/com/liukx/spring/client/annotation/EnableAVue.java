@@ -1,6 +1,6 @@
 package com.liukx.spring.client.annotation;
 
-import com.liukx.spring.client.config.AVueBeanDefinitionRegistrar;
+import com.liukx.spring.client.AVueBeanDefinitionRegistrar;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

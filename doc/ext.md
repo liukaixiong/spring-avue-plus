@@ -48,3 +48,93 @@
 
 负责用户的token生成和校验
 
+## 5. 枚举相关
+
+### 通用枚举:
+
+- AVueDicBooleanEnum : 是否枚举
+- AVueDicStatusEnum : 有效无效枚举
+
+### 5.1 DicEnumData 普通枚举
+
+可以定义枚举之后实现该接口，然后会根据你的接口的code和label来展示对应的编码和描述
+
+```java
+@AVueSelect(prop = "checkStatus", label = "认证状态", dicData = "CheckStatusEnums", search = true)
+private String checkStatus = CheckStatusEnums.FOOTBALL.getCode().toString();
+```
+
+```java
+public enum CheckStatusEnums implements DicEnumData {
+    BASKETBALL("1", "已认证"),
+    FOOTBALL("0", "未认证"),
+    BADMINTON("-99", "已失效"),
+    BILLIARDS("-1", "已拒绝");
+
+    private String code;
+    private String label;
+
+    CheckStatusEnums(String code, String label) {
+        this.code = code;
+        this.label = label;
+    }
+
+    @Override
+    public Object getCode() {
+        return code;
+    }
+
+    @Override
+    public String getLabel() {
+        return label;
+    }
+
+}
+```
+
+### 5.2 DictionaryDataCallback 回调枚举
+
+可以通过查询数据库、缓存或者第三方等等来实现,会通过容器找到对应的实现并填充
+
+**使用方式**
+
+```java
+@AVueSelect(prop = "likeStar", label = "喜欢明星", dicData = "test-likeStar-map", dicUrl = "/liukx")
+private Integer likeStar;
+```
+
+```java
+@Component
+public class TestModelProcessor implements DictionaryDataCallback<Map<String, Object>> {
+
+    @Override
+    public String callName() {
+        return "test-likeStar-map";
+    }
+
+    @Override
+    public PropsModel props() {
+        //
+        return new PropsModel("username", "id");
+    }
+
+    @Override
+    public List<Map<String, Object>> call(AVueAttrLevel level, AnnotatedElement element, Map<String, Object> attrMap) {
+        // 模拟数据
+        List<Map<String, Object>> list = new ArrayList<>();
+        list.add(mock(1, "周杰伦"));
+        list.add(mock(2, "林俊杰"));
+        list.add(mock(3, "王力宏"));
+        list.add(mock(4, "许嵩"));
+        return list;
+    }
+
+    private Map<String, Object> mock(int id, String name) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("username", name);
+        return map;
+    }
+}
+```
+
