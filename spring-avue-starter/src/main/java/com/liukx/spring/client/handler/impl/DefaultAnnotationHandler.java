@@ -50,6 +50,7 @@ public class DefaultAnnotationHandler implements AVueHandler {
         if (prop.isDebug()) {
             return getAnnotationValueMap(element, annotation);
         }
+
         return cacheMap.computeIfAbsent(key, k -> getAnnotationValueMap(element, annotation));
     }
 

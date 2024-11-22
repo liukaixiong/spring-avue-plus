@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author liukaixiong
@@ -23,7 +23,7 @@ public class DefaultFieldValueProcess implements AVueAttrPostProcess {
     /**
      * 对象属性缓存
      */
-    private final Map<String, Object> objectFieldMap = new ConcurrentHashMap<>();
+    private final Map<String, Object> objectFieldMap = new HashMap<>(64);
 
     @Autowired
     private AVueProperties prop;
@@ -49,8 +49,10 @@ public class DefaultFieldValueProcess implements AVueAttrPostProcess {
             return getClazzDefaultValue(declaringClass, element);
         }
 
+        final Object clazzDefaultValue = getClazzDefaultValue(declaringClass, element);
+
         Object value =
-                objectFieldMap.computeIfAbsent(simpleName + "-" + name, k -> getClazzDefaultValue(declaringClass, element));
+                objectFieldMap.computeIfAbsent(simpleName + "-" + name, k -> clazzDefaultValue);
 
         if (value != null && value != nullObject) {
             return value;
