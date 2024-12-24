@@ -2,7 +2,6 @@ package com.liukx.spring.client.handler;
 
 import com.liukx.spring.client.config.props.AVueProperties;
 import com.liukx.spring.client.helper.JsonAVueCacheHelper;
-import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -22,7 +21,7 @@ import java.util.Map;
 @Component
 public class AVueJsonCacheHandler implements InitializingBean {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    @Resource
+    @Autowired
     private AVueProperties vueProperties;
 
     @Autowired(required = false)

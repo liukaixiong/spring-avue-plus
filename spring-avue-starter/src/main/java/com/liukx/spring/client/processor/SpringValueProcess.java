@@ -3,7 +3,6 @@ package com.liukx.spring.client.processor;
 import com.liukx.spring.client.componts.SpringContextHelper;
 import com.liukx.spring.client.config.props.AVueProperties;
 import com.liukx.spring.client.enums.AVueAttrLevel;
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,7 +22,7 @@ public class SpringValueProcess extends AbstractAttrDataProcess implements Initi
     @Autowired
     private SpringContextHelper contextHelper;
 
-    @Resource
+    @Autowired
     private AVueProperties avueProperties;
 
     @Override

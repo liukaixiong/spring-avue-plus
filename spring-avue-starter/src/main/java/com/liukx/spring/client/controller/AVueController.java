@@ -10,7 +10,6 @@ import com.liukx.spring.client.model.LoginModel;
 import com.liukx.spring.client.service.IAVueLoginService;
 import com.liukx.spring.client.service.IAVueTokenService;
 import com.liukx.spring.client.utils.CookiesUtil;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +38,7 @@ public class AVueController {
     private IAVueTokenService tokenService;
     @Autowired
     private AVueAnnotationHandlerManager handlerManager;
-
-    @Resource
+    @Autowired
     private AVueJsonCacheHandler jsonCacheHandler;
 
     @GetMapping(value = {AVueConstants.Path.INDEX_CRUD_URL, AVueConstants.Path.COMPONENT_ALL_LIST_URL, AVueConstants.Path.INDEX_COMPONENT_URL, AVueConstants.Path.LOGIN_HTML_PATH})

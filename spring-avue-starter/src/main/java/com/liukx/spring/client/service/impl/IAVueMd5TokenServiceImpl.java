@@ -3,7 +3,7 @@ package com.liukx.spring.client.service.impl;
 import com.liukx.spring.client.config.props.AVueProperties;
 import com.liukx.spring.client.model.LoginModel;
 import com.liukx.spring.client.service.IAVueTokenService;
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.security.MessageDigest;
@@ -16,7 +16,7 @@ import java.util.Base64;
  */
 public class IAVueMd5TokenServiceImpl implements IAVueTokenService {
 
-    @Resource
+    @Autowired
     private AVueProperties avueProperties;
 
     @Override

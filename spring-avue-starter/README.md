@@ -2,13 +2,13 @@
 
 作为一个后端小伙伴，最大的痛点就是写完的接口需要拥有一些可视化的页面去承载这些功能使用【如果是只给后端那么swagger也足够了，非后端有点呛】如果有专业前端去弄确实也快，但是小公司呀~~~
 
-学呗~妈呀，现在的前端也挺卷，vue3啊element-ui呀typescript啊vite啊【我其实只想要一个简单的页面维护数据】
+学呗~妈呀，现在的前端也挺卷，vue3啊element-ui呀typescript啊vite啊`【我其实只想要一个简单的页面维护数据】`
 
 了解到[AVue](https://avuejs.com/)之后，觉得挺不错，降低不少门槛。内置的组件还挺多，嗯，不错。如果能把这种能力赋能给后端就更好了。
 
-优势:
+**优势:**
 
-- 不用过多关注前端【不用前端环境，集成SpringBoot的项目即可使用】
+- 不用过多关注前端【不用单独搭建前端环境，集成SpringBoot的项目即可使用】
 - CRUD可以直接基于模版完成【完全基于注解来定义模版，用过Spring的都懂】
 - 集成简单、使用方便
 - 很多复杂的数据提取步骤统统标准化起来，各种拓展，轻松玩转。【5分钟即可完成增删改查，试试呗~】
@@ -19,10 +19,13 @@
 
 ### 2、编译项目
 
+```shell
+mvn install 
+```
+
 ### 3、客户端引入依赖
 
 ```xml
-
 <dependency>
     <groupId>com.liukx.spring</groupId>
     <artifactId>spring-avue-starter</artifactId>
@@ -33,7 +36,7 @@
 ### 4、启用注解
 
 ```java
-@EnableAVue(basePackages = {"你的模版路径"})
+@EnableAVue(basePackages = {"你的模版路径"}, enumsPackages = {"你的枚举路径"})
 ```
 
 - **模版类路径指定【必填】**
@@ -50,11 +53,11 @@
 
 > 端口号请更换成你的项目端口号
 
-| 路径地址                                                        | 路径描述            |
-|-------------------------------------------------------------|-----------------|
-| http://localhost:9403/avue/server-crud?group=你的模版groupKey   | 查看crud的列表页面     |
-| http://localhost:9403/avue/avue-component?group=avueUrlList | 所有avue的路由模版卡片列表 |
-| http://localhost:9403/avue/list                             | 所有avue的路由模版卡片列表 |
+| 路径地址                                                        | 路径描述                    |
+|-------------------------------------------------------------|-------------------------|
+| http://localhost:9403/avue/server-crud?group=你的模版groupKey   | 查看crud的列表页面             |
+| http://localhost:9403/avue/avue-component?group=avueUrlList | 所有avue的路由模版卡片列表         |
+| http://localhost:9403/avue/list                             | 所有avue的路由模版卡片列表[上面的简化版] |
 
 以上步骤即可渲染出增删改查页面，内置丰富的组件能力。[详细参考AVue的crud](https://avuejs.com/crud/crud-doc.html)
 
@@ -116,6 +119,7 @@ test目录下 : `com.ruoyi.client.model.AVueCrudModel`
 
 ```java
 
+// 每个模版的标识,根据该标识路径能访问到该地址
 @AVueRouteKey(groupKey = "test-route", title = "复杂模版路由", description = "这个是用来处理一些比较复杂的模版，里面涵盖了crud，按钮，以及后端的接口路径的定义，包括分页的参数设置等等一系列的demo操作", img = "https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png")
 // 表格的标题,整个CRUD的配置,和table渲染相关的
 @AVueCrudOption(title = "这是一个复杂的模版", dialogClickModal = true, dialogDrag = true, border = true, viewBtn = true)
@@ -279,7 +283,7 @@ public class AVueCrudModel {
 ```yaml
 spring:
   avue:
-    debug: true  # 开发环境开启调试模式，IDEA->Build -> Rebuild 模版类即可立即生效
+    debug: true  # 开发环境开启调试模式，IDEA-> Build -> Rebuild 模版类即可立即生效
     enable-login: true  # 是否开启登录模式
     username: admin     # 登录帐号
     password: 1234      # 登录的密码

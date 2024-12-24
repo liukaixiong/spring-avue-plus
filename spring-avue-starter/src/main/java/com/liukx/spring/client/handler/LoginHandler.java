@@ -4,15 +4,16 @@ import com.liukx.spring.client.config.props.AVueProperties;
 import com.liukx.spring.client.enums.AVueConstants;
 import com.liukx.spring.client.service.IAVueTokenService;
 import com.liukx.spring.client.utils.CookiesUtil;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
+
 
 
 @Component
@@ -20,10 +21,10 @@ public class LoginHandler implements HandlerInterceptor {
 
     private final Logger logger = LoggerFactory.getLogger(LoginHandler.class);
 
-    @Resource
+    @Autowired
     private AVueProperties avueProperties;
 
-    @Resource
+    @Autowired
     private IAVueTokenService tokenService;
 
     @Override

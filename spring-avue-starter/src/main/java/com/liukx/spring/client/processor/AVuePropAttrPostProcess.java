@@ -22,7 +22,8 @@ public class AVuePropAttrPostProcess implements AVueAttrPostProcess {
         final Object prop = attrMap.get(PROP_NAME);
 
         if (prop == null || prop.toString().isEmpty()) {
-            if (element instanceof Field field) {
+            if (element instanceof Field) {
+                Field field = (Field) element;
                 final String name = field.getName();
                 attrMap.put(PROP_NAME, name);
             }

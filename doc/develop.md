@@ -4,7 +4,7 @@
 
 ### 1. 后端
 
-测试: com.liukx.spring.client.RuoYiClientTestApplication: 启动类
+测试: `com.liukx.spring.client.RuoYiClientTestApplication` : 启动类
 
 ### 2. 前端
 
@@ -40,7 +40,7 @@
 
 关于枚举类
 
-DicEnumData
+`DicEnumData`
 
 ## 注意事项
 

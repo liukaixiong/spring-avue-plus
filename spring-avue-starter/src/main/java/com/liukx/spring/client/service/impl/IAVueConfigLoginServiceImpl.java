@@ -3,7 +3,7 @@ package com.liukx.spring.client.service.impl;
 import com.liukx.spring.client.config.props.AVueProperties;
 import com.liukx.spring.client.model.LoginModel;
 import com.liukx.spring.client.service.IAVueLoginService;
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.util.StringUtils;
  */
 public class IAVueConfigLoginServiceImpl implements IAVueLoginService {
 
-    @Resource
+    @Autowired
     private AVueProperties avueProperties;
 
     @Override
