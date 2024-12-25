@@ -279,7 +279,7 @@ public class AVueCrudModel {
 
 ### 3. 配置项
 
-`RuoYi-AVue-Plus\ruoyi-avue-client\src\test\resources\application.yml`
+`spring-avue-starter/src/test/resources/application.yml`
 
 ```yaml
 spring:
