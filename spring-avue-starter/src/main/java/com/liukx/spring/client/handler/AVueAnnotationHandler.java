@@ -4,8 +4,8 @@ import com.liukx.spring.client.annotation.*;
 import com.liukx.spring.client.enums.AVueAttrLevel;
 import com.liukx.spring.client.helper.AttrPostProcessHelper;
 import com.liukx.spring.client.helper.HandlerHelper;
+import com.liukx.spring.client.utils.SpringContextUtil;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
@@ -21,16 +21,13 @@ import java.util.*;
  */
 @Component
 public class AVueAnnotationHandler implements InitializingBean {
-
-    @Autowired
-    private HandlerHelper handlerHelper;
-
-    @Autowired
-    private AttrPostProcessHelper attrPostProcessHelper;
-
-    private Map<Class<? extends Annotation>, AVueAttrLevel> annotationMap = new HashMap<>();
+    private final Map<Class<? extends Annotation>, AVueAttrLevel> annotationMap = new HashMap<>();
 
     public Map<String, Map<String, Object>> parse(Class clazz) {
+
+        final HandlerHelper handlerHelper = SpringContextUtil.getBean(HandlerHelper.class);
+        AttrPostProcessHelper attrPostProcessHelper = SpringContextUtil.getBean(AttrPostProcessHelper.class);
+
         // 获取类的
         Annotation[] declaredAnnotations = clazz.getDeclaredAnnotations();
 
@@ -47,7 +44,6 @@ public class AVueAnnotationHandler implements InitializingBean {
             String keyName = aVueAttrLevel.getKeyName();
 
             // 这里应该是个List
-
             Map<String, Object> handlerResult = handlerHelper.handler(aVueAttrLevel, clazz, declaredAnnotation);
             if (!handlerResult.isEmpty()) {
 
