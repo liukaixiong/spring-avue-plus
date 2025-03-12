@@ -22,14 +22,14 @@
 
 
   <span v-if="componentType === 'avue-mind'">
-<template>
-  <div class="mindMapDemo">
-    <div id="mindMapContainer"></div>
-    <div class="toolbar">
-    	<button @click="changeLyaout">切换结构</button>
-    </div>
-  </div>
-</template>
+    <template>
+      <div class="mindMapDemo">
+        <div id="mindMapContainer"></div>
+        <div class="toolbar">
+          <button @click="changeLyaout">切换结构</button>
+        </div>
+      </div>
+    </template>
   </span>
 
 </template>

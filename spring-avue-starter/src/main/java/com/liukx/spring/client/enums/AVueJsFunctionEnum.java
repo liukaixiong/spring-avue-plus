@@ -3,6 +3,7 @@ package com.liukx.spring.client.enums;
 /**
  * 默认自带的基础函数
  * 代码在{@code rowClickEvent.js}中
+ * 约定 #{属性} = 占位符,可在有url配置中使用该模版内部属性
  *
  * @author liukaixiong
  * @date 2024/10/14 - 16:10
@@ -13,7 +14,7 @@ public enum AVueJsFunctionEnum {
      * {@code @AVueClickButton(methodName = AVueJsFunctionEnum.hrefClick, btnName = "跳转链接", type = "success", icon = "el-icon-setting", attrExt = {
      *                         @AVueAttr(name = "url", value = "https://www.baidu.com")}}
      */
-    hrefClick("跳转链接,点击即可跳转到对应的地址!", new String[]{"url : 配置对应的url地址"}),
+    hrefClick("跳转链接,点击即可跳转到对应的地址!", new String[]{"url : 配置对应的url地址,[如果是基于行的使用方式,可以使用#{属性名称}占位符来定义]"}),
     /**
      * {@code  @AVueClickButton(methodName = AVueJsFunctionEnum.confirmClickRemoteApi, btnName = "确认按钮", attrExt = {
      *                         @AVueAttr(name = "title", value = "小伙子，你确定吗？有惊喜喔!"),
@@ -26,9 +27,14 @@ public enum AVueJsFunctionEnum {
      *                         // 当前弹层的提交路径
      *                         @AVueAttr(name = "submitUrl", value = AVueControllerTest.BODY_URL),
      *                         // 找下一个模版
-     *                         @AVueAttr(name = "group", value = "test-config")})}
+     *                         @AVueAttr(name = "group", value = "test-config"),
+     *                         // 由于不是同一套模版，允许将数据结构进行转换填充。这里指定关系,
+     *                         @AVueAttr(name = "fieldConvertMap", value = "dataJson=configJson&&age=validDay")})
+     *                         }
+     *
      */
     openWindowJsonRemote("点击打开一个弹出层,弹出层内渲染一个指定模版,基于当前数据渲染到模版中", new String[]{"group[必填]: 模版编码", "submitUrl [必填]: 弹层中的提交按钮指向的请求地址", "url [非必填]: 模版url,默认是/avue/crud,也就是说本地的模版", "submitEventName 非必填: 提交的方法实现, 在dialogSubmitEvent.js中,默认是defaultSubmit方法", "fieldConvertMap , 字段转换,当前行的数据,要到另一个模版中去,涉及到的值转换"}),
+    openWindowTableList("点击打开一个弹出层,弹出层内渲染一个指定模版,基于当前数据渲染到模版中", new String[]{"group[必填]: 模版编码", "submitUrl [必填]: 弹层中的提交按钮指向的请求地址", "url [非必填]: 模版url,默认是/avue/crud,也就是说本地的模版", "submitEventName 非必填: 提交的方法实现, 在dialogSubmitEvent.js中,默认是defaultSubmit方法", "fieldConvertMap , 字段转换,当前行的数据,要到另一个模版中去,涉及到的值转换"}),
 
     /**
      * {@code @AVueClickButton(type = "success", btnName = "复制行", methodName = AVueJsFunctionEnum.copyField)}

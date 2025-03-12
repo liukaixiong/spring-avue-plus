@@ -7,6 +7,7 @@
 
 import crudUtil from "@/utils/server-crud";
 import _remote from "@/api/crud/remoteApi";
+import page from "@/const/page.js";
 
 /**
  * 通用的测试按钮A
@@ -40,8 +41,10 @@ export function testB(self, item, row, index) {
  */
 export function hrefClick(self, item, row, index) {
     let json = listToJson(item['attrExt']);
+    let jumpUrl = json.url;
+    jumpUrl = parseTextEnvData(row, jumpUrl);
     if (json) {
-        window.open(json.url);
+        window.open(jumpUrl);
     } else {
         self.message.error("没有配置跳转链接，无法跳转！")
     }
@@ -56,8 +59,8 @@ export function hrefClick(self, item, row, index) {
  */
 export function confirmClickRemoteApi(self, item, row, index) {
     let param = listToJson(item['attrExt']);
-    let title = param.title || '您确认执行该操作吗?';
-    let url = param.url;
+    let title = parseTextEnvData(row, param.title) || '您确认执行该操作吗?';
+    let url = parseTextEnvData(row, param.url);
     let method = param.method || 'post';
 
     if (!url) {
@@ -82,6 +85,14 @@ export function confirmClickRemoteApi(self, item, row, index) {
     })
 }
 
+/**
+ * 打开一个弹层，输入json参数给后端
+ * @param self
+ * @param item
+ * @param row
+ * @param index
+ * @returns {{}}
+ */
 export function openTabLink(self, item, row, index) {
     let param = listToJson(item['attrExt']);
     let requestParams = param["query"];
@@ -145,7 +156,7 @@ export function openWindowJsonRemote(self, item, row, index) {
     // 显示弹窗窗口
     let param = listToJson(item['attrExt']);
     // 提交按钮指向的后端地址
-    let submitUrl = param.submitUrl;
+    let submitUrl = parseTextEnvData(row, param.submitUrl);
     // 提交事件
     let submitEventName = param.submitEventName;
     // 配置模版
@@ -161,7 +172,7 @@ export function openWindowJsonRemote(self, item, row, index) {
 
     let requestUrl = crudUtil.completionDomain(self, param.url || '/avue/crud');
     // 先清空对象
-    self.dialogConfig.objectData = {};
+    // self.dialogConfig.objectData = {};
 
     let acceptToken = self.config.acceptToken;
     let requestBody = {
@@ -184,6 +195,77 @@ export function openWindowJsonRemote(self, item, row, index) {
 }
 
 /**
+ * 打开一个弹层，弹层内容为另一个模版
+ * @param self
+ * @param item
+ * @param row
+ * @param index
+ */
+export function openWindowTableList(self, item, row, index) {
+    // 显示弹窗窗口
+    let param = listToJson(item['attrExt']);
+    // 提交按钮指向的后端地址
+    let submitUrl = parseTextEnvData(row, param.submitUrl);
+    // 提交事件
+    let submitEventName = param.submitEventName;
+    // 配置模版
+    let group = param.group;
+
+    let fieldConvertMap = param.fieldConvertMap;
+    let varRow = row;
+    // 做一层值转换
+    if (fieldConvertMap) {
+        let convertObject = parseKeyValuePairs(fieldConvertMap);
+        Object.entries(convertObject).forEach(([k, v]) => {
+            varRow[v] = row[k];
+        });
+    }
+
+    let requestUrl = crudUtil.completionDomain(self, param.url || '/avue/crud');
+    // 先清空对象
+    // self.dialogConfig.objectData = [];
+
+    let acceptToken = self.config.acceptToken;
+    let requestBody = {
+        "group": group,
+        "acceptToken": acceptToken
+    }
+    self.dialogConfig.objectData.page = {};
+    self.dialogConfig.objectData.page.currentPage = 1;
+    self.dialogConfig.objectData.search = varRow;
+    _remote.post(requestUrl, requestBody, (res) => {
+        // 构建后端路径
+        let listUrl = crudUtil.completionDomain(self, res.config.list);
+        self.dialogConfig.objectData.page.url = listUrl;
+        self.dialogConfig.objectData.page.row = varRow;
+        self.dialogConfig.objectData.getList = () => {
+            // 构建分页参数
+            let pageParams = {}
+            pageParams[self.getPageInfo(page.pageNumber) || 'pageNumber'] = self.dialogConfig.objectData.page.currentPage || 1;
+            pageParams[self.getPageInfo(page.pageSize) || 'pageSize'] = self.dialogConfig.objectData.page.pageSize || 10;
+            let data = Object.assign(pageParams, varRow);
+            data = Object.assign(data, self.dialogConfig.objectData.search);
+            _remote.post(listUrl, data, (list_res) => {
+                let listObject = self.getRootData(list_res);
+                self.dialogConfig.objectData.data = listObject[self.getPageInfo(page.pageData) || 'data'];
+                self.dialogConfig.objectData.page.total = listObject[self.getPageInfo(page.pageTotal) || 'total'];
+            });
+        }
+
+        self.dialogConfig.config = {};
+        self.dialogConfig.config["submitUrl"] = submitUrl;
+        self.dialogConfig.config["submitEventName"] = submitEventName;
+        self.dialogConfig.formOption = res.option;
+        self.dialogConfig.dialogOption = {
+            title: res.option.title || '弹窗操作',
+            type: 'table'
+        };
+        self.dialogConfig.showDialogProps = true;
+        self.dialogConfig.objectData.getList();
+    });
+}
+
+/**
  * 转换请求参数
  * @param search
  * @param objectData
@@ -201,6 +283,20 @@ function convertQueryParam(search, objectData) {
         }
     })
     return obj;
+}
+
+function parseTextEnvData(row, text) {
+    let textBody = text;
+    if (row && textBody) {
+        while (textBody.includes("#{") && textBody.includes("}")) {
+            let start = textBody.indexOf("#{");
+            let end = textBody.indexOf("}");
+            let key = textBody.substring(start + 2, end);
+            let value = row[key];
+            textBody = textBody.replace("#{" + key + "}", value);
+        }
+    }
+    return textBody;
 }
 
 /**

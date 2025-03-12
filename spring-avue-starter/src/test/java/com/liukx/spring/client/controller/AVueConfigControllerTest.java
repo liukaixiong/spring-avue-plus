@@ -42,7 +42,7 @@ public class AVueConfigControllerTest extends TestCase {
         //            crudModel.setconfig
         //            crudModels.add(crudModel);
         //        }
-        List<AVueSimpleModel> mockList = JMockData.mock(new TypeReference<List<AVueSimpleModel>>() {
+        List<AVueSimpleModel> mockList = JMockData.mock(new TypeReference<>() {
         });
 
         Map<String, Object> resultMap = new HashMap<>();

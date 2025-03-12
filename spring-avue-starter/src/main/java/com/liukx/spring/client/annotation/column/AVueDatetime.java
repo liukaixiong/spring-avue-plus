@@ -136,7 +136,7 @@ public @interface AVueDatetime {
     /**
      * 表单编辑时是否可见
      */
-    boolean editDisplay() default false;
+    boolean editDisplay() default true;
 
     /**
      * 表单编辑时是否为查看模式
@@ -154,6 +154,7 @@ public @interface AVueDatetime {
      * @return
      */
     boolean viewDisabled() default false;
+
     /**
      * 开启排序
      */
@@ -183,11 +184,15 @@ public @interface AVueDatetime {
 
     /**
      * 真实值的时间格式
+     * 年月日时分秒: YYYY-MM-DD HH:mm:ss
+     * <a href="https://avuejs.com/form/form-date.html#%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E5%8C%96">时间格式</a>
      */
     String valueFormat() default "";
 
     /**
      * 显示值时间格式
+     * 年月日时分秒: YYYY-MM-DD HH:mm:ss
+     * <a href="https://avuejs.com/form/form-date.html#%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E5%8C%96">时间格式</a>
      */
     String format() default "";
 

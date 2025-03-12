@@ -87,19 +87,19 @@ function httpPost(url, data) {
  *
  * @param self           vue对象
  * @param clientConfig   页面传输对象
- * @param pageRouteInfo  页面对象,URL请求参数
+ * @param pageQueryObject  页面对象,URL请求参数
  * @param serverInfo     domain对象
  * @param listFunction   调用获取集合的方法
  */
-export function renderData(self, clientConfig, pageRouteInfo, serverInfo, listFunction) {
+export function renderData(self, clientConfig, pageQueryObject, serverInfo, listFunction) {
     if (!serverInfo) {
-        self.$message.error("找不到对应的服务注册编号 请检查请求路径中的: server=" + pageRouteInfo.server + " 然后去[系统管理->服务注册]中查找是否有该编号!");
+        self.$message.error("找不到对应的服务注册编号 请检查请求路径中的: server=" + pageQueryObject.server + " 然后去[系统管理->服务注册]中查找是否有该编号!");
         return;
     }
     let domain = serverInfo.domain;
     let acceptToken = serverInfo.acceptToken;
     let params = {
-        "group": pageRouteInfo.group,
+        "group": pageQueryObject.group,
         "acceptToken": serverInfo.acceptToken
     }
 
@@ -128,6 +128,8 @@ export function renderData(self, clientConfig, pageRouteInfo, serverInfo, listFu
                 pageInfo[key] = responsePage[key];
             });
             self.$data.page.info = pageInfo;
+            self.$data.page.currentPage = pageInfo.currentNo || 1;
+            self.$data.page.pageSize = pageInfo.currentPageSize || 10;
         }
 
         // 初始化option部分
@@ -135,6 +137,7 @@ export function renderData(self, clientConfig, pageRouteInfo, serverInfo, listFu
         self.$data.config = config;
         self.$data.config['domain'] = domain;
         self.$data.config['acceptToken'] = acceptToken;
+        self.$data.search = pageQueryObject;
         postRenderData(self.$data);
 
         listFunction();

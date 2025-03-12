@@ -22,8 +22,8 @@ import java.util.List;
 @AVueRouteKey(groupKey = "test-route", title = "复杂模版路由", description = "这个是用来处理一些比较复杂的模版，里面涵盖了crud，按钮，以及后端的接口路径的定义，包括分页的参数设置等等一系列的demo操作", img = "https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png")
 // 表格的标题,整个CRUD的配置,和table渲染相关的
 @AVueCrudOption(title = "这是一个复杂的模版", dialogClickModal = true, dialogDrag = true, border = true, viewBtn = true)
-// 构建自己的页面自定义数据结构
-//@AVuePage(pageData = "data", pageNumber = "pageNo", pageSize = "pSize", pageTotal = "pageTotal")
+// 构建自己的页面自定义数据结构 配置页面分页参数, 不需要可直接注释掉,就不会走分页的逻辑
+@AVuePage(pageData = "data", pageNumber = "pageNo", pageSize = "pageSize", pageTotal = "total", currentPageSize = 100)
 // 适配后台服务的对应的处理接口
 @AVueConfig(list = AVueControllerTest.LIST_URL, update = AVueControllerTest.UPDATE_URL, save = AVueControllerTest.UPDATE_URL, successKeyword = "true", successField = "success", messageField = "message")
 // 设置后台接口调用之后成功或者失败的结构模型
@@ -32,7 +32,7 @@ import java.util.List;
         tableRowButtons = {
                 // 指定方法名称按钮事件名称
                 @AVueClickButton(methodName = AVueJsFunctionEnum.confirmClickRemoteApi, btnName = "确认按钮", attrExt = {
-                        @AVueAttr(name = "title", value = "小伙子，你确定吗？有惊喜喔!"),
+                        @AVueAttr(name = "title", value = "小伙子->#{username}，你确定吗？有惊喜喔!"),
                         @AVueAttr(name = "url", value = AVueControllerTest.BODY_URL)}),
                 // 指定事件
                 @AVueClickButton(type = "success", btnName = "弹层按钮测试", methodName = AVueJsFunctionEnum.openWindowJsonRemote, attrExt = {
@@ -40,7 +40,17 @@ import java.util.List;
                         @AVueAttr(name = "submitUrl", value = AVueControllerTest.BODY_URL),
                         // 找下一个模版
                         @AVueAttr(name = "group", value = "test-config"),
-                        // 由于不是同一套模版，允许将数据结构进行转换填充。这里指定关系
+                        // 由于不是同一套模版，允许将数据结构进行转换填充。这里指定关系,
+                        @AVueAttr(name = "fieldConvertMap", value = "dataJson=configJson&&age=validDay")
+                }),
+
+                // 指定事件
+                @AVueClickButton(type = "success", btnName = "弹层展示一个表格数据", methodName = AVueJsFunctionEnum.openWindowTableList, attrExt = {
+                        // 当前弹层的提交路径
+                        @AVueAttr(name = "submitUrl", value = AVueControllerTest.BODY_URL),
+                        // 找下一个模版
+                        @AVueAttr(name = "group", value = "test-config"),
+                        // 由于不是同一套模版，允许将数据结构进行转换填充。这里指定关系,
                         @AVueAttr(name = "fieldConvertMap", value = "dataJson=configJson&&age=validDay")
                 }),
                 // 指定事件
@@ -49,11 +59,13 @@ import java.util.List;
                         @AVueAttr(name = "name", value = "dataJson"),
                 }),
                 // 指定事件
-                @AVueClickButton(type = "success", btnName = "复制行", methodName = AVueJsFunctionEnum.copyField)
+                @AVueClickButton(type = "success", btnName = "复制行", methodName = AVueJsFunctionEnum.copyField),
+                @AVueClickButton(methodName = AVueJsFunctionEnum.hrefClick, btnName = "行跳转链接", type = "success", icon = "el-icon-setting", attrExt = {
+                        @AVueAttr(name = "url", value = "/avue/server-crud?group=test-route&&remoteDic=#{remoteDic}")})
         },
         // 左上角按钮事件
         tableTopLeftButtons = {
-                @AVueClickButton(methodName = AVueJsFunctionEnum.hrefClick, btnName = "跳转链接", type = "success", icon = "el-icon-setting", attrExt = {
+                @AVueClickButton(methodName = AVueJsFunctionEnum.hrefClick, btnName = "左上角跳转链接", type = "success", icon = "el-icon-setting", attrExt = {
                         @AVueAttr(name = "url", value = "https://www.baidu.com")})
         }
 )

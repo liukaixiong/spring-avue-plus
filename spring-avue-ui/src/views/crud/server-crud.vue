@@ -3,6 +3,7 @@
     <avue-crud v-bind="bindVal"
                v-on="onEvent"
                v-model="form"
+               v-model:search="search"
                ref="crud"
                v-model:page="page"
                @size-change="pageSizeChange"
@@ -120,6 +121,7 @@ export default serverCrud({
           page: {
             currentPage: 1
           },
+          search: {},
           option: {
             dialogDrag: true, // 这里会有一个延迟问题,如果通过接口返回的话,即便为true也不会生效
           }

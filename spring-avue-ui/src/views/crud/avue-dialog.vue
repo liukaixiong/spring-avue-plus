@@ -7,18 +7,31 @@
         :top="dialogOption.top || '50px' "
         v-model="showDialog"
         width="60%" @close='closeDialog'>
-      <avue-form ref="form" :modelValue="objectData" :option="formOption" @reset-change="resetForm" @submit="submit">
-        <!--    #[item] -> https://avuejs.com/form/form-slot.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%86%85%E5%AE%B9    -->
-        <template #[item]="{column,value}" v-for="item in formOption.registerFieldComponents">
-          <!--          &lt;!&ndash; 引入新的组件  json &ndash;&gt;-->
-          <span v-if="column.type==='json'">
-            <json-editor-vue class="editor" :ref="'editor-'+column.prop" :name="column.prop"
-                             :modelValue="JSON.parse(value|| '{}')"
-                             @blur="jsonFormat(this,column.prop)"/>
+      <span v-if="dialogOption.type === undefined || dialogOption.type === 'form'">
+        <avue-form ref="form" :modelValue="objectData" :option="formOption" @reset-change="resetForm" @submit="submit">
+          <!--    #[item] -> https://avuejs.com/form/form-slot.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%86%85%E5%AE%B9    -->
+          <template #[item]="{column,value}" v-for="item in formOption.registerFieldComponents">
+            <!--          &lt;!&ndash; 引入新的组件  json &ndash;&gt;-->
+            <span v-if="column.type === 'json'">
+              <json-editor-vue class="editor" :ref="'editor-'+column.prop" :name="column.prop"
+                               :modelValue="JSON.parse(value|| '{}')"
+                               @blur="jsonFormat(this,column.prop)"/>
+            </span>
+          </template>
+        </avue-form>
+      </span>
 
-          </span>
-        </template>
-      </avue-form>
+      <span v-if="dialogOption.type === 'table'">
+       <avue-crud :data="objectData.data||[]"
+                  :option="formOption||[]"
+                  v-model:page="objectData.page"
+                  v-model:search="objectData.search"
+                  @search-change="searchChange"
+                  @search-reset="searchChange"
+                  @size-change="pageSizeChange"
+                  @current-change="currentPageChange"
+       ></avue-crud>
+      </span>
       <!--      <json-editor-vue class="editor" ref="editor-" name="column.prop"-->
       <!--                       :modelValue="JSON.parse( '{}')"-->
       <!--                       @blur="jsonFormat(this,'{}')"/>-->
@@ -53,6 +66,9 @@ export default {
     },
     dialogOption: {
       default: {}
+    }, getList: {
+      required: false,
+      type: Function
     }
   },
   data() {
@@ -68,7 +84,7 @@ export default {
     // 当关闭弹窗的时候，清空里面的值
     showDialogProps(val) {
       this.showDialog = val;
-      if (!val) {
+      if (!val && this.$refs.form) {
         this.$refs.form.resetForm();
       }
     }
@@ -90,6 +106,19 @@ export default {
       crudUtil.jsonFormat(this, name);
     }, getSlotFormName(item) {
       return crudUtil.getSlotFormName(item);
+    },// 当前页码发生变化
+    currentPageChange(val) {
+      this.objectData.page.currentPage = val;
+      this.objectData.getList();
+    },
+    // 当前页码发生变化
+    pageSizeChange(val) {
+      this.objectData.page.pageSize = val;
+      this.objectData.getList();
+    }, searchChange(params, done) {
+      if (done) done();
+      this.objectData.search = params;
+      this.objectData.getList();
     }
   }
 }

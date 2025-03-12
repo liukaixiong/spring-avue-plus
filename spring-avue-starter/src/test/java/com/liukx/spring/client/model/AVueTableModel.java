@@ -13,7 +13,7 @@ import com.liukx.spring.client.controller.AVueConfigControllerTest;
  * @Email liukx@elab-plus.com
  * @date 2021/8/17 - 13:02
  */
-@AVueRouteKey(groupKey = "test-table", title = "这是一个模版测试", description = "这个是基于子表单所构建的参数模型,从一个页面展示表格相关的测试")
+@AVueRouteKey(groupKey = "test-table", title = "这是一个table模版测试", description = "这个是基于子表单所构建的参数模型,从一个页面展示表格相关的测试")
 @AVueCrudOption(title = "这是一个测试")
 @AVueConfig(list = AVueConfigControllerTest.LIST_URL, update = AVueConfigControllerTest.UPDATE_URL, save = AVueConfigControllerTest.UPDATE_URL)
 public class AVueTableModel {

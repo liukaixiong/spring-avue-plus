@@ -14,6 +14,17 @@ import java.lang.annotation.*;
 @Documented
 public @interface AVuePage {
 
+
+    /**
+     * 开始页码
+     */
+    int currentNo() default 1;
+
+    /**
+     * 当前页大小
+     */
+    int currentPageSize() default 10;
+
     /**
      * 接口返回数据的根路径,多层级可以用.号分割
      *

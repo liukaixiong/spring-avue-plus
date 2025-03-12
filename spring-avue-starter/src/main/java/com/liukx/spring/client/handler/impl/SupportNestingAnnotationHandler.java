@@ -33,7 +33,7 @@ public class SupportNestingAnnotationHandler extends DefaultAnnotationHandler {
 
         Map<String, Map<String, Object>> clazzAnnotationMap = annotationHandler.parse(type);
 
-        if (clazzAnnotationMap.size() > 0) {
+        if (!clazzAnnotationMap.isEmpty()) {
             Map<String, Object> result = clazzAnnotationMap.get(AVueAttrLevel.OPTION.getKeyName());
             handler.put("children", result);
         }

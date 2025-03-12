@@ -63,6 +63,11 @@ public class AVueController {
         }
         // 非空判断
         String group = configMappingModel.getGroup();
+
+        if (group.contains("?")) {
+            group = group.substring(0, group.indexOf("?"));
+        }
+
         Class clazz = RouteKeyHelper.getInstance().get(group);
         if (clazz == null) {
             final Map<String, Object> jsonObject = jsonCacheHandler.getJsonCache(group);
