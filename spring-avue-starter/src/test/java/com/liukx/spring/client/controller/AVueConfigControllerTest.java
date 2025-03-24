@@ -58,16 +58,20 @@ public class AVueConfigControllerTest extends TestCase {
     @RequestMapping(value = UPDATE_URL, method = RequestMethod.POST, produces = {APPLICATION_JSON_VALUE,
         HAL_MEDIA_TYPE})
     @ResponseBody
-    public ResponseEntity<Boolean> update(@RequestBody AVueCrudModel body) {
+    public ResponseEntity<Map<String, Object>> update(@RequestBody AVueCrudModel body) {
         logger.info("update request : " + JsonParseUtils.toJson(body));
-        return ResponseEntity.ok(true);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("success", true);
+        return ResponseEntity.ok(resultMap);
     }
 
     @RequestMapping(value = SAVE_URL, method = RequestMethod.POST, produces = {APPLICATION_JSON_VALUE, HAL_MEDIA_TYPE})
     @ResponseBody
-    public ResponseEntity<Boolean> save(@RequestBody AVueCrudModel body) {
+    public ResponseEntity<Map<String, Object>> save(@RequestBody AVueCrudModel body) {
         logger.info("save request : " + JsonParseUtils.toJson(body));
-        return ResponseEntity.ok(true);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("success", true);
+        return ResponseEntity.ok(resultMap);
     }
 
     private Integer mockInteger(int min, int max) {

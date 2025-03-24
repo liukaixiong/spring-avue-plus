@@ -26,9 +26,11 @@ let components = {
             jsonObjectList.forEach(vars => {
                 let value = vars.editor.getText();
                 if (value && !utils.isJson(value)) {
+                    check = false;
                     self.$message.error("非标准的JSON,请检查!");
                     return check;
                 }
+
                 if (value) {
                     let name = vars.$attrs['name'];
                     self.form[name] = value;
@@ -50,10 +52,11 @@ let components = {
         },
         jsonFormat(self, name) {
             let jsonObject = utils.getPrefixNameRefsList(self, 'editor-', name);
+
             if (jsonObject && jsonObject.length > 0) {
                 let value = jsonObject[0].editor.getText();
                 if (value && !utils.isJson(value)) {
-                    this.$message.error("非标准的JSON,请检查!");
+                    self.$message.error("非标准的JSON,请检查!");
                 }
             }
         }

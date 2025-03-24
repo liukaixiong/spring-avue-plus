@@ -232,6 +232,7 @@ export default serverCrud({
               }
             }
           });
+
           return check;
         },
         componentsAfter(form, done, loading) {

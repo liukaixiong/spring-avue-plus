@@ -136,17 +136,20 @@ public @interface AVueJson {
     boolean display() default false;
 
     /* ********************************** 表单常用属性 ***************************************** */
+
     /**
      * 比例 12 代表一行的一半，24则铺满整行
      *
      * @return
      */
     int span() default 12;
+
     /**
      * 表格页面是否展示
      * @return
      */
     boolean hide() default false;
+
     /**
      * 表单新增时是否禁止
      *
@@ -200,6 +203,7 @@ public @interface AVueJson {
      * @return
      */
     boolean viewDisabled() default false;
+
     /**
      * 开启排序
      *

@@ -121,11 +121,14 @@ export default (app, clientOption = {}) => {
                             done(row, done, loading);
                         }
                     }).catch(() => {
-                        loading()
+                        loading();
                     })
                 }
                 if (this.addBefore) {
-                    this.addBefore(row, done, loading)
+                    if (!this.addBefore(row, done, loading)) {
+                        loading();
+                        return;
+                    }
                 }
                 callback()
             },
