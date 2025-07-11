@@ -82,8 +82,11 @@ public class JsonAVueCacheHelper {
     }
 
     public void refreshCache() {
-        for (String jsonPath : getJsonPaths()) {
-            builderResourceCache(jsonPath);
+        final String[] jsonPaths = getJsonPaths();
+        if (jsonPaths != null) {
+            for (String jsonPath : getJsonPaths()) {
+                builderResourceCache(jsonPath);
+            }
         }
     }
 }

@@ -1,3 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.liukx.spring.client.config.AVueAutoConfiguration,\
-com.liukx.spring.client.config.AVueMvcWebMvcConfigurer
+com.liukx.spring.client.config.AVueAutoConfiguration

@@ -10,13 +10,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.io.IOException;
 
 
-@Component
 public class LoginHandler implements HandlerInterceptor {
 
     private final Logger logger = LoggerFactory.getLogger(LoginHandler.class);
@@ -30,6 +29,10 @@ public class LoginHandler implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+        return login(request, response);
+    }
+
+    private boolean login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.info(request.getRequestURI());
 
         if (!avueProperties.isEnableLogin()) {

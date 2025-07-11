@@ -25,6 +25,7 @@ public class GroupAnnotationHandler extends DefaultAnnotationHandler {
     private AVueAnnotationHandler annotationHandler;
 
     @Override
+    @SuppressWarnings(value = {"unchecked"})
     public void handler(AVueAttrLevel level, AnnotatedElement element, Annotation annotation,
         Map<String, Object> levelMap) {
 
