@@ -47,7 +47,7 @@ public class AVueMvcWebFluxMvcConfigurer implements WebFluxConfigurer {
             final String path = exchange.getRequest().getURI().getPath();
 
             // 静态资源
-            if (path.startsWith("/avue/assets")) {
+            if (!path.startsWith("/avue") || path.startsWith("/avue/assets")) {
                 return chain.filter(exchange);
             }
 
@@ -71,47 +71,6 @@ public class AVueMvcWebFluxMvcConfigurer implements WebFluxConfigurer {
             return chain.filter(exchange);
         };
     }
-
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(loginHandler).addPathPatterns(AVueConstants.Path.INDEX_FULL_URL)
-//                .excludePathPatterns(AVueConstants.Path.LOGIN_HTML_PATH, AVueConstants.Path.DEFAULT_LOGIN_URL, AVueConstants.Path.INDEX_FORWARD_URL)
-//                .excludePathPatterns("/avue/assets/**");
-//    }
-
-    //    @Bean
-//    public WebFilter loginFilter() {
-//        return (exchange, chain) -> {
-//            // 在这里添加你的拦截逻辑
-//            // 例如：检查登录状态
-//            // 可以使用 exchange.getRequest().getURI().getPath() 来获取请求路径
-//            String path = exchange.getRequest().getURI().getPath();
-//            if (path.equals(AVueConstants.Path.INDEX_FULL_URL)) {
-//                // 检查是否需要拦截
-//                if (shouldExclude(path)) {
-//                    return chain.filter(exchange);
-//                }
-//                // 执行拦截逻辑
-//            }
-//            // 例如：检查登录状态
-//            return chain.filter(exchange);
-//        };
-//    }
-    private boolean shouldExclude(String path) {
-        return path.equals(AVueConstants.Path.LOGIN_HTML_PATH) ||
-                path.equals(AVueConstants.Path.DEFAULT_LOGIN_URL) ||
-                path.equals(AVueConstants.Path.INDEX_FORWARD_URL) ||
-                path.startsWith("/avue/assets/");
-    }
-
-//    @Bean
-//    @Order
-//    @ConditionalOnMissingBean
-//    public InternalResourceViewResolver internalResourceViewResolver() {
-//        // 静态转发需要用到
-//        return new InternalResourceViewResolver();
-//    }
-
 
     @Override
     public void addCorsMappings(org.springframework.web.reactive.config.CorsRegistry registry) {
