@@ -13,7 +13,7 @@
     </modules>
 
     <properties>
-        <revision>2.0.0-SNAPSHOT</revision>
+        <revision>2.0.1-SNAPSHOT</revision>
         <!-- jdk 17 版本 -->
         <jdk.version>17</jdk.version>
         <spring-boot.version>3.1.7</spring-boot.version>

@@ -47,6 +47,20 @@ public class AVueProperties {
      */
     private String password;
 
+    /**
+     * 加密的扰动因子
+     */
+    private String userSalt = "Z3O4uM2D8cha";
+
+
+    public String getUserSalt() {
+        return userSalt;
+    }
+
+    public void setUserSalt(String userSalt) {
+        this.userSalt = userSalt;
+    }
+
     public String getWebDomain() {
         return webDomain;
     }

@@ -1,5 +1,6 @@
 package com.liukx.spring.client.config;
 
+import com.liukx.spring.client.controller.AVueWebMvcController;
 import com.liukx.spring.client.enums.AVueConstants;
 import com.liukx.spring.client.handler.LoginHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -25,6 +27,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(value = {WebMvcConfigurer.class})
 @ConditionalOnProperty(name = "spring.main.web-application-type", havingValue = "servlet", matchIfMissing = true)
+@Import({AVueWebMvcController.class})
 public class AVueMvcWebMvcConfigurer implements WebMvcConfigurer {
 
     @Autowired

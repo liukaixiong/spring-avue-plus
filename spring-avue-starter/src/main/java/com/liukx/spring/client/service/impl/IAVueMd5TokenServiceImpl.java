@@ -22,7 +22,12 @@ public class IAVueMd5TokenServiceImpl implements IAVueTokenService {
     @Override
     public String tokenCreated(LoginModel loginModel) {
         final String username = avueProperties.getUsername();
-        return md5(username);
+        return md5(insertSaltValue(username));
+    }
+
+    private String insertSaltValue(String username) {
+        final String userSalt = avueProperties.getUserSalt();
+        return username + userSalt;
     }
 
     @Override
@@ -30,8 +35,8 @@ public class IAVueMd5TokenServiceImpl implements IAVueTokenService {
         if (!StringUtils.hasText(token)) {
             return false;
         }
-        final String username = avueProperties.getUsername();
-        final String userToken = md5(username);
+        final String userSalt = insertSaltValue(avueProperties.getUsername());
+        final String userToken = md5(userSalt);
         return userToken.equals(token);
     }
 
