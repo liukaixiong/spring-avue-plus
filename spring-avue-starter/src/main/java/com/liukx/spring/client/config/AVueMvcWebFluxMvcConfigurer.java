@@ -47,7 +47,7 @@ public class AVueMvcWebFluxMvcConfigurer implements WebFluxConfigurer {
             final String path = exchange.getRequest().getURI().getPath();
 
             // 静态资源
-            if (!path.startsWith("/avue") || path.startsWith("/avue/assets")) {
+            if (!path.startsWith(AVueConstants.Path.INDEX_URL) || path.startsWith("/avue/assets")) {
                 return chain.filter(exchange);
             }
 

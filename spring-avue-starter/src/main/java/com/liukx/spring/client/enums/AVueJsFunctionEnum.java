@@ -9,6 +9,7 @@ package com.liukx.spring.client.enums;
  * @date 2024/10/14 - 16:10
  */
 public enum AVueJsFunctionEnum {
+    //@Formatter:off
     /**
      * 必填参数: url
      * {@code @AVueClickButton(methodName = AVueJsFunctionEnum.hrefClick, btnName = "跳转链接", type = "success", icon = "el-icon-setting", attrExt = {
@@ -17,8 +18,13 @@ public enum AVueJsFunctionEnum {
     hrefClick("跳转链接,点击即可跳转到对应的地址!", new String[]{"url : 配置对应的url地址,[如果是基于行的使用方式,可以使用#{属性名称}占位符来定义]"}),
     /**
      * {@code  @AVueClickButton(methodName = AVueJsFunctionEnum.confirmClickRemoteApi, btnName = "确认按钮", attrExt = {
-     *                         @AVueAttr(name = "title", value = "小伙子，你确定吗？有惊喜喔!"),
-     *                         @AVueAttr(name = "url", value = AVueControllerTest.BODY_URL)})}
+     *                         @AVueAttr(name = "title", value = "#{占位符:username} => 小伙子，你确定吗？有惊喜喔! "),
+     *                         @AVueAttr(name = "url", value = AVueControllerTest.BODY_URL),
+     *                         @AVueAttr(name = "method", value = "get || post"),
+     *                         @AVueAttr(name = "requestDataType", value = "row 行数据 || search:查询数据")
+     *})
+     *}
+     *
      */
     confirmClickRemoteApi("确认框, 询问之后,触发远程调用,传递的参数是当前行数据", new String[]{"title : 确认内容描述", "url: 请求的地址,当前服务直接传递path即可", "method: 请求方法[get/post]"}),
     openTabLink("点击打开一个弹出层,需要指定弹出层要弹出的模版", new String[]{"title : 确认内容描述", "url: 请求的地址,当前服务直接传递path即可", "method: 请求方法[get/post]"}),

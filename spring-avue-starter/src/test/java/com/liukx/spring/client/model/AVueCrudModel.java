@@ -65,8 +65,12 @@ import java.util.List;
         },
         // 左上角按钮事件
         tableTopLeftButtons = {
-                @AVueClickButton(methodName = AVueJsFunctionEnum.hrefClick, btnName = "左上角跳转链接", type = "success", icon = "el-icon-setting", attrExt = {
-                        @AVueAttr(name = "url", value = "https://www.baidu.com")})
+                @AVueClickButton(methodName = AVueJsFunctionEnum.hrefClick, btnName = "左上角跳转链接", type = "success", icon = "el-icon-setting", attrExt = {@AVueAttr(name = "url", value = "https://www.baidu.com")}),
+                @AVueClickButton(methodName = AVueJsFunctionEnum.confirmClickRemoteApi, btnName = "左上角携带查询参数确认框", type = "success", icon = "el-icon-setting", attrExt = {
+                        @AVueAttr(name = "url", value = "https://www.baidu.com"),
+                        @AVueAttr(name = "title", value = "小伙子-> #{username} ，你确定吗？有惊喜喔!"),
+                        @AVueAttr(name = "requestDataType", value = "search")
+                })
         }
 )
 public class AVueCrudModel {

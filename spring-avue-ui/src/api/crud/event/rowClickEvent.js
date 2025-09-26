@@ -41,8 +41,9 @@ export function testB(self, item, row, index) {
  */
 export function hrefClick(self, item, row, index) {
     let json = listToJson(item['attrExt']);
+    let requestBody = getRequestBody(self, json, row);
     let jumpUrl = json.url;
-    jumpUrl = parseTextEnvData(row, jumpUrl);
+    jumpUrl = parseTextEnvData(requestBody, jumpUrl);
     if (json) {
         window.open(jumpUrl);
     } else {
@@ -59,8 +60,10 @@ export function hrefClick(self, item, row, index) {
  */
 export function confirmClickRemoteApi(self, item, row, index) {
     let param = listToJson(item['attrExt']);
-    let title = parseTextEnvData(row, param.title) || '您确认执行该操作吗?';
-    let url = parseTextEnvData(row, param.url);
+    // 这里代表着你需要什么请求参数, row 代表行数据, search 代表查询列表数据
+    let requestBody = getRequestBody(self, param, row);
+    let title = parseTextEnvData(requestBody, param.title) || '您确认执行该操作吗?';
+    let url = parseTextEnvData(requestBody, param.url);
     let method = param.method || 'post';
 
     if (!url) {
@@ -76,13 +79,18 @@ export function confirmClickRemoteApi(self, item, row, index) {
         cancelButtonText: '取消',
         type: 'warning'
     }).then(() => {
-        _remote.api(url, method, row, (data) => {
+        _remote.api(url, method, requestBody, (data) => {
             if (crudUtil.processDMLResponse(self, data)) {
                 // 刷新表格
                 self.$refs.crud.refreshChange();
             }
         });
     })
+}
+
+
+function getRequestBody(self, extParam, row) {
+    return extParam['requestDataType'] || 'row' === 'search' ? self.search : row;
 }
 
 /**
@@ -96,7 +104,8 @@ export function confirmClickRemoteApi(self, item, row, index) {
 export function openTabLink(self, item, row, index) {
     let param = listToJson(item['attrExt']);
     let requestParams = param["query"];
-    let param2Obj = convertQueryParam(requestParams, row);
+    let requestBody = getRequestBody(self, param, row);
+    let param2Obj = convertQueryParam(requestParams, requestBody);
     let routeLink = {};
     let query = self.$route.query;
 
@@ -123,7 +132,7 @@ export function openTabLink(self, item, row, index) {
  */
 export function copyField(self, item, row, index) {
     let param = listToJson(item['attrExt']);
-    let copyObject = row;
+    let copyObject = getRequestBody(self, param, row);
     if (param) {
         let fieldName = param["name"];
         if (fieldName) {
@@ -155,6 +164,7 @@ export function copyField(self, item, row, index) {
 export function openWindowJsonRemote(self, item, row, index) {
     // 显示弹窗窗口
     let param = listToJson(item['attrExt']);
+
     // 提交按钮指向的后端地址
     let submitUrl = parseTextEnvData(row, param.submitUrl);
     // 提交事件
